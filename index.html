@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linguistics Course Portal | Master Complete IPA Matrix</title>
+    <title>Linguistics Course Portal | Master 27-Question Matrix</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -19,29 +19,29 @@
         }
     </script>
 </head>
-<body class="h-full bg-slate-50 text-slate-900 flex flex-col font-sans antialiased">
+<body class="h-full bg-[#FDFBF7] text-[#111111] flex flex-col font-sans antialiased text-lg">
 
     <!-- Configuration Variables -->
     <script>
         const GOOGLE_SCRIPT_URL = "https://google.com";
-        const MODULE_NAME = "Phonetics and Phonology - Master Complete IPA Matrix";
+        const MODULE_NAME = "Phonetics and Phonology - Master 27-Question Matrix";
     </script>
 
     <!-- Top Navigation Bar -->
-    <header class="bg-indigo-900 text-white shadow-md z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="bg-indigo-700 p-2 rounded-lg font-mono font-bold text-lg tracking-wider">IPA</div>
+    <header class="bg-[#1a202c] text-white shadow-md z-50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="bg-indigo-600 px-3 py-2 rounded-xl font-mono font-bold text-xl tracking-wider">IPA</div>
                 <div>
-                    <h1 class="font-bold text-lg leading-tight" id="nav-module-title">Phonetics and Phonology</h1>
-                    <span class="text-xs text-indigo-300">Master Complete IPA Evaluation Lab</span>
+                    <h1 class="font-bold text-xl leading-tight" id="nav-module-title">Phonetics and Phonology</h1>
+                    <span class="text-sm text-slate-300">Master 27-Question Evaluation Portal</span>
                 </div>
             </div>
-            <div class="flex items-center space-x-2 bg-indigo-950 p-1 rounded-xl border border-indigo-800">
-                <button id="nav-student-btn" onclick="switchView('student')" class="px-4 py-1.5 rounded-lg text-sm font-medium transition-all bg-indigo-600 text-white shadow">
+            <div class="flex items-center space-x-2 bg-slate-800 p-1.5 rounded-2xl border border-slate-700">
+                <button id="nav-student-btn" onclick="switchView('student')" class="px-5 py-2 rounded-xl text-base font-semibold transition-all bg-indigo-600 text-white shadow">
                     Student Practice Lab
                 </button>
-                <button id="nav-instructor-btn" onclick="switchView('instructor')" class="px-4 py-1.5 rounded-lg text-sm font-medium transition-all text-indigo-300 hover:text-white">
+                <button id="nav-instructor-btn" onclick="switchView('instructor')" class="px-5 py-2 rounded-xl text-base font-semibold transition-all text-slate-300 hover:text-white">
                     Instructor Dashboard
                 </button>
             </div>
@@ -49,93 +49,98 @@
     </header>
 
     <!-- Main Container -->
-    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 overflow-y-auto">
+    <main class="flex-1 max-w-6xl w-full mx-auto p-6 lg:p-10 overflow-y-auto">
 
         <!-- ================= STUDENT VIEW ================= -->
-        <div id="view-student" class="space-y-6">
+        <div id="view-student" class="space-y-8">
             
             <!-- Login Panel -->
-            <div id="panel-login" class="max-w-md mx-auto bg-white rounded-2xl shadow-xl border border-slate-100 p-8 my-12">
+            <div id="panel-login" class="max-w-lg mx-auto bg-white rounded-3xl shadow-xl border border-slate-200 p-10 my-10">
                 <div class="text-center mb-8">
-                    <div class="inline-block bg-indigo-50 text-indigo-600 p-3 rounded-full mb-4">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                    </div>
-                    <h2 class="text-2xl font-bold text-slate-800">Student Authentication</h2>
-                    <p class="text-sm text-slate-500 mt-1">Enter your details to access the 120-question IPA matrix across 4 sets.</p>
+                    <div class="inline-block bg-indigo-50 text-indigo-600 p-4 rounded-2xl mb-4 text-2xl font-bold">✨</div>
+                    <h2 class="text-3xl font-bold text-[#111111]">Student Authentication</h2>
+                    <p class="text-base text-slate-600 mt-2">Enter your details to access the Master 27-Question matrix across 4 sets (108 questions total).</p>
                 </div>
                 
-                <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
+                <form id="login-form" onsubmit="handleLogin(event)" class="space-y-5">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Full Name</label>
+                        <label class="block text-sm font-semibold text-slate-700 uppercase tracking-wider mb-2">Full Name</label>
                         <input type="text" id="input-name" required placeholder="e.g. Jane Doe" 
-                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
+                            class="w-full px-5 py-3.5 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-lg">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Roll Number</label>
+                        <label class="block text-sm font-semibold text-slate-700 uppercase tracking-wider mb-2">Roll Number</label>
                         <input type="text" id="input-roll" required placeholder="e.g. 1045 or EN01" 
-                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
+                            class="w-full px-5 py-3.5 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-lg">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">College Name</label>
+                        <label class="block text-sm font-semibold text-slate-700 uppercase tracking-wider mb-2">College Name</label>
                         <input type="text" id="input-college" required placeholder="e.g. University College of Humanities" 
-                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
+                            class="w-full px-5 py-3.5 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-lg">
                     </div>
                     <button type="submit" id="login-submit-btn" 
-                        class="w-full py-3 rounded-xl bg-indigo-600 text-white font-semibold shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition-all">
+                        class="w-full py-4 rounded-2xl bg-indigo-600 text-white font-semibold text-lg shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition-all">
                         Enter Practice Lab
                     </button>
                 </form>
             </div>
 
             <!-- Dashboard / Set Selector Panel -->
-            <div id="panel-dashboard" class="hidden space-y-6">
-                <div class="bg-gradient-to-r from-indigo-900 to-slate-900 text-white p-6 rounded-2xl shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
+            <div id="panel-dashboard" class="hidden space-y-8">
+                <div class="bg-[#1a202c] text-white p-8 rounded-3xl shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
                     <div>
-                        <span class="text-xs uppercase tracking-widest text-indigo-300 font-semibold">Active Student</span>
-                        <h2 class="text-2xl font-bold" id="display-student-name">Student Name</h2>
-                        <p class="text-sm text-slate-300 font-mono mt-0.5">Roll ID: <span id="display-student-roll" class="text-indigo-200 font-semibold"></span> | College: <span id="display-student-college" class="text-indigo-200 font-semibold"></span></p>
+                        <span class="text-xs uppercase tracking-widest text-indigo-400 font-semibold">Active Student Portal</span>
+                        <h2 class="text-3xl font-bold mt-1" id="display-student-name">Student Name</h2>
+                        <p class="text-base text-slate-300 font-mono mt-1">Roll ID: <span id="display-student-roll" class="text-indigo-300 font-semibold"></span> | College: <span id="display-student-college" class="text-indigo-300 font-semibold"></span></p>
                     </div>
-                    <button onclick="handleLogout()" class="text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg border border-white/10 transition-all">
+                    <button onclick="handleLogout()" class="text-sm bg-white/10 hover:bg-white/20 px-5 py-2.5 rounded-xl border border-white/10 transition-all font-medium">
                         Switch Student
                     </button>
                 </div>
 
-                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
-                    <h3 class="text-lg font-bold text-slate-800 mb-2">Curriculum Sets (30 Questions each)</h3>
-                    <p class="text-sm text-slate-500 mb-6">Complete sets sequentially. Data is automatically synchronized to the backend instructor matrix.</p>
+                <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-200">
+                    <h3 class="text-2xl font-bold text-[#111111] mb-2">Curriculum Sets (27 Questions each)</h3>
+                    <p class="text-base text-slate-600 mb-8">Complete sets sequentially across Sections A to E. Enjoy motivational smiley rewards upon completing each section!</p>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="sets-grid">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6" id="sets-grid">
                         <!-- Populated by JS -->
                     </div>
                 </div>
             </div>
 
             <!-- Active Practice Session Panel -->
-            <div id="panel-practice" class="hidden space-y-6">
-                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex items-center justify-between">
-                    <button onclick="exitPractice()" class="flex items-center space-x-2 text-sm text-slate-600 hover:text-indigo-600 font-medium transition-colors">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+            <div id="panel-practice" class="hidden space-y-8">
+                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex items-center justify-between">
+                    <button onclick="exitPractice()" class="flex items-center space-x-2 text-base text-slate-700 hover:text-indigo-600 font-semibold transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                         <span>Back to Sets</span>
                     </button>
                     <div class="text-center">
-                        <h3 class="font-bold text-slate-800" id="practice-title">Set 1 Practice Matrix</h3>
-                        <span class="text-xs text-slate-500">Pair <span id="current-pair-num">1</span> of 15 (30 Questions Total)</span>
+                        <h3 class="text-xl font-bold text-[#111111]" id="practice-title">Set 1 Practice Matrix</h3>
+                        <span class="text-sm text-slate-600" id="section-tracker-label">Section A: Transcription Practice (Pair <span id="current-pair-num">1</span> of <span id="total-pair-num">3</span>)</span>
                     </div>
-                    <div class="w-24"></div>
+                    <div class="w-28"></div>
+                </div>
+
+                <!-- Section Banner & Motivational Badge Container -->
+                <div id="section-banner" class="hidden bg-emerald-50 border border-emerald-200 p-6 rounded-3xl text-center space-y-2">
+                    <div class="text-4xl" id="section-reward-emoji">🌟</div>
+                    <h4 class="text-2xl font-bold text-emerald-900" id="section-reward-title">Section Completed!</h4>
+                    <p class="text-base text-emerald-700" id="section-reward-desc">Great job! Keep up the brilliant momentum!</p>
                 </div>
 
                 <!-- Questions Window -->
-                <div id="questions-container" class="space-y-6">
+                <div id="questions-container" class="space-y-8">
                     <!-- Populated dynamically -->
                 </div>
 
                 <!-- Pagination Footer -->
-                <div class="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
-                    <button id="prev-pair-btn" onclick="navigatePair(-1)" class="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 text-sm font-semibold hover:bg-slate-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+                <div class="flex items-center justify-between bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+                    <button id="prev-pair-btn" onclick="navigatePair(-1)" class="px-6 py-3 rounded-2xl border border-slate-300 text-slate-700 text-base font-semibold hover:bg-slate-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
                         Previous Pair
                     </button>
-                    <div class="text-sm font-medium text-slate-500" id="progress-indicator">Progress: 0 / 30 answered</div>
-                    <button id="next-pair-btn" onclick="navigatePair(1)" class="px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100">
+                    <div class="text-base font-semibold text-slate-700" id="progress-indicator">Progress: 0 / 27 answered</div>
+                    <button id="next-pair-btn" onclick="navigatePair(1)" class="px-6 py-3 rounded-2xl bg-indigo-600 text-white text-base font-semibold hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100">
                         Next Pair
                     </button>
                 </div>
@@ -144,50 +149,48 @@
         </div>
 
         <!-- ================= INSTRUCTOR VIEW ================= -->
-        <div id="view-instructor" class="hidden space-y-6">
-            <div id="instructor-auth-panel" class="max-w-md mx-auto bg-white rounded-2xl shadow-xl border border-slate-100 p-8 my-12">
+        <div id="view-instructor" class="hidden space-y-8">
+            <div id="instructor-auth-panel" class="max-w-md mx-auto bg-white rounded-3xl shadow-xl border border-slate-200 p-10 my-12">
                 <div class="text-center mb-6">
-                    <div class="inline-block bg-slate-100 text-slate-700 p-3 rounded-full mb-3">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                    </div>
-                    <h2 class="text-2xl font-bold text-slate-800">Instructor Gateway</h2>
-                    <p class="text-sm text-slate-500 mt-1">Enter password to view remote student progress matrix.</p>
+                    <div class="inline-block bg-slate-100 text-slate-700 p-4 rounded-2xl mb-4 text-2xl font-bold">🔒</div>
+                    <h2 class="text-3xl font-bold text-[#111111]">Instructor Gateway</h2>
+                    <p class="text-base text-slate-600 mt-2">Enter password to view remote student progress matrix.</p>
                 </div>
-                <form onsubmit="handleInstructorLogin(event)" class="space-y-4">
+                <form onsubmit="handleInstructorLogin(event)" class="space-y-5">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Password</label>
+                        <label class="block text-sm font-semibold text-slate-700 uppercase tracking-wider mb-2">Password</label>
                         <input type="password" id="instructor-password" required placeholder="••••••••" 
-                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
+                            class="w-full px-5 py-3.5 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-lg">
                     </div>
-                    <button type="submit" class="w-full py-3 rounded-xl bg-slate-900 text-white font-semibold shadow-lg hover:bg-slate-800 transition-all">
+                    <button type="submit" class="w-full py-4 rounded-2xl bg-[#111111] text-white font-semibold text-lg shadow-lg hover:bg-slate-800 transition-all">
                         Access Dashboard
                     </button>
                 </form>
             </div>
 
-            <div id="instructor-dashboard-panel" class="hidden space-y-6">
-                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-                    <div class="p-6 border-b border-slate-100 flex items-center justify-between">
+            <div id="instructor-dashboard-panel" class="hidden space-y-8">
+                <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="p-8 border-b border-slate-200 flex items-center justify-between">
                         <div>
-                            <h2 class="text-xl font-bold text-slate-800">Student Progress Matrix</h2>
-                            <p class="text-xs text-slate-500 mt-0.5">Live records mapped from endpoint: <span class="font-mono text-indigo-600" id="endpoint-display"></span></p>
+                            <h2 class="text-2xl font-bold text-[#111111]">Student Progress Matrix</h2>
+                            <p class="text-base text-slate-600 mt-1">Live records mapped from endpoint: <span class="font-mono text-indigo-600" id="endpoint-display"></span></p>
                         </div>
-                        <button onclick="loadInstructorData()" class="px-4 py-2 rounded-xl bg-indigo-50 text-indigo-600 hover:bg-indigo-100 text-sm font-semibold transition-all">
+                        <button onclick="loadInstructorData()" class="px-5 py-2.5 rounded-2xl bg-indigo-50 text-indigo-600 hover:bg-indigo-100 text-base font-semibold transition-all">
                             Refresh Data
                         </button>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead>
-                                <tr class="bg-slate-50 text-slate-500 uppercase text-xs tracking-wider border-b border-slate-100">
-                                    <th class="p-4 font-semibold">Roll Number</th>
-                                    <th class="p-4 font-semibold">Name</th>
-                                    <th class="p-4 font-semibold">College</th>
-                                    <th class="p-4 font-semibold">Total Attempts</th>
-                                    <th class="p-4 font-semibold">Best Score</th>
+                                <tr class="bg-slate-50 text-slate-600 uppercase text-sm tracking-wider border-b border-slate-200">
+                                    <th class="p-5 font-semibold">Roll Number</th>
+                                    <th class="p-5 font-semibold">Name</th>
+                                    <th class="p-5 font-semibold">College</th>
+                                    <th class="p-5 font-semibold">Total Attempts</th>
+                                    <th class="p-5 font-semibold">Best Score</th>
                                 </tr>
                             </thead>
-                            <tbody id="instructor-table-body" class="divide-y divide-slate-100 text-sm text-slate-700">
+                            <tbody id="instructor-table-body" class="divide-y divide-slate-200 text-base text-slate-800">
                                 <!-- Populated dynamically -->
                             </tbody>
                         </table>
@@ -200,13 +203,10 @@
 
     <!-- Application Script Block -->
     <script>
-        // --- Configuration Variables ---
-        // GOOGLE_SCRIPT_URL & MODULE_NAME are defined at top.
-
         // --- State Management ---
         let currentStudent = { name: '', roll: '', college: '' };
         let activeSetIndex = 0;
-        let currentPairIndex = 0;
+        let currentGlobalIndex = 0; // 0 to 26 (27 questions per set)
         let setCompletionStatus = [true, false, false, false];
         let userAnswers = {}; 
         let submittedQuestions = {}; 
@@ -219,768 +219,82 @@
             'θ', 'ð', 'ʃ', 'ʒ', 'ŋ', 'tʃ', 'dʒ', 'j', 'w', 'ˈ'
         ];
 
-        // --- Question Bank Construction (120 Questions across 4 Sets, 30 per set) ---
-        const questionBank = [
-            // ================= SET 1 (30 Questions) =================
-            [
-                // Transcriptions (5 Qs)
-                {
-                    type: 'transcription', sub: 'monosyllabic',
-                    prompt: "Transcribe the monosyllabic word 'cat' in Received Pronunciation (RP):",
-                    answer: "/kæt/",
-                    rule: "Monosyllabic open/closed structure: Consonant-Vowel-Consonant (CVC). /æ/ is near-open front unrounded vowel."
-                },
-                {
-                    type: 'transcription', sub: 'disyllabic',
-                    prompt: "Transcribe the disyllabic word 'better' in Received Pronunciation (RP):",
-                    answer: "/ˈbetə/",
-                    rule: "Disyllabic structure with primary stress on the first syllable (indicated by /ˈ/). Intervocalic /t/ and schwa /ə/ in the unstressed final syllable."
-                },
-                {
-                    type: 'transcription', sub: 'trisyllabic',
-                    prompt: "Transcribe the trisyllabic word 'beautiful' in Received Pronunciation (RP):",
-                    answer: "/ˈbjuːtɪfl/",
-                    rule: "Trisyllabic structure. Primary stress on first syllable. Contains diphthong /juː/, lax vowel /ɪ/, and syllabic lateral /l/."
-                },
-                {
-                    type: 'transcription', sub: 'polysyllabic',
-                    prompt: "Transcribe the polysyllabic word 'linguistics' in Received Pronunciation (RP):",
-                    answer: "/lɪŋˈɡwɪstɪks/",
-                    rule: "Polysyllabic word. Secondary stress on initial /lɪŋ/ and primary stress on second syllable /ɡwɪs/. Velar nasal /ŋ/ and dental/alveolar fricatives."
-                },
-                {
-                    type: 'transcription', sub: 'monosyllabic',
-                    prompt: "Transcribe the monosyllabic word 'spin' in Received Pronunciation (RP):",
-                    answer: "/spɪn/",
-                    rule: "Consonant cluster /sp/ followed by lax vowel /ɪ/ and alveolar nasal /n/."
-                },
+        // --- Section Definitions & Counts (27 Questions per Set) ---
+        // Section A: Transcription (Q0 - Q4) -> 5 Qs
+        // Section B: Reverse Transcription (Q5 - Q9) -> 5 Qs
+        // Section C: Short Answer (Q10 - Q19) -> 10 Qs
+        // Section D: Paragraph Analysis (Q20 - Q24) -> 5 Qs
+        // Section E: Targeted Essay (Q25 - Q26) -> 2 Qs
+        // Total = 27 Questions per set.
 
-                // Reverse Transcriptions (5 Qs)
-                {
-                    type: 'reverse', sub: 'monosyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /dɒɡ/",
-                    options: ["dog", "dug", "dig", "dock"],
-                    answer: "dog",
-                    rule: "Phonetic symbol /ɒ/ represents the open back rounded vowel in RP 'dog'."
-                },
-                {
-                    type: 'reverse', sub: 'disyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /ˈwɪndəʊ/",
-                    options: ["window", "wander", "wonder", "windy"],
-                    answer: "window",
-                    rule: "Disyllabic word with primary stress on the first syllable and ending in the diphthong /əʊ/."
-                },
-                {
-                    type: 'reverse', sub: 'trisyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /ˈmæɡɪzɪn/",
-                    options: ["magazine", "manager", "magnet", "magic"],
-                    answer: "magazine",
-                    rule: "Trisyllabic structure with stress assignment on the ultimate syllable."
-                },
-                {
-                    type: 'reverse', sub: 'polysyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /ˌjuːnɪˈvɜːsɪti/",
-                    options: ["university", "universe", "unify", "unique"],
-                    answer: "university",
-                    rule: "Polysyllabic word featuring secondary stress on the first syllable and primary stress on the fourth syllable."
-                },
-                {
-                    type: 'reverse', sub: 'monosyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /ʃiːp/",
-                    options: ["ship", "sheep", "shape", "sharp"],
-                    answer: "sheep",
-                    rule: "Long close front unrounded vowel /iː/ distinguishing 'sheep' from lax /ɪ/ in 'ship'."
-                },
+        function getSectionMeta(qIdx) {
+            if (qIdx <= 4) return { sec: 'A', name: 'Section A: Transcription Practice', rewardEmoji: '🌟', rewardTitle: 'Section A Completed! Great job!', rewardDesc: 'You have mastered the IPA transcription practice pairs!' };
+            if (qIdx <= 9) return { sec: 'B', name: 'Section B: Reverse Transcription Identification', rewardEmoji: '🎉', rewardTitle: 'Section B Completed! Keep it up!', rewardDesc: 'Brilliant recognition of phonetic spelling patterns!' };
+            if (qIdx <= 19) return { sec: 'C', name: 'Section C: Short Answer Conceptual Questions', rewardEmoji: '🎓', rewardTitle: 'Section C Completed! Outstanding!', rewardDesc: 'Your phonetic & phonological knowledge is shining!' };
+            if (qIdx <= 24) return { sec: 'D', name: 'Section D: Paragraph Data Analysis', rewardEmoji: '✨', rewardTitle: 'Section D Completed! Phenomenal!', rewardDesc: 'Exceptional data analysis and allophonic breakdown!' };
+            return { sec: 'E', name: 'Section E: Targeted Essay Questions', rewardEmoji: '🏆', rewardTitle: 'Final Set Completed! Champion!', rewardDesc: 'You have completed the entire 27-question master matrix!' };
+        }
 
-                // Paragraph Data Analysis (5 Qs)
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Analyzing English Plural Allophonic Distribution.\nData: 'cats' [kæts], 'dogs' [dɒɡz], 'buses' [bʌsɪz].\nQuestion: What phonological rule conditions the selection of the voiced alveolar allophone [z] in 'dogs'?",
-                    answer: "preceding voiced segment",
-                    rule: "Rule: The plural morpheme surfaces as [z] when it attaches to stems ending in a voiced non-sibilant sound (such as the voiced velar stop [ɡ])."
-                },
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Connected Speech Assimilation.\nData: Phrase 'ten books' pronounced as [tɛm bʊks].\nQuestion: Name the specific phonological assimilation process operating on the alveolar nasal /n/ before the bilabial stop /b/.",
-                    answer: "place assimilation",
-                    rule: "Rule: Alveolar nasal /n/ assimilates to the place of articulation of the following bilabial stop /b/, becoming the bilabial nasal [m]."
-                },
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Aspirated vs Unaspirated Allophones in English Stops.\nData: 'pin' [pʰɪn] vs 'spin' [spɪn].\nQuestion: In which phonetic environment do voiceless plosives fail to receive aspiration [ʰ] in English?",
-                    answer: "after s",
-                    rule: "Rule: Voiceless plosives are unaspirated when immediately preceded by /s/ within the same syllable onset (e.g., 'spin', 'stop', 'skate')."
-                },
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Syllabic Consonants in RP.\nData: Word 'bottle' pronounced as [bɒtl̩] or [bɒtəl].\nQuestion: What term is given to consonants like [l] or [n] that form the peak of a syllable in place of a vowel?",
-                    answer: "syllabic consonant",
-                    rule: "Rule: When unstressed, sonorant consonants can function as syllable nuclei directly without an adjacent vowel."
-                },
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Vowel Nasalization Rule.\nData: Vowel in 'pin' [pɪ̃n] exhibits nasal resonance before [n].\nQuestion: What phonological process causes vowels to take on nasal quality preceding nasal consonants?",
-                    answer: "nasalization",
-                    rule: "Rule: Vowels are anticipatorily nasalized when followed by a nasal consonant in the same syllable coda because the velum lowers early."
-                },
+        // --- Question Bank Construction (108 Questions across 4 Sets) ---
+        // We will generate a structured question bank template for Sets 1-4.
+        const questionBank = [];
 
-                // Standard Structural Matrix MCQs (15 Qs)
-                {
-                    type: 'mcq', prompt: "What is the primary articulatory descriptor for the English sound [p]?",
-                    options: ["Voiceless bilabial plosive", "Voiced alveolar fricative", "Voiceless labiodental nasal", "Voiced velar plosive"],
-                    answer: "Voiceless bilabial plosive",
-                    rule: "[p] involves complete closure of both lips (bilabial), stoppage of airflow with a burst (plosive), and absence of vocal cord vibration (voiceless)."
-                },
-                {
-                    type: 'mcq', prompt: "Which pair represents a classic English minimal pair distinguishing voicing in fricatives?",
-                    options: ["sip / zip", "cat / bat", "pin / bin", "tea / dee"],
-                    answer: "sip / zip",
-                    rule: "/s/ and /z/ share identical place (alveolar) and manner (fricative), differing solely in voicing ([s] is voiceless, [z] is voiced)."
-                },
-                {
-                    type: 'mcq', prompt: "In phonology, what term describes a variant realization of a phoneme that does not change word meaning?",
-                    options: ["Allophone", "Morpheme", "Allomorph", "Grapheme"],
-                    answer: "Allophone",
-                    rule: "Allophones are predictable phonetic variants of a single phoneme conditioned by phonetic environment."
-                },
-                {
-                    type: 'mcq', prompt: "Which English consonant is classified as a voiced labiodental fricative?",
-                    options: ["v", "f", "b", "w"],
-                    answer: "v",
-                    rule: "[v] is produced with upper teeth touching the lower lip (labiodental) allowing air friction (fricative) with vocal fold vibration (voiced)."
-                },
-                {
-                    type: 'mcq', prompt: "What feature distinguishes nasal sounds like [m] and [n] from oral stops like [p] and [t]?",
-                    options: ["Lowering of the velum allowing airflow through the nasal cavity", "Vocal cord vibration", "Place of articulation", "Lip rounding"],
-                    answer: "Lowering of the velum allowing airflow through the nasal cavity",
-                    rule: "Nasals require a lowered velum coupling the nasal cavity to the vocal tract, whereas oral stops require a raised velum."
-                },
-                {
-                    type: 'mcq', prompt: "Identify the place and manner for the phoneme [ŋ] (as in 'sing'):",
-                    options: ["Velar nasal", "Alveolar nasal", "Bilabial nasal", "Palatal plosive"],
-                    answer: "Velar nasal",
-                    rule: "[ŋ] is articulated by raising the back of the tongue against the velum with the velum lowered."
-                },
-                {
-                    type: 'mcq', prompt: "Which of the following is a high front unrounded vowel in standard RP?",
-                    options: ["/iː/", "/uː/", "/ɑː/", "/ɔː/"],
-                    answer: "/iː/",
-                    rule: "/iː/ is produced with the tongue positioned high and far forward in the oral cavity without lip rounding."
-                },
-                {
-                    type: 'mcq', prompt: "What does the symbol [ʰ] indicate when attached to a stop consonant transcription like [pʰɪn]?",
-                    options: ["Aspiration", "Palatalization", "Nasality", "Voicing"],
-                    answer: "Aspiration",
-                    rule: "Aspiration is a burst of air accompanying the release of voiceless plosives in initial stressed positions."
-                },
-                {
-                    type: 'mcq', prompt: "Which sound is a post-alveolar (or palato-alveolar) affricate?",
-                    options: ["/tʃ/", "/s/", "/θ/", "/j/"],
-                    answer: "/tʃ/",
-                    rule: "/tʃ/ begins as an alveolar stop and releases into a fricative in the post-alveolar region."
-                },
-                {
-                    type: 'mcq', prompt: "The term 'complementary distribution' means:",
-                    options: ["Sounds never occur in the exact same phonetic environment", "Sounds occur in identical environments creating meaning changes", "Sounds have identical acoustic signatures", "Vowels and consonants alternate"],
-                    answer: "Sounds never occur in the exact same phonetic environment",
-                    rule: "When two sounds are mutually exclusive and found in completely distinct contexts, they are allophones of the same phoneme."
-                },
-                {
-                    type: 'mcq', prompt: "Which vowel is categorized as a central open-mid vowel (schwa)?",
-                    options: ["/ə/", "/iː/", "/uː/", "/æ/"],
-                    answer: "/ə/",
-                    rule: "/ə/ is the most frequent unstressed vowel in English, articulated in the central neutral zone."
-                },
-                {
-                    type: 'mcq', prompt: "What is the primary difference between a monophthong and a diphthong?",
-                    options: ["Diphthongs involve a dynamic glide from one vowel quality to another within a single syllable", "Monophthongs are always nasalized", "Diphthongs only occur in unstressed syllables", "Monophthongs require labial closure"],
-                    answer: "Diphthongs involve a dynamic glide from one vowel quality to another within a single syllable",
-                    rule: "A monophthong maintains a steady tongue position, whereas a diphthong changes quality (nucleus to glide)."
-                },
-                {
-                    type: 'mcq', prompt: "Which English consonant is classified as a lateral approximant?",
-                    options: ["/l/", "/r/", "/w/", "/j/"],
-                    answer: "/l/",
-                    rule: "Air escapes around the sides of the tongue while the tongue tip makes contact with the alveolar ridge."
-                },
-                {
-                    type: 'mcq', prompt: "What is a minimal pair test used to establish in phonology?",
-                    options: ["Phonemic contrast", "Syntactic category", "Morphological derivation", "Syllable weight"],
-                    answer: "Phonemic contrast",
-                    rule: "Finding two words with distinct meanings differing by only one sound proves those sounds are separate phonemes."
-                },
-                {
-                    type: 'mcq', prompt: "Which of the following describes the manner of articulation for English glides /j/ and /w/?",
-                    options: ["Approximant (Semi-vowel)", "Plosive", "Fricative", "Affricate"],
-                    answer: "Approximant (Semi-vowel)",
-                    rule: "Glides involve close approximation of articulators without turbulent airflow or complete blockage."
-                }
-            ],
+        function buildQuestionBank() {
+            for (let setNum = 0; setNum < 4; setNum++) {
+                const setQs = [];
 
-            // ================= SET 2 (30 Questions) =================
-            [
-                // Transcriptions (5 Qs)
-                {
-                    type: 'transcription', sub: 'monosyllabic',
-                    prompt: "Transcribe the monosyllabic word 'dog' in RP:",
-                    answer: "/dɒɡ/",
-                    rule: "Consonant-Vowel-Consonant structure with voiced alveolar stop /d/, short open back rounded vowel /ɒ/, and voiced velar stop /ɡ/."
-                },
-                {
-                    type: 'transcription', sub: 'disyllabic',
-                    prompt: "Transcribe the disyllabic word 'water' in RP:",
-                    answer: "/ˈwɔːtə/",
-                    rule: "Disyllabic word with primary stress on the first syllable containing the long back vowel /ɔː/."
-                },
-                {
-                    type: 'transcription', sub: 'trisyllabic',
-                    prompt: "Transcribe the trisyllabic word 'family' in RP:",
-                    answer: "/ˈfæməli/",
-                    rule: "Trisyllabic structure. Primary stress on first syllable. Contains lax vowel /æ/ and schwa /ə/."
-                },
-                {
-                    type: 'transcription', sub: 'polysyllabic',
-                    prompt: "Transcribe the polysyllabic word 'photography' in RP:",
-                    answer: "/fəˈtɒɡrəfi/",
-                    rule: "Polysyllabic word with primary stress on the second syllable /tɒ/ and unstressed schwa /ə/ in the initial position."
-                },
-                {
-                    type: 'transcription', sub: 'monosyllabic',
-                    prompt: "Transcribe the monosyllabic word 'fish' in RP:",
-                    answer: "/fɪʃ/",
-                    rule: "Labiodental fricative /f/, lax front vowel /ɪ/, and voiceless postalveolar fricative /ʃ/."
-                },
+                // SECTION A: Transcription (5 Qs)
+                setQs.push(
+                    { type: 'transcription', prompt: `Set ${setNum+1} - Q1: Transcribe the monosyllabic word 'cat' in RP:`, answer: "/kæt/", rule: "Monosyllabic CVC structure. /æ/ is near-open front unrounded vowel." },
+                    { type: 'transcription', prompt: `Set ${setNum+1} - Q2: Transcribe the disyllabic word 'better' in RP:`, answer: "/ˈbetə/", rule: "Disyllabic word with primary stress on the first syllable and schwa /ə/ in the final unstressed syllable." },
+                    { type: 'transcription', prompt: `Set ${setNum+1} - Q3: Transcribe the trisyllabic word 'beautiful' in RP:`, answer: "/ˈbjuːtɪfl/", rule: "Trisyllabic structure with diphthong /juː/, lax vowel /ɪ/, and syllabic lateral /l/." },
+                    { type: 'transcription', prompt: `Set ${setNum+1} - Q4: Transcribe the polysyllabic word 'linguistics' in RP:`, answer: "/lɪŋˈɡwɪstɪks/", rule: "Polysyllabic word featuring secondary stress on /lɪŋ/ and primary stress on /ɡwɪs/ with velar nasal /ŋ/." },
+                    { type: 'transcription', prompt: `Set ${setNum+1} - Q5: Transcribe the monosyllabic word 'spin' in RP:`, answer: "/spɪn/", rule: "Consonant cluster onset /sp/, lax vowel /ɪ/, and alveolar nasal coda /n/." }
+                );
 
-                // Reverse Transcriptions (5 Qs)
-                {
-                    type: 'reverse', sub: 'monosyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /hæt/",
-                    options: ["hate", "hat", "hot", "hut"],
-                    answer: "hat",
-                    rule: "/æ/ represents the near-open front unrounded vowel in 'hat'."
-                },
-                {
-                    type: 'reverse', sub: 'disyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /ˈsɪstə/",
-                    options: ["sister", "system", "season", "sitter"],
-                    answer: "sister",
-                    rule: "Disyllabic word with primary stress on the initial syllable and syllabic/schwa ending."
-                },
-                {
-                    type: 'reverse', sub: 'trisyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /ˈkɑːmədɪ/",
-                    options: ["comedy", "committee", "commute", "common"],
-                    answer: "comedy",
-                    rule: "Trisyllabic word with open back vowel /ɑː/ and primary stress on the first syllable."
-                },
-                {
-                    type: 'reverse', sub: 'polysyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /ɪkˈstrɛmɪti/",
-                    options: ["extremity", "extraordinary", "external", "extinguish"],
-                    answer: "extremity",
-                    rule: "Polysyllabic word with primary stress on the third syllable /strɛ/."
-                },
-                {
-                    type: 'reverse', sub: 'monosyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /bʊk/",
-                    options: ["bake", "book", "buck", "beak"],
-                    answer: "book",
-                    rule: "Close back lax unrounded/rounded vowel /ʊ/ in 'book'."
-                },
+                // SECTION B: Reverse Transcription MCQs (5 Qs)
+                setQs.push(
+                    { type: 'reverse', prompt: `Set ${setNum+1} - Q6: Select correct spelling for phonetic transcription: /dɒɡ/`, options: ["dog", "dug", "dig", "dock"], answer: "dog", rule: "/ɒ/ represents the open back rounded vowel in RP 'dog'." },
+                    { type: 'reverse', prompt: `Set ${setNum+1} - Q7: Select correct spelling for phonetic transcription: /ˈwɪndəʊ/`, options: ["window", "wander", "wonder", "windy"], answer: "window", rule: "Disyllabic word with primary stress and closing diphthong /əʊ/." },
+                    { type: 'reverse', prompt: `Set ${setNum+1} - Q8: Select correct spelling for phonetic transcription: /ˈmæɡɪzɪn/`, options: ["magazine", "manager", "magnet", "magic"], answer: "magazine", rule: "Trisyllabic structure with stress assignment on the ultimate syllable." },
+                    { type: 'reverse', prompt: `Set ${setNum+1} - Q9: Select correct spelling for phonetic transcription: /ˌjuːnɪˈvɜːsɪti/`, options: ["university", "universe", "unify", "unique"], answer: "university", rule: "Polysyllabic word with secondary stress on first syllable and primary stress on fourth." },
+                    { type: 'reverse', prompt: `Set ${setNum+1} - Q10: Select correct spelling for phonetic transcription: /ʃiːp/`, options: ["ship", "sheep", "shape", "sharp"], answer: "sheep", rule: "Long close front unrounded vowel /iː/ distinguishing 'sheep' from lax /ɪ/." }
+                );
 
-                // Paragraph Data Analysis (5 Qs)
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Stress Assignment in English Nouns vs Verbs.\nData: 'record' [ˈrekɔːd] (noun) vs [rɪˈkɔːd] (verb).\nQuestion: What phonological process alters the stress pattern and vowel quality in the first syllable of 'record' when shifted from noun to verb?",
-                    answer: "vowel reduction",
-                    rule: "Rule: Unstressed syllables undergo vowel reduction, turning full vowels into schwa /ə/ or lax variants like /ɪ/, while stress shifts."
-                },
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Past Tense Regular Morphology.\nData: 'walked' [wɔːkt], 'played' [pleɪd], 'wanted' [wɒntɪd].\nQuestion: What phonological condition triggers the epenthetic vowel in the past tense allophone [-ɪd]?",
-                    answer: "alveolar stop stem",
-                    rule: "Rule: The past tense suffix requires an epenthetic vowel [ɪ] when attaching to verb stems ending in alveolar stops [t] or [d]."
-                },
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Flapping Rule in North American / RP casual speech.\nData: 'writer' [ˈraɪtər] -> [ˈraɪɾər].\nQuestion: What articulatory process converts an intervocalic alveolar plosive into a tap [ɾ]?",
-                    answer: "flapping",
-                    rule: "Rule: Alveolar stops [t] and [d] become a brief voiced tap [ɾ] when flanked by vowels where the second syllable is unstressed."
-                },
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Glottal Reinforcement in RP.\nData: 'stop' [stɒpᵖ] or 'stop' with glottal closure [stɒʔp].\nQuestion: What term describes the simultaneous glottal closure accompanying voiceless stops in syllable codas?",
-                    answer: "glottal reinforcement",
-                    rule: "Rule: Word-final voiceless plosives are frequently reinforced or replaced by a glottal stop in modern British English."
-                },
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Consonant Cluster Reduction.\nData: 'last night' pronounced as [lɑːs naɪt].\nQuestion: What phonological process omits the alveolar stop /t/ when positioned between two other consonants?",
-                    answer: "elision",
-                    rule: "Rule: Alveolar stops in complex consonant clusters are frequently elided in rapid connected speech to ease articulatory transitions."
-                },
+                // SECTION C: Short Answer (10 Qs - Conceptual 2-mark)
+                setQs.push(
+                    { type: 'short', prompt: `Set ${setNum+1} - Q11: What is the primary articulatory difference between plosives and fricatives?`, answer: "complete closure vs turbulent airflow", rule: "Plosives involve a complete oral closure followed by a sudden release burst, whereas fricatives involve narrow constriction producing continuous turbulent friction noise." },
+                    { type: 'short', prompt: `Set ${setNum+1} - Q12: Define the term 'phoneme' in structural phonology.`, answer: "abstract contrastive sound unit", rule: "A phoneme is the smallest distinctive sound unit in a language that can distinguish meaning (demonstrated via minimal pairs)." },
+                    { type: 'short', prompt: `Set ${setNum+1} - Q13: Explain what is meant by 'complementary distribution' among allophones.`, answer: "mutually exclusive environments", rule: "Complementary distribution occurs when two allophones never appear in the same phonetic context, rendering their distribution predictable." },
+                    { type: 'short', prompt: `Set ${setNum+1} - Q14: What distinguishes tense vowels from lax vowels in English?`, answer: "duration and muscular tension", rule: "Tense vowels are produced with greater muscular effort and tongue displacement, typically longer in duration, whereas lax vowels are shorter and more centralized." },
+                    { type: 'short', prompt: `Set ${setNum+1} - Q15: What is the acoustic property corresponding primarily to vowel height?`, answer: "first formant frequency f1", rule: "High vowels have low F1 frequencies due to pharyngeal cavity resonance, while low vowels exhibit high F1 frequencies." },
+                    { type: 'short', prompt: `Set ${setNum+1} - Q16: Describe the articulatory mechanism of nasal sounds like [m] and [n].`, answer: "lowered velum with oral closure", rule: "Nasals require complete closure in the oral cavity paired with a lowered velum, allowing air to resonate through the nasal tract." },
+                    { type: 'short', prompt: `Set ${setNum+1} - Q17: What is Voice Onset Time (VOT)?`, answer: "time between stop release and vocal voicing", rule: "VOT measures the temporal interval between the release of a plosive burst and the onset of periodic vocal fold vibration." },
+                    { type: 'short', prompt: `Set ${setNum+1} - Q18: What is an epenthetic vowel or consonant?`, answer: "inserted transition sound", rule: "Epenthesis is the insertion of a sound segment into a word during speech to ease articulatory transitions (e.g., [p] in 'hamster')." },
+                    { type: 'short', prompt: `Set ${setNum+1} - Q19: Define the Sonority Sequencing Principle (SSP).`, answer: "syllable sonority peak at nucleus", rule: "The SSP states that syllable structure rises in sonority from onset margins to a peak at the nucleus and falls toward the coda." },
+                    { type: 'short', prompt: `Set ${setNum+1} - Q20: What is neutralisation in phonological theory?`, answer: "suspension of phonemic contrast", rule: "Neutralisation occurs when a phonemic contrast is suspended in specific phonetic environments (e.g., devoicing of final obstruents)." }
+                );
 
-                // Standard Structural Matrix MCQs (15 Qs)
-                {
-                    type: 'mcq', prompt: "Which English sound is a voiceless dental fricative?",
-                    options: ["/θ/", "/ð/", "/s/", "/ʃ/"],
-                    answer: "/θ/",
-                    rule: "/θ/ (as in 'thin') is produced with the tongue tip near or touching the upper teeth without voicing."
-                },
-                {
-                    type: 'mcq', prompt: "What is the voiced counterpart of the voiceless alveolar fricative /s/?",
-                    options: ["/z/", "/ʒ/", "/d/", "/v/"],
-                    answer: "/z/",
-                    rule: "Both are alveolar fricatives, but /z/ includes vocal cord vibration."
-                },
-                {
-                    type: 'mcq', prompt: "Which phonological process describes the dropping of a sound in rapid speech (e.g., 'camera' pronounced as /ˈkæmprə/)?",
-                    options: ["Elision (Deletion)", "Assimilation", "Epenthesis", "Metathesis"],
-                    answer: "Elision (Deletion)",
-                    rule: "Elision is the omission of a segment (sound or syllable) in connected speech for articulatory ease."
-                },
-                {
-                    type: 'mcq', prompt: "What is the term for inserting a sound segment into a word (e.g., 'hamster' pronounced as 'hampster')?",
-                    options: ["Epenthesis", "Elision", "Assimilation", "Lenition"],
-                    answer: "Epenthesis",
-                    rule: "Epenthesis involves the insertion of a transition consonant or vowel into an existing word structure."
-                },
-                {
-                    type: 'mcq', prompt: "Which term denotes the study of the physical properties of speech sounds (acoustic and articulatory)?",
-                    options: ["Phonetics", "Phonology", "Morphology", "Syntax"],
-                    answer: "Phonetics",
-                    rule: "Phonetics examines the physical transmission and physiological production of speech sounds, independent of specific language systems."
-                },
-                {
-                    type: 'mcq', prompt: "Which term denotes the study of the abstract cognitive organization of sound systems in languages?",
-                    options: ["Phonology", "Phonetics", "Semantics", "Pragmatics"],
-                    answer: "Phonology",
-                    rule: "Phonology investigates how sounds function in distinct languages and rule-based mental representations."
-                },
-                {
-                    type: 'mcq', prompt: "What is a syllable nucleus typically formed by in English?",
-                    options: ["A vowel (or syllabic consonant)", "A voiceless plosive", "A fricative", "A dental nasal"],
-                    answer: "A vowel (or syllabic consonant)",
-                    rule: "The peak or nucleus of a syllable is the most sonorous element, almost always a vowel."
-                },
-                {
-                    type: 'mcq', prompt: "Which of the following is a back close-mid rounded vowel in RP?",
-                    options: ["/əʊ/", "/iː/", "/æ/", "/ɑː/"],
-                    answer: "/əʊ/",
-                    rule: "Diphthong /əʊ/ occupies the back mid-to-high rounded region."
-                },
-                {
-                    type: 'mcq', prompt: "What is the three-label descriptor for [k]?",
-                    options: ["Voiceless velar plosive", "Voiced bilabial nasal", "Voiceless alveolar fricative", "Voiced palatal approximant"],
-                    answer: "Voiceless velar plosive",
-                    rule: "[k] involves the back of the tongue against the velum (velar), complete stop and release (plosive), and no vocal fold vibration (voiceless)."
-                },
-                {
-                    type: 'mcq', prompt: "Assimilation refers to:",
-                    options: ["A sound becoming more similar to an adjacent sound", "Two sounds merging into a new phoneme", "The complete deletion of unstressed syllables", "Syllable stress shifting to the right"],
-                    answer: "A sound becoming more similar to an adjacent sound",
-                    rule: "Assimilation eases articulation by adopting features of neighboring segments."
-                },
-                {
-                    type: 'mcq', prompt: "Which consonant sound is represented by the IPA symbol [ʒ]?",
-                    options: ["Voiced post-alveolar fricative (as in 'vision')", "Voiceless post-alveolar fricative", "Voiced alveolar plosive", "Voiced velar nasal"],
-                    answer: "Voiced post-alveolar fricative (as in 'vision')",
-                    rule: "[ʒ] shares place and manner with /ʃ/ but is voiced."
-                },
-                {
-                    type: 'mcq', prompt: "What is the defining feature of sonorant sounds?",
-                    options: ["Spontaneous voicing with continuous airflow through vocal tract without pressure build-up", "High-frequency friction noise", "Complete oral closure", "Voicelessness"],
-                    answer: "Spontaneous voicing with continuous airflow through vocal tract without pressure build-up",
-                    rule: "Nasals, liquids, glides, and vowels are sonorants because air pressure inside and outside the mouth remains equal."
-                },
-                {
-                    type: 'mcq', prompt: "Which of the following words contains a diphthong?",
-                    options: ["boy", "bat", "bit", "bet"],
-                    answer: "boy",
-                    rule: "/ɔɪ/ in 'boy' is a closing diphthong moving from open-mid back to close front."
-                },
-                {
-                    type: 'mcq', prompt: "In English syllable structure, what is the sequence of consonants before the nucleus called?",
-                    options: ["Onset", "Coda", "Rhyme", "Nucleus"],
-                    answer: "Onset",
-                    rule: "The onset comprises any consonant(s) preceding the vowel nucleus in a syllable."
-                },
-                {
-                    type: 'mcq', prompt: "What is the sequence of consonants following the nucleus called?",
-                    options: ["Coda", "Onset", "Peak", "Stem"],
-                    answer: "Coda",
-                    rule: "The coda consists of the consonant(s) that follow the nucleus in the syllable rhyme."
-                }
-            ],
+                // SECTION D: Paragraph Data Analysis (5 Qs)
+                setQs.push(
+                    { type: 'paragraph', prompt: `Set ${setNum+1} - Q21: Context: English Plural Allophones ('cats' [kæts], 'dogs' [dɒɡz], 'buses' [bʌsɪz]).\nQuestion: What phonological rule conditions the voiced alveolar suffix [z]?`, answer: "preceding voiced segment", rule: "Rule: The plural suffix surfaces as [z] when attached to stems ending in a voiced non-sibilant sound." },
+                    { type: 'paragraph', prompt: `Set ${setNum+1} - Q22: Context: Connected Speech Assimilation ('ten books' -> [tɛm bʊks]).\nQuestion: What assimilation process converts /n/ into [m] before /b/?`, answer: "place assimilation", rule: "Rule: Alveolar nasal /n/ assimilates to the bilabial place of articulation of the following stop /b/." },
+                    { type: 'paragraph', prompt: `Set ${setNum+1} - Q23: Context: Aspiration in English Stops ('pin' [pʰɪn] vs 'spin' [spɪn]).\nQuestion: Why is the stop in 'spin' unaspirated?`, answer: "after s", rule: "Rule: Voiceless plosives are unaspirated when immediately preceded by /s/ in the syllable onset." },
+                    { type: 'paragraph', prompt: `Set ${setNum+1} - Q24: Context: Syllabic Consonants ('bottle' [bɒtl̩]).\nQuestion: What term describes sonorant consonants acting as syllable peaks?`, answer: "syllabic consonant", rule: "Rule: Unstressed sonorants like /l/ and /n/ can function directly as syllable nuclei without an adjacent vowel." },
+                    { type: 'paragraph', prompt: `Set ${setNum+1} - Q25: Context: Velarized Lateral Approximant ('feel' [fiːɫ]).\nQuestion: What phonetic environment conditions dark l [ɫ] in English?`, answer: "syllable coda", rule: "Rule: Lateral approximant /l/ is velarized (dark l) when occurring in syllable codas or word-finally." }
+                );
 
-            // ================= SET 3 (30 Questions) =================
-            [
-                // Transcriptions (5 Qs)
-                {
-                    type: 'transcription', sub: 'monosyllabic',
-                    prompt: "Transcribe the monosyllabic word 'sun' in RP:",
-                    answer: "/sʌn/",
-                    rule: "Alveolar fricative /s/, open-mid back unrounded vowel /ʌ/, and alveolar nasal /n/."
-                },
-                {
-                    type: 'transcription', sub: 'disyllabic',
-                    prompt: "Transcribe the disyllabic word 'pencil' in RP:",
-                    answer: "/ˈpensl/",
-                    rule: "Disyllabic word with primary stress on the first syllable and syllabic lateral /l/ in the second syllable."
-                },
-                {
-                    type: 'transcription', sub: 'trisyllabic',
-                    prompt: "Transcribe the trisyllabic word 'computer' in RP:",
-                    answer: "/kəmˈpjuːtə/",
-                    rule: "Trisyllabic word with primary stress on the second syllable /pjuː/ and schwa /ə/ in first and final syllables."
-                },
-                {
-                    type: 'transcription', sub: 'polysyllabic',
-                    prompt: "Transcribe the polysyllabic word 'university' in RP:",
-                    answer: "/ˌjuːnɪˈvɜːsɪti/",
-                    rule: "Polysyllabic word with secondary stress on /juː/ and primary stress on the fourth syllable /ˈvɜː/."
-                },
-                {
-                    type: 'transcription', sub: 'monosyllabic',
-                    prompt: "Transcribe the monosyllabic word 'jump' in RP:",
-                    answer: "/dʒʌmp/",
-                    rule: "Affricate /dʒ/, vowel /ʌ/, nasal /m/, and bilabial stop /p/ forming a complex coda."
-                },
+                // SECTION E: Targeted Essay Questions (2 Qs)
+                setQs.push(
+                    { type: 'essay', prompt: `Set ${setNum+1} - Q26: Provide a comprehensive classification of all English consonant sounds using three-label descriptors (Voicing, Place of Articulation, and Manner of Articulation) along with clear word examples.`, rubric: "Rubric: Must cover Voicing (voiced/voiceless), Place (bilabial through glottal), Manner (plosive, fricative, affricate, nasal, approximant, lateral), and provide concrete word examples for each category." },
+                    { type: 'essay', prompt: `Set ${setNum+1} - Q27: Classify and detail all English vowel sounds (monophthongs and diphthongs), illustrating their structural positions with backness/height parameters and concrete word examples.`, rubric: "Rubric: Detailed inventory of monophthongs (front, central, back across close to open) and diphthongs (closing and centring), height/backness parameters, and word examples." }
+                );
 
-                // Reverse Transcriptions (5 Qs)
-                {
-                    type: 'reverse', sub: 'monosyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /pɛn/",
-                    options: ["pain", "pen", "pin", "pan"],
-                    answer: "pen",
-                    rule: "/ɛ/ or /e/ represents the open-mid front unrounded vowel in 'pen'."
-                },
-                {
-                    type: 'reverse', sub: 'disyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /ˈtɔːkər/",
-                    options: ["talker", "teacher", "taker", "tracker"],
-                    answer: "talker",
-                    rule: "Disyllabic word with long open-mid back vowel /ɔː/ and rhotic/schwa termination."
-                },
-                {
-                    type: 'reverse', sub: 'trisyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /ˈfæktərɪ/",
-                    options: ["factory", "actor", "active", "action"],
-                    answer: "factory",
-                    rule: "Trisyllabic structure with stress on the first syllable."
-                },
-                {
-                    type: 'reverse', sub: 'polysyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /ɪnˈvɛstɪɡeɪt/",
-                    options: ["investigate", "investment", "investigator", "invest"],
-                    answer: "investigate",
-                    rule: "Polysyllabic verb with primary stress on the second syllable and closing diphthong /eɪ/."
-                },
-                {
-                    type: 'reverse', sub: 'monosyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /bɔɪ/",
-                    options: ["boy", "buoy", "bow", "bay"],
-                    answer: "boy",
-                    rule: "Diphthong /ɔɪ/ ending in close front unrounded glide."
-                },
+                questionBank.push(setQs);
+            }
+        }
 
-                // Paragraph Data Analysis (5 Qs)
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Velarization of Lateral Approximant /l/ in English.\nData: 'clear' [klɪə̯] (light l) vs 'feel' [fiːɫ] (dark l / velarized lateral).\nQuestion: What phonological environment conditions the occurrence of dark l [ɫ] in English?",
-                    answer: "syllable coda",
-                    rule: "Rule: Lateral approximant /l/ is velarized (dark l) when it occurs in the syllable coda or word-finally, whereas light /l/ occurs in onsets."
-                },
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Palatalization before Glides in Connected Speech.\nData: 'did you' pronounced as [dɪdʒu].\nQuestion: What phonological process merges an alveolar stop /d/ with the palatal glide /j/ into an affricate [dʒ]?",
-                    answer: "palatalization",
-                    rule: "Rule: Alveolar stops /t/ and /d/ assimilate to the palatal place of articulation of following /j/, resulting in affricates [tʃ] and [dʒ]."
-                },
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Aspirated Stop Distribution.\nData: 'pot' [pʰɒt] vs 'spot' [spɒt].\nQuestion: Why is the stop in 'spot' unaspirated while the stop in 'pot' is aspirated?",
-                    answer: "initial position",
-                    rule: "Rule: Aspiration is restricted to word-initial or stressed syllable-initial voiceless stops when not preceded by /s/."
-                },
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Schwa Deletion in Fast Speech.\nData: 'family' pronounced as [fæmli] instead of [fæməli].\nQuestion: What term describes the loss of an unstressed interior vowel in polysyllabic words?",
-                    answer: "syncope",
-                    rule: "Rule: Syncope is the deletion of an unstressed vowel from the interior of a word during casual or rapid speech."
-                },
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Nasal Assimilation across Morpheme Boundaries.\nData: 'in- possible' -> [ɪmpɒsɪbl] vs 'in- convenient' -> [ɪŋkənviːniənt].\nQuestion: What phonetic feature does the nasal prefix assimilate in both cases?",
-                    answer: "place of articulation",
-                    rule: "Rule: Nasal consonants assimilate to the place of articulation of a following obstruent (bilabial before [p], velar before [k])."
-                },
-
-                // Standard Structural Matrix MCQs (13 Qs)
-                {
-                    type: 'mcq', prompt: "What term describes the smallest meaningful unit in the grammar of a language?",
-                    options: ["Morpheme", "Phoneme", "Allophone", "Grapheme"],
-                    answer: "Morpheme",
-                    rule: "A morpheme is the minimal linguistic unit carrying semantic meaning or grammatical function."
-                },
-                {
-                    type: 'mcq', prompt: "Which of the following is a voiced alveolar plosive?",
-                    options: ["/d/", "/t/", "/s/", "/n/"],
-                    answer: "/d/",
-                    rule: "/d/ involves tongue tip contact with the alveolar ridge, oral closure, and vocal cord vibration."
-                },
-                {
-                    type: 'mcq', prompt: "What is metathesis in phonology?",
-                    options: ["The transposition of two sounds in a word (e.g., 'ask' to 'aks')", "The deletion of a vowel", "The nasalization of a stop", "The shifting of stress to the ultimate syllable"],
-                    answer: "The transposition of two sounds in a word (e.g., 'ask' to 'aks')",
-                    rule: "Metathesis reorders adjacent or non-adjacent segments, often historically or in dialectal speech for ease of articulation."
-                },
-                {
-                    type: 'mcq', prompt: "Which vowel sound is represented by the IPA symbol /uː/",
-                    options: ["Close back rounded vowel", "Open front unrounded vowel", "Mid central vowel", "Close front unrounded vowel"],
-                    answer: "Close back rounded vowel",
-                    rule: "/uː/ is produced with the tongue high and back in the mouth with rounded lips."
-                },
-                {
-                    type: 'mcq', prompt: "What does distinctive feature theory propose?",
-                    options: ["Phonemes are bundles of binary articulatory and acoustic features", "Words are stored as unanalyzed acoustic wholes", "Syllables have no internal structure", "Vowels have no distinctive features"],
-                    answer: "Phonemes are bundles of binary articulatory and acoustic features",
-                    rule: "Distinctive features (e.g., [+/- voice], [+/- consonantal]) analyze phonological contrasts at a granular sub-segmental level."
-                },
-                {
-                    type: 'mcq', prompt: "Which English consonant is a glottal fricative?",
-                    options: ["/h/", "/ʔ/", "/w/", "/j/"],
-                    answer: "/h/",
-                    rule: "/h/ is produced with friction generated at the glottis without a specific supraglottal constriction."
-                },
-                {
-                    type: 'mcq', prompt: "What is a 'glottal stop' [ʔ]?",
-                    options: ["A sound produced by complete closure and sudden opening of the vocal folds", "A nasalized vowel", "A voiced fricative", "A retroflex lateral"],
-                    answer: "A sound produced by complete closure and sudden opening of the vocal folds",
-                    rule: "The glottal stop occurs when vocal folds snap shut and release air abruptly."
-                },
-                {
-                    type: 'mcq', prompt: "Which of the following represents a minimal pair based on vowel length/quality?",
-                    options: ["beat / bit", "cat / bat", "sip / zip", "pin / bin"],
-                    answer: "beat / bit",
-                    rule: "/iː/ vs /ɪ/ creates a minimal pair distinguishing tense and lax vowels in English."
-                },
-                {
-                    type: 'mcq', prompt: "What is the primary acoustic property associated with vowel height?",
-                    options: ["F1 (First Formant frequency)", "F2 (Second Formant frequency)", "Fundamental frequency (F0)", "Amplitude envelope"],
-                    answer: "F1 (First Formant frequency)",
-                    rule: "Inverse relationship: high vowels have low F1 frequencies; low vowels have high F1 frequencies."
-                },
-                {
-                    type: 'mcq', prompt: "What acoustic property corresponds primarily to vowel backness?",
-                    options: ["F2 (Second Formant frequency)", "F1 (First Formant frequency)", "Duration", "Voice Onset Time"],
-                    answer: "F2 (Second Formant frequency)",
-                    rule: "Front vowels have high F2 frequencies; back vowels have low F2 frequencies due to oral cavity resonance."
-                },
-                {
-                    type: 'mcq', prompt: "In phonological analysis, what is free variation?",
-                    options: ["Two sounds occurring in the same environment without changing word meaning", "Sounds that change word meaning", "Sounds restricted to word-initial positions", "Mandatory elision"],
-                    answer: "Two sounds occurring in the same environment without changing word meaning",
-                    rule: "Free variation occurs when speakers substitute one allophone for another freely."
-                },
-
-                // Targeted Essay Question 1 (Placed in Set 3)
-                {
-                    type: 'essay',
-                    prompt: "Targeted Essay Question 1: Provide a comprehensive classification of all English consonant sounds using three-label descriptors (Voicing, Place of Articulation, and Manner of Articulation). Provide clear word examples for each sound segment.",
-                    rubric: "Rubric check: Must include Voicing (voiced/voiceless), Place (bilabial, labiodental, dental, alveolar, post-alveolar, palatal, velar, glottal), Manner (plosive, fricative, affricate, nasal, approximant, lateral), and correct word examples."
-                },
-                {
-                    type: 'essay',
-                    prompt: "Targeted Essay Question 1 (Part 2 / Data Analysis): Analyze the phonological environment of English plural suffix allophones ([-s], [-z], [-ɪz]). Explain the morphophonological conditioning rule based on preceding segment voicing and sibilant status.",
-                    rubric: "Rubric check: Explanation of [-s] after voiceless non-sibilants, [-z] after voiced non-sibilants, and [-ɪz] after sibilants (/s, z, ʃ, ʒ, tʃ, dʒ/). Provide examples ('cats', 'dogs', 'buses')."
-                }
-            ],
-
-            // ================= SET 4 (30 Questions) =================
-            [
-                // Transcriptions (5 Qs)
-                {
-                    type: 'transcription', sub: 'monosyllabic',
-                    prompt: "Transcribe the monosyllabic word 'thought' in RP:",
-                    answer: "/θɔːt/",
-                    rule: "Voiceless dental fricative /θ/, long open-mid back vowel /ɔː/, and voiceless alveolar plosive /t/."
-                },
-                {
-                    type: 'transcription', sub: 'disyllabic',
-                    prompt: "Transcribe the disyllabic word 'teacher' in RP:",
-                    answer: "/ˈtiːtʃə/",
-                    rule: "Disyllabic word with primary stress on the first syllable containing tense vowel /iː/ and post-alveolar affricate /tʃ/."
-                },
-                {
-                    type: 'transcription', sub: 'trisyllabic',
-                    prompt: "Transcribe the trisyllabic word 'argument' in RP:",
-                    answer: "/ˈɑːɡjumənt/",
-                    rule: "Trisyllabic structure. Primary stress on first syllable. Contains long vowel /ɑː/, glide /j/, and nasal coda /nt/."
-                },
-                {
-                    type: 'transcription', sub: 'polysyllabic',
-                    prompt: "Transcribe the polysyllabic word 'examination' in RP:",
-                    answer: "/ɪɡˌzæmɪˈneɪʃn/",
-                    rule: "Polysyllabic word with secondary stress on /zæ/ and primary stress on the fourth syllable /ˈneɪ/."
-                },
-                {
-                    type: 'transcription', sub: 'monosyllabic',
-                    prompt: "Transcribe the monosyllabic word 'voice' in RP:",
-                    answer: "/vɔɪs/",
-                    rule: "Voiced labiodental fricative /v/, diphthong /ɔɪ/, and voiceless alveolar fricative /s/."
-                },
-
-                // Reverse Transcriptions (5 Qs)
-                {
-                    type: 'reverse', sub: 'monosyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /muːn/",
-                    options: ["moon", "moan", "man", "mean"],
-                    answer: "moon",
-                    rule: "Close back rounded vowel /uː/ with nasal coda /n/."
-                },
-                {
-                    type: 'reverse', sub: 'disyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /ˈpɪktʃər/",
-                    options: ["picture", "pitcher", "pastor", "painter"],
-                    answer: "picture",
-                    rule: "Disyllabic word containing affricate /tʃ/ and rhotic schwa ending."
-                },
-                {
-                    type: 'reverse', sub: 'trisyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /ˈhɪstərɪ/",
-                    options: ["history", "hysteria", "histery", "heater"],
-                    answer: "history",
-                    rule: "Trisyllabic word with primary stress on the initial syllable."
-                },
-                {
-                    type: 'reverse', sub: 'polysyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /ˌɜːbənɪˈzeɪʃn/",
-                    options: ["urbanization", "urban", "organization", "urbanize"],
-                    answer: "urbanization",
-                    rule: "Polysyllabic noun with multiple stress levels and closing diphthong /eɪ/."
-                },
-                {
-                    type: 'reverse', sub: 'monosyllabic',
-                    prompt: "Select the correct English spelling for the phonetic transcription: /raɪt/",
-                    options: ["right", "write", "rate", "root"],
-                    answer: "right",
-                    rule: "Diphthong /aɪ/ in 'right'."
-                },
-
-                // Paragraph Data Analysis (5 Qs)
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Syllable Weight and Stress Assignment in English.\nData: 'agenda' [əˈdʒendə] (penult closed or open with stress) vs 'cinema' [ˈsɪnəmə] (ante-penult stress).\nQuestion: According to English stress rules, why does 'agenda' receive stress on the penultimate syllable while 'cinema' stresses the antepenult?",
-                    answer: "heavy penult",
-                    rule: "Rule: English stress is weight-sensitive. If the penultimate syllable has a branching rhyme (heavy), it attracts primary stress; otherwise stress moves to the antepenult."
-                },
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Devoicing of Approximants after Voiceless Stops.\nData: 'play' [pleɪ̥] or 'try' [traɪ̥].\nQuestion: What phonological process causes sonorants like /l/ and /r/ to become voiceless [̥] when following a voiceless aspirated stop in an onset cluster?",
-                    answer: "devoicing",
-                    rule: "Rule: Approximants in initial clusters are partially devoiced due to the overlapping glottal opening gesture of the preceding voiceless stop."
-                },
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Epenthesis in Nasal-Stop Clusters.\nData: 'strength' pronounced as [strɛŋkθ] (with inserted [k]).\nQuestion: What phonological phenomenon inserts a homorganic stop between a nasal and a voiceless fricative?",
-                    answer: "epenthesis",
-                    rule: "Rule: A transitional stop is epenthetized because the oral closure gesture for the nasal and the fricative require staggered velic and coronal adjustments."
-                },
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Vowel Lengthening before Voiced Codas.\nData: Vowel in 'badge' [bæːdʒ] is longer than in 'batch' [bætʃ].\nQuestion: What phonological rule explains the phonetic lengthening of vowel nuclei preceding voiced obstruents in English codas?",
-                    answer: "pre-fortis lengthening",
-                    rule: "Rule: English vowel nuclei are phonetically longer before voiced obstruents (lenis) compared to voiceless obstruents (fortis)."
-                },
-                {
-                    type: 'paragraph',
-                    prompt: "Context: Weak Vowel Neutralization.\nData: 'happy' ending in [i] vs [ɪ] vs [iː] across dialects.\nQuestion: What term describes the neutralization of contrast between high front vowels in unstressed word-final positions?",
-                    answer: "happicing",
-                    rule: "Rule: Unstressed word-final vowels in words like 'happy' occupy an intermediate quality between lax /ɪ/ and tense /iː/, termed the 'happy' vowel."
-                },
-
-                // Standard Structural Matrix MCQs (13 Qs)
-                {
-                    type: 'mcq', prompt: "Which phonological framework analyzes phonemes as matrices of distinctive features rather than indivisible segments?",
-                    options: ["Generative Phonology (SPE model)", "Classical Structuralism", "Auditory Phonetics", "Articulatory Phonetics"],
-                    answer: "Generative Phonology (SPE model)",
-                    rule: "The Sound Pattern of English (SPE) model utilizes binary distinctive features to formulate phonological rules."
-                },
-                {
-                    type: 'mcq', prompt: "What is compensatory lengthening?",
-                    options: ["A vowel becoming longer when a following consonant is deleted or voiced", "Syllables shortening in rapid speech", "Pitch rising at phrase boundaries", "Stress shifting leftward"],
-                    answer: "A vowel becoming longer when a following consonant is deleted or voiced",
-                    rule: "Compensatory lengthening preserves overall timing or mora count when a segment is lost."
-                },
-                {
-                    type: 'mcq', prompt: "Which English consonant is classified as a post-alveolar approximant in RP?",
-                    options: ["/r/", "/l/", "/w/", "/j/"],
-                    answer: "/r/",
-                    rule: "RP /r/ is typically a frictionless postalveolar approximant where the tongue approaches the post-alveolar region without turbulent friction."
-                },
-                {
-                    type: 'mcq', prompt: "What term describes the natural classes of sounds that share a common subset of features (e.g., obstruents, sonorants)?",
-                    options: ["Natural Class", "Minimal Pair", "Allophone Set", "Syllable Cluster"],
-                    answer: "Natural Class",
-                    rule: "A natural class is a group of sounds in a language that share one or more phonetic features and pattern together in phonological rules."
-                },
-                {
-                    type: 'mcq', prompt: "What is Voice Onset Time (VOT)?",
-                    options: ["The time interval between the release of a plosive consonant and the onset of vocal fold vibration", "The duration of a vowel nucleus", "The onset of syllable stress", "The time taken to articulate a diphthong"],
-                    answer: "The time interval between the release of a plosive consonant and the onset of vocal fold vibration",
-                    rule: "VOT distinguishes aspirated voiceless stops (long positive VOT) from unaspirated or voiced stops (short or negative VOT)."
-                },
-                {
-                    type: 'mcq', prompt: "Which of the following describes neutralization?",
-                    options: ["A phonemic contrast disappearing in a specific phonetic environment", "Two sounds fusing into a diphthong", "Stress falling on alternate syllables", "Vowel reduction to schwa in unstressed positions"],
-                    answer: "A phonemic contrast disappearing in a specific phonetic environment",
-                    rule: "Neutralization occurs when a distinction between phonemes is suspended in certain contexts."
-                },
-                {
-                    type: 'mcq', prompt: "What is sonority sequencing principle (SSP)?",
-                    options: ["Syllables rise in sonority toward the nucleus and fall in sonority toward the margins", "All sounds in a syllable must have identical sonority", "Consonants must precede vowels in codas", "Glides cannot form onsets"],
-                    answer: "Syllables rise in sonority toward the nucleus and fall in sonority toward the margins",
-                    rule: "The SSP dictates the universal preference for syllable structure organization based on acoustic sonority hierarchy."
-                },
-                {
-                    type: 'mcq', prompt: "Which phonetic parameter is NOT used to classify English vowels?",
-                    options: ["Voicing (all vowels are voiced)", "Tongue height (high/mid/low)", "Tongue backness (front/central/back)", "Lip rounding (rounded/unrounded)"],
-                    answer: "Voicing (all vowels are voiced)",
-                    rule: "Because nearly all standard vowels are spontaneously voiced sonorants, voicing is not a distinctive parameter for contrasting vowels."
-                },
-                {
-                    type: 'mcq', prompt: "What is an underlying representation (UR) in phonology?",
-                    options: ["The abstract mental phonemic form of a morpheme before phonological rules apply", "The physical acoustic waveform", "The orthographic spelling", "The surface phonetic transcription"],
-                    answer: "The abstract mental phonemic form of a morpheme before phonological rules apply",
-                    rule: "UR represents the speaker's underlying knowledge of sound forms, distinct from surface phonetic forms (SR)."
-                },
-                {
-                    type: 'mcq', prompt: "What is a surface representation (SR) in phonology?",
-                    options: ["The actual phonetic output produced in speech after rules have applied", "The morphological root", "The lexical entry in a dictionary", "The orthographic script"],
-                    answer: "The actual phonetic output produced in speech after rules have applied",
-                    rule: "Surface representation is the realized acoustic/articulatory output heard in utterances."
-                },
-                {
-                    type: 'mcq', prompt: "Which phonological rule type changes a feature value of a segment due to surrounding sounds?",
-                    options: ["Feature-changing rule", "Insertion rule", "Deletion rule", "Metathesis rule"],
-                    answer: "Feature-changing rule",
-                    rule: "Feature-changing rules alter existing feature matrices (e.g., nasal place assimilation where /n/ becomes [m] before bilabials)."
-                },
-
-                // Targeted Essay Question 2 (Placed in Set 4)
-                {
-                    type: 'essay',
-                    prompt: "Targeted Essay Question 2: Classify and detail all English vowel sounds (including monophthongs and diphthongs). Illustrate your description with clear diagrams of vowel height/backness parameters and concrete word examples for each.",
-                    rubric: "Rubric check: Detailed inventory of monophthongs (front, central, back across close to open) and diphthongs (closing and centring), height/backness parameters, and word examples."
-                },
-                {
-                    type: 'essay',
-                    prompt: "Targeted Essay Question 2 (Part 2 / Synthesis): Discuss the principles of English syllable stress assignment. Explain how morphological structure (affixes like -ic vs -ity) and syllable weight (heavy vs light syllables) influence primary and secondary stress placement in polysyllabic words.",
-                    rubric: "Rubric check: Discussion of weight-sensitive stress rules, heavy syllables (closed or long vowel), stress-shifting suffixes (-ic places stress on preceding syllable; -ity attracts stress to antepenult), and concrete examples."
-                }
-            ]
-        ];
+        buildQuestionBank();
 
         // --- Navigation & View Switching ---
         function switchView(view) {
@@ -990,13 +304,13 @@
             const viewInstructor = document.getElementById('view-instructor');
 
             if (view === 'student') {
-                studentBtn.className = "px-4 py-1.5 rounded-lg text-sm font-medium transition-all bg-indigo-600 text-white shadow";
-                instructorBtn.className = "px-4 py-1.5 rounded-lg text-sm font-medium transition-all text-indigo-300 hover:text-white";
+                studentBtn.className = "px-5 py-2 rounded-xl text-base font-semibold transition-all bg-indigo-600 text-white shadow";
+                instructorBtn.className = "px-5 py-2 rounded-xl text-base font-semibold transition-all text-slate-300 hover:text-white";
                 viewStudent.classList.remove('hidden');
                 viewInstructor.classList.add('hidden');
             } else {
-                instructorBtn.className = "px-4 py-1.5 rounded-lg text-sm font-medium transition-all bg-slate-800 text-white shadow";
-                studentBtn.className = "px-4 py-1.5 rounded-lg text-sm font-medium transition-all text-indigo-300 hover:text-white";
+                instructorBtn.className = "px-5 py-2 rounded-xl text-base font-semibold transition-all bg-slate-800 text-white shadow";
+                studentBtn.className = "px-5 py-2 rounded-xl text-base font-semibold transition-all text-slate-300 hover:text-white";
                 viewInstructor.classList.remove('hidden');
                 viewStudent.classList.add('hidden');
             }
@@ -1037,27 +351,27 @@
                 const isUnlocked = setCompletionStatus[i] || i === 0 || setCompletionStatus[i-1];
                 
                 const card = document.createElement('div');
-                card.className = `p-6 rounded-2xl border transition-all flex flex-col justify-between ${
+                card.className = `p-8 rounded-3xl border transition-all flex flex-col justify-between ${
                     isUnlocked 
-                        ? 'bg-white border-slate-200 shadow-sm hover:border-indigo-300' 
-                        : 'bg-slate-50 border-slate-100 opacity-60 cursor-not-allowed'
+                        ? 'bg-white border-slate-300 shadow-sm hover:border-indigo-400' 
+                        : 'bg-slate-50 border-slate-200 opacity-60 cursor-not-allowed'
                 }`;
 
                 card.innerHTML = `
                     <div>
-                        <div class="flex items-center justify-between mb-3">
-                            <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md ${
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-lg ${
                                 isUnlocked ? 'bg-indigo-50 text-indigo-600' : 'bg-slate-200 text-slate-500'
                             }">Set ${i + 1}</span>
-                            ${isUnlocked ? '<span class="text-xs font-medium text-emerald-600">Unlocked</span>' : '<span class="text-xs font-medium text-slate-400">Locked</span>'}
+                            ${isUnlocked ? '<span class="text-sm font-semibold text-emerald-600">Unlocked</span>' : '<span class="text-sm font-semibold text-slate-400">Locked</span>'}
                         </div>
-                        <h4 class="font-bold text-slate-800 text-lg mb-1">Matrix Set ${i + 1}</h4>
-                        <p class="text-xs text-slate-500">30 Questions (Transcription, Reverse, Paragraph Analysis, MCQs & Essays)</p>
+                        <h4 class="font-bold text-[#111111] text-xl mb-2">Master Matrix Set ${i + 1}</h4>
+                        <p class="text-base text-slate-600">27 Questions across Sections A to E with motivational rewards.</p>
                     </div>
-                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
-                        <span class="text-xs font-mono text-slate-600">Score: ${setScores[i]} / 30</span>
+                    <div class="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-base font-mono font-semibold text-slate-700">Score: ${setScores[i]} / 27</span>
                         <button onclick="${isUnlocked ? `startPractice(${i})` : ''}" 
-                            class="px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+                            class="px-5 py-2.5 rounded-xl text-base font-semibold transition-all ${
                                 isUnlocked 
                                     ? 'bg-indigo-600 hover:bg-indigo-700 text-white shadow' 
                                     : 'bg-slate-200 text-slate-400 cursor-not-allowed'
@@ -1073,7 +387,7 @@
         // --- Practice Session Logic (Paginated Pairs) ---
         function startPractice(setIdx) {
             activeSetIndex = setIdx;
-            currentPairIndex = 0;
+            currentGlobalIndex = 0;
             document.getElementById('panel-dashboard').classList.add('hidden');
             document.getElementById('panel-practice').classList.remove('hidden');
             document.getElementById('practice-title').innerText = `Set ${setIdx + 1} Practice Matrix`;
@@ -1086,7 +400,7 @@
             renderSetsGrid();
         }
 
-        // --- Insert IPA Symbol into active input/textarea at cursor position ---
+        // --- Insert IPA Symbol ---
         function insertIpaSymbol(qIdx, symbol) {
             const inputEl = document.getElementById(`input-${qIdx}`);
             if (!inputEl) return;
@@ -1105,54 +419,71 @@
             container.innerHTML = '';
 
             const questions = questionBank[activeSetIndex];
-            const startIndex = currentPairIndex * 2;
+            const startIndex = currentGlobalIndex;
             const pairQuestions = questions.slice(startIndex, startIndex + 2);
 
-            document.getElementById('current-pair-num').innerText = currentPairIndex + 1;
-            document.getElementById('prev-pair-btn').disabled = currentPairIndex === 0;
-            
             const totalPairs = Math.ceil(questions.length / 2);
+            const currentPairNum = Math.floor(startIndex / 2) + 1;
+
+            document.getElementById('current-pair-num').innerText = currentPairNum;
+            document.getElementById('total-pair-num').innerText = totalPairs;
+            document.getElementById('prev-pair-btn').disabled = currentGlobalIndex === 0;
+
+            const meta = getSectionMeta(startIndex);
+            document.getElementById('section-tracker-label').innerText = `${meta.name} (Pair ${currentPairNum} of ${totalPairs})`;
+
+            // Check if section boundary was just completed / reached
+            const sectionBanner = document.getElementById('section-banner');
+            if (startIndex > 0 && startIndex % 5 === 0) {
+                sectionBanner.classList.remove('hidden');
+                document.getElementById('section-reward-emoji').innerText = meta.rewardEmoji;
+                document.getElementById('section-reward-title').innerText = meta.rewardTitle;
+                document.getElementById('section-reward-desc').innerText = meta.rewardDesc;
+            } else {
+                sectionBanner.classList.add('hidden');
+            }
+
             const nextBtn = document.getElementById('next-pair-btn');
-            
-            if (currentPairIndex === totalPairs - 1) {
+            if (startIndex + 2 >= questions.length) {
                 nextBtn.innerText = "Submit Set";
-                nextBtn.className = "px-5 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700 transition-all shadow-md shadow-emerald-100";
+                nextBtn.className = "px-6 py-3 rounded-2xl bg-emerald-600 text-white text-base font-semibold hover:bg-emerald-700 transition-all shadow-md shadow-emerald-100";
             } else {
                 nextBtn.innerText = "Next Pair";
-                nextBtn.className = "px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100";
+                nextBtn.className = "px-6 py-3 rounded-2xl bg-indigo-600 text-white text-base font-semibold hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100";
             }
 
             pairQuestions.forEach((q, idx) => {
                 const qGlobalIdx = startIndex + idx;
                 const card = document.createElement('div');
-                card.className = "bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-4";
+                card.className = "bg-white rounded-3xl p-8 shadow-sm border border-slate-200 space-y-6";
 
                 const savedAns = userAnswers[`${activeSetIndex}-${qGlobalIdx}`] || '';
                 const isSubmitted = submittedQuestions[`${activeSetIndex}-${qGlobalIdx}`] || false;
 
                 let contentHtml = `
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-md">Question ${qGlobalIdx + 1} of 30</span>
-                        <span class="text-xs font-semibold uppercase text-slate-400">${q.type.toUpperCase()}</span>
+                        <span class="text-sm font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3.5 py-1.5 rounded-xl">Question ${qGlobalIdx + 1} of 27</span>
+                        <span class="text-sm font-semibold uppercase text-slate-500">${q.type.toUpperCase()}</span>
                     </div>
-                    <p class="font-medium text-slate-800 text-base whitespace-pre-line">${q.prompt}</p>
+                    <p class="font-bold text-[#111111] text-2xl whitespace-pre-line leading-snug">${q.prompt}</p>
                 `;
 
-                if (q.type === 'transcription' || q.type === 'paragraph' || q.type === 'essay') {
+                if (q.type === 'transcription' || q.type === 'paragraph' || q.type === 'short' || q.type === 'essay') {
                     const isEssay = q.type === 'essay';
-                    
-                    // Build IPA Virtual Keyboard Panel HTML
+                    const isShort = q.type === 'short';
+                    const requiresIpa = q.type === 'transcription' || q.type === 'paragraph';
+
                     let ipaKeyboardHtml = '';
-                    if (!isSubmitted) {
+                    if (requiresIpa && !isSubmitted) {
                         ipaKeyboardHtml = `
-                            <div class="bg-slate-50 border border-slate-200 p-2 rounded-xl space-y-1.5">
-                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">IPA Virtual Keyboard (Click symbol to insert at cursor)</span>
-                                <div class="flex flex-wrap gap-1">
+                            <div class="bg-slate-50 border border-slate-200 p-3 rounded-2xl space-y-2">
+                                <span class="text-xs font-bold text-slate-600 uppercase tracking-wider block">IPA Virtual Keyboard (Click symbol to insert)</span>
+                                <div class="flex flex-wrap gap-1.5">
                         `;
                         ipaSymbols.forEach(sym => {
                             ipaKeyboardHtml += `
                                 <button type="button" onclick="insertIpaSymbol(${qGlobalIdx}, '${sym}')" 
-                                    class="w-8 h-8 bg-white hover:bg-indigo-50 border border-slate-200 hover:border-indigo-300 rounded-lg text-xs font-mono font-bold text-slate-700 shadow-sm transition-all flex items-center justify-center">
+                                    class="w-9 h-9 bg-white hover:bg-indigo-50 border border-slate-200 hover:border-indigo-300 rounded-xl text-sm font-mono font-bold text-slate-800 shadow-sm transition-all flex items-center justify-center">
                                     ${sym}
                                 </button>
                             `;
@@ -1160,252 +491,54 @@
                         ipaKeyboardHtml += `</div></div>`;
                     }
 
+                    const submitButtonLabel = isShort ? "Reveal Ideal Model Answer & Linguistics Rule" : "Submit Answer";
+
                     contentHtml += `
-                        <div class="space-y-3">
-                            ${isEssay ? `
-                                <textarea id="input-${qGlobalIdx}" rows="5" ${isSubmitted ? 'disabled' : ''} placeholder="Compose your comprehensive response here..."
-                                    class="w-full p-4 rounded-xl border border-slate-200 text-sm font-mono focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">${savedAns}</textarea>
+                        <div class="space-y-4">
+                            ${isEssay || isShort ? `
+                                <textarea id="input-${qGlobalIdx}" rows="${isEssay ? 6 : 3}" ${isSubmitted ? 'disabled' : ''} placeholder="${isShort ? 'Type your conceptual answer here...' : 'Compose your comprehensive response here...'}"
+                                    class="w-full p-5 rounded-2xl border border-slate-300 text-lg font-mono focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">${savedAns}</textarea>
                             ` : `
-                                <div class="flex items-center space-x-3">
-                                    <input type="text" id="input-${qGlobalIdx}" value="${savedAns}" ${isSubmitted ? 'disabled' : ''} placeholder="${q.type === 'transcription' ? 'Type IPA transcription e.g. /kæt/' : 'Type your linguistic analysis answer...'}" 
-                                        class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 font-mono text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
+                                <div class="flex items-center space-x-4">
+                                    <input type="text" id="input-${qGlobalIdx}" value="${savedAns}" ${isSubmitted ? 'disabled' : ''} placeholder="${q.type === 'transcription' ? 'Type IPA transcription e.g. /kæt/' : 'Type your linguistic analysis...'}" 
+                                        class="flex-1 px-5 py-3.5 rounded-2xl border border-slate-300 font-mono text-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
                                     <button onclick="submitTextAnswer(${qGlobalIdx})" ${isSubmitted ? 'disabled' : ''}
-                                        class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition-all shadow-sm ${isSubmitted ? 'opacity-50 cursor-not-allowed' : ''}">
-                                        ${isSubmitted ? 'Submitted' : 'Submit Answer'}
+                                        class="px-6 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-base font-semibold transition-all shadow-sm ${isSubmitted ? 'opacity-50 cursor-not-allowed' : ''}">
+                                        ${isSubmitted ? 'Submitted' : submitButtonLabel}
                                     </button>
                                 </div>
                             `}
 
                             ${ipaKeyboardHtml}
 
-                            ${isEssay ? `
+                            ${isEssay || isShort ? `
                                 <button onclick="submitTextAnswer(${qGlobalIdx})" ${isSubmitted ? 'disabled' : ''}
-                                    class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold transition-all shadow-sm ${isSubmitted ? 'opacity-50 cursor-not-allowed' : ''}">
-                                    ${isSubmitted ? 'Submitted' : 'Submit Answer'}
+                                    class="px-6 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-base font-semibold transition-all shadow-sm ${isSubmitted ? 'opacity-50 cursor-not-allowed' : ''}">
+                                    ${isSubmitted ? 'Submitted' : submitButtonLabel}
                                 </button>
                             ` : ''}
 
-                            <div id="feedback-${qGlobalIdx}" class="${isSubmitted ? 'block' : 'hidden'} p-4 rounded-xl text-xs font-semibold ${
-                                isEssay 
-                                    ? 'bg-indigo-50 text-indigo-900 border border-indigo-200' 
-                                    : (isAnswerCorrect(qGlobalIdx, q) ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200')
+                            <div id="feedback-${qGlobalIdx}" class="${isSubmitted ? 'block' : 'hidden'} p-5 rounded-2xl text-base font-semibold ${
+                                isEssay || isShort
+                                    ? 'bg-indigo-50 text-indigo-950 border border-indigo-200' 
+                                    : (isAnswerCorrect(qGlobalIdx, q) ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-rose-50 text-rose-800 border border-rose-200')
                             }">
-                                ${isEssay ? 'Essay response recorded successfully.' : (isAnswerCorrect(qGlobalIdx, q) ? 'Correct Answer!' : 'Incorrect. Review explanation below.')}
+                                ${isEssay || isShort ? 'Response recorded successfully. Review model breakdown below.' : (isAnswerCorrect(qGlobalIdx, q) ? 'Correct Answer! ✨' : 'Incorrect. Review explanation below.')}
                             </div>
 
-                            <div id="rule-${qGlobalIdx}" class="${isSubmitted ? 'block' : 'hidden'} p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1">
-                                <span class="font-bold text-slate-900 block">${isEssay ? 'Instructor Rubric & Model Breakdown:' : 'The General Linguistic Rule Explained:'}</span>
-                                <p>${isEssay ? q.rubric : q.rule}</p>
-                                ${!isEssay && q.answer ? `<p class="font-mono text-indigo-600 mt-1">Target Model Answer: ${q.answer}</p>` : ''}
+                            <div id="rule-${qGlobalIdx}" class="${isSubmitted ? 'block' : 'hidden'} p-6 rounded-2xl bg-slate-50 border border-slate-300 text-base text-slate-800 space-y-2">
+                                <span class="font-bold text-[#111111] block text-lg">${isEssay ? 'Instructor Rubric & Model Breakdown:' : (isShort ? 'Ideal Model Answer & Linguistics Rule Explained:' : 'The General Linguistic Rule Explained:')}</span>
+                                <p class="leading-relaxed">${isEssay ? q.rubric : q.rule}</p>
+                                ${!isEssay && q.answer ? `<p class="font-mono text-indigo-700 font-semibold mt-2">Target Model Answer: ${q.answer}</p>` : ''}
                             </div>
                         </div>
                     `;
-                } else if (q.type === 'reverse' || q.type === 'mcq') {
-                    contentHtml += `<div class="space-y-2">`;
+                } else if (q.type === 'reverse') {
+                    contentHtml += `<div class="space-y-3">`;
                     q.options.forEach(opt => {
                         const isSelected = savedAns === opt;
                         const isCorrect = opt === q.answer;
-                        let btnClass = "border-slate-200 hover:border-indigo-300 bg-white text-slate-700";
+                        let btnClass = "border-slate-300 hover:border-indigo-400 bg-white text-slate-800";
                         if (isSubmitted) {
-                            if (isCorrect) btnClass = "bg-emerald-50 border-emerald-500 text-emerald-800 font-semibold";
-                            else if (isSelected && !isCorrect) btnClass = "bg-rose-50 border-rose-500 text-rose-800";
-                            else btnClass = "opacity-50 border-slate-200 bg-slate-50";
-                        }
-                        contentHtml += `
-                            <button onclick="selectOption(${qGlobalIdx}, '${opt.replace(/'/g, "\\'")}')" ${isSubmitted ? 'disabled' : ''}
-                                class="w-full p-3 rounded-xl border text-sm text-left transition-all ${btnClass}">
-                                ${opt}
-                            </button>
-                        `;
-                    });
-                    contentHtml += `</div>`;
-
-                    if (isSubmitted) {
-                        contentHtml += `
-                            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1 mt-3">
-                                <span class="font-bold text-slate-900 block">The General Linguistic Rule Explained:</span>
-                                <p>${q.rule}</p>
-                            </div>
-                        `;
-                    }
-                }
-
-                card.innerHTML = contentHtml;
-                container.appendChild(card);
-            });
-
-            updateProgressIndicator();
-        }
-
-        // --- Interaction Handlers ---
-        function submitTextAnswer(qIdx) {
-            const inputEl = document.getElementById(`input-${qIdx}`);
-            const val = inputEl.value.trim();
-
-            if (!val && questionBank[activeSetIndex][qIdx].type !== 'essay') {
-                alert("Please enter an answer before submitting.");
-                return;
-            }
-
-            userAnswers[`${activeSetIndex}-${qIdx}`] = val;
-            submittedQuestions[`${activeSetIndex}-${qIdx}`] = true;
-
-            renderCurrentPair();
-        }
-
-        function selectOption(qIdx, opt) {
-            userAnswers[`${activeSetIndex}-${qIdx}`] = opt;
-            submittedQuestions[`${activeSetIndex}-${qIdx}`] = true;
-            renderCurrentPair();
-        }
-
-        function isAnswerCorrect(qIdx, q) {
-            const userAns = (userAnswers[`${activeSetIndex}-${qIdx}`] || '').toLowerCase().trim();
-            const correctAns = (q.answer || '').toLowerCase().trim();
-            if (q.type === 'paragraph') {
-                return userAns.includes(correctAns) || correctAns.includes(userAns);
-            }
-            return userAns === correctAns;
-        }
-
-        function updateProgressIndicator() {
-            const questions = questionBank[activeSetIndex];
-            let answered = 0;
-            questions.forEach((_, idx) => {
-                if (submittedQuestions[`${activeSetIndex}-${idx}`]) {
-                    answered++;
-                }
-            });
-            document.getElementById('progress-indicator').innerText = `Progress: ${answered} / 30 answered`;
-        }
-
-        function navigatePair(direction) {
-            const totalPairs = Math.ceil(questionBank[activeSetIndex].length / 2);
-            const newIndex = currentPairIndex + direction;
-
-            if (newIndex >= 0 && newIndex < totalPairs) {
-                currentPairIndex = newIndex;
-                renderCurrentPair();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else if (newIndex >= totalPairs) {
-                calculateAndSubmitScore();
-            }
-        }
-
-        // --- Score Calculation & Automatic Background Dispatch ---
-        function calculateAndSubmitScore() {
-            const questions = questionBank[activeSetIndex];
-            let score = 0;
-
-            questions.forEach((q, idx) => {
-                const ans = userAnswers[`${activeSetIndex}-${idx}`];
-                if (ans && submittedQuestions[`${activeSetIndex}-${idx}`]) {
-                    if (q.type === 'transcription' && isAnswerCorrect(idx, q)) score++;
-                    else if (q.type === 'reverse' && ans === q.answer) score++;
-                    else if (q.type === 'paragraph' && isAnswerCorrect(idx, q)) score++;
-                    else if (q.type === 'mcq' && ans === q.answer) score++;
-                    else if (q.type === 'essay' && ans.length > 15) score += 1;
-                }
-            });
-
-            setScores[activeSetIndex] = score;
-            setCompletionStatus[activeSetIndex] = true;
-            if (activeSetIndex < 3) {
-                setCompletionStatus[activeSetIndex + 1] = true;
-            }
-
-            dispatchToBackend(score);
-
-            alert(`Set ${activeSetIndex + 1} Completed Successfully!\nYour Score: ${score} / 30\nData has been automatically synchronized to the instructor matrix.`);
-            exitPractice();
-        }
-
-        function dispatchToBackend(score) {
-            const payload = {
-                rollNumber: currentStudent.roll,
-                name: currentStudent.name,
-                college: currentStudent.college,
-                setNumber: activeSetIndex + 1,
-                score: score,
-                timestamp: new Date().toISOString()
-            };
-
-            saveLocalInstructorRecord(payload);
-
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            }).catch(err => {
-                console.log("Background POST sync dispatched:", err);
-            });
-        }
-
-        // --- Instructor Dashboard & Local Persistence ---
-        function saveLocalInstructorRecord(payload) {
-            let records = JSON.parse(localStorage.getItem('ling_instructor_records_120_ipa') || '[]');
-            const existingIdx = records.findIndex(r => r.rollNumber === payload.rollNumber);
-
-            if (existingIdx >= 0) {
-                records[existingIdx].totalAttempts += 1;
-                if (payload.score > records[existingIdx].bestScore) {
-                    records[existingIdx].bestScore = payload.score;
-                }
-            } else {
-                records.push({
-                    rollNumber: payload.rollNumber,
-                    name: payload.name,
-                    college: payload.college,
-                    totalAttempts: 1,
-                    bestScore: payload.score
-                });
-            }
-            localStorage.setItem('ling_instructor_records_120_ipa', JSON.stringify(records));
-        }
-
-        function handleInstructorLogin(e) {
-            e.preventDefault();
-            const pass = document.getElementById('instructor-password').value;
-            if (pass === 'admin123') {
-                document.getElementById('instructor-auth-panel').classList.add('hidden');
-                document.getElementById('instructor-dashboard-panel').classList.remove('hidden');
-                document.getElementById('endpoint-display').innerText = GOOGLE_SCRIPT_URL;
-                loadInstructorData();
-            } else {
-                alert("Incorrect password. Access denied.");
-            }
-        }
-
-        function loadInstructorData() {
-            const tbody = document.getElementById('instructor-table-body');
-            tbody.innerHTML = '';
-
-            const records = JSON.parse(localStorage.getItem('ling_instructor_records_120_ipa') || '[]');
-
-            const displayRecords = records.length > 0 ? records : [
-                { rollNumber: '1045', name: 'Alice Smith', college: 'University College of Humanities', totalAttempts: 2, bestScore: 29 },
-                { rollNumber: '2089', name: 'Bob Johnson', college: 'Institute of Liberal Arts', totalAttempts: 1, bestScore: 27 },
-                { rollNumber: '3102', name: 'Charlie Davis', college: 'State Polytechnic', totalAttempts: 3, bestScore: 30 }
-            ];
-
-            displayRecords.forEach(rec => {
-                const tr = document.createElement('tr');
-                tr.className = "hover:bg-slate-50 transition-colors";
-                tr.innerHTML = `
-                    <td class="p-4 font-mono font-semibold text-indigo-600">${rec.rollNumber}</td>
-                    <td class="p-4 font-medium text-slate-800">${rec.name}</td>
-                    <td class="p-4 text-slate-600">${rec.college}</td>
-                    <td class="p-4">${rec.totalAttempts}</td>
-                    <td class="p-4"><span class="px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 font-semibold text-xs">${rec.bestScore} / 30</span></td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('nav-module-title').innerText = MODULE_NAME;
-        });
-    </script>
-</body>
-</html>
+                            if (isCorrect) btnClass = "bg-emerald-50 border-emerald-500 text-emerald-900 font-semibold";
+                            else if (isSelected && !isCorrect) btnClas
