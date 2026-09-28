@@ -314,6 +314,7 @@
             const rollInput = document.getElementById('input-roll');
             const collegeInput = document.getElementById('input-college');
 
+
             const name = nameInput.value.trim();
             const roll = rollInput.value.trim();
             const college = collegeInput.value.trim();
@@ -328,6 +329,9 @@
 
             document.getElementById('display-student-name').innerText = name;
             document.getElementById('display-student-roll').innerText = roll;
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('practice-lab-screen').style.display = 'block';
+
             document.getElementById('display-student-college').innerText = college;
 
             // Hide login container card and reveal dashboard/practice layout instantly
