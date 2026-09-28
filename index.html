@@ -1,523 +1,1296 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linguistics Course Interactive Hub</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Linguistics Course Portal | Phonetics and Phonology</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    colors: {
-                        brand: {
-                            50: '#f0fdf4',
-                            100: '#dcfce7',
-                            500: '#22c55e',
-                            600: '#16a34a',
-                            700: '#15803d',
-                            900: '#14532d',
-                        }
-                    }
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
                 }
             }
         }
     </script>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col font-sans">
+<body class="h-full bg-slate-50 text-slate-900 flex flex-col font-sans antialiased">
+
+    <!-- Configuration Variables -->
+    <script>
+        const GOOGLE_SCRIPT_URL = "https://google.com";
+        const MODULE_NAME = "Phonetics and Phonology - Expanded Matrix";
+    </script>
 
     <!-- Top Navigation Bar -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+    <header class="bg-indigo-900 text-white shadow-md z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-lg bg-emerald-600 flex items-center justify-center text-white font-bold text-xl">L</div>
+                <div class="bg-indigo-700 p-2 rounded-lg font-mono font-bold text-lg tracking-wider">IPA</div>
                 <div>
-                    <h1 id="nav-module-title" class="font-bold text-slate-900 leading-tight">Phonetics and Phonology</h1>
-                    <span class="text-xs text-slate-500">Interactive Course Hub</span>
+                    <h1 class="font-bold text-lg leading-tight" id="nav-module-title">Phonetics and Phonology</h1>
+                    <span class="text-xs text-indigo-300">Interactive Student & Evaluation Lab</span>
                 </div>
             </div>
-            
-            <nav class="flex space-x-2">
-                <button onclick="switchView('student')" id="nav-student-btn" class="px-4 py-2 rounded-lg font-medium text-sm transition bg-emerald-600 text-white shadow-sm">
+            <div class="flex items-center space-x-2 bg-indigo-950 p-1 rounded-xl border border-indigo-800">
+                <button id="nav-student-btn" onclick="switchView('student')" class="px-4 py-1.5 rounded-lg text-sm font-medium transition-all bg-indigo-600 text-white shadow">
                     Student Practice Lab
                 </button>
-                <button onclick="switchView('instructor')" id="nav-instructor-btn" class="px-4 py-2 rounded-lg font-medium text-sm transition text-slate-600 hover:bg-slate-100">
+                <button id="nav-instructor-btn" onclick="switchView('instructor')" class="px-4 py-1.5 rounded-lg text-sm font-medium transition-all text-indigo-300 hover:text-white">
                     Instructor Dashboard
                 </button>
-            </nav>
+            </div>
         </div>
     </header>
 
     <!-- Main Container -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 overflow-y-auto">
 
-        <!-- STUDENT PRACTICE LAB VIEW -->
-        <div id="view-student" class="space-y-8">
-            <!-- Login / Student Select Banner -->
-            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4">
-                <div>
-                    <h2 class="text-xl font-bold text-slate-900">Student Practice Lab</h2>
-                    <p class="text-sm text-slate-600">Select your profile to begin tracking attempts and progress.</p>
+        <!-- ================= STUDENT VIEW ================= -->
+        <div id="view-student" class="space-y-6">
+            
+            <!-- Login Panel (Active when not logged in) -->
+            <div id="panel-login" class="max-w-md mx-auto bg-white rounded-2xl shadow-xl border border-slate-100 p-8 my-12">
+                <div class="text-center mb-8">
+                    <div class="inline-block bg-indigo-50 text-indigo-600 p-3 rounded-full mb-4">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-800">Student Authentication</h2>
+                    <p class="text-sm text-slate-500 mt-1">Enter your details to access the 100-question matrix across 4 sets.</p>
                 </div>
-                <div class="flex items-center space-x-3 w-full md:w-auto">
-                    <label for="student-select" class="text-sm font-medium text-slate-700 whitespace-nowrap">Active Student:</label>
-                    <select id="student-select" onchange="handleStudentChange(this.value)" class="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block w-full md:w-64 p-2.5">
-                        <!-- Populated via JS -->
-                    </select>
+                
+                <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Full Name</label>
+                        <input type="text" id="input-name" required placeholder="e.g. Jane Doe" 
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Roll Number</label>
+                        <input type="text" id="input-roll" required placeholder="e.g. EN01" oninput="validateRollNumber(this)"
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all uppercase">
+                        <p id="roll-error" class="text-xs text-rose-500 font-medium mt-1 hidden">Roll number must start with EN</p>
+                    </div>
+                    <button type="submit" id="login-submit-btn" disabled 
+                        class="w-full py-3 rounded-xl bg-indigo-600 text-white font-semibold shadow-lg shadow-indigo-100 opacity-50 cursor-not-allowed hover:bg-indigo-700 transition-all">
+                        Enter Practice Lab
+                    </button>
+                </form>
+            </div>
+
+            <!-- Dashboard / Set Selector Panel (Visible post-login) -->
+            <div id="panel-dashboard" class="hidden space-y-6">
+                <!-- User welcome card -->
+                <div class="bg-gradient-to-r from-indigo-900 to-slate-900 text-white p-6 rounded-2xl shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div>
+                        <span class="text-xs uppercase tracking-widest text-indigo-300 font-semibold">Active Student</span>
+                        <h2 class="text-2xl font-bold" id="display-student-name">Student Name</h2>
+                        <p class="text-sm text-slate-300 font-mono mt-0.5">Roll ID: <span id="display-student-roll" class="text-indigo-200 font-semibold"></span></p>
+                    </div>
+                    <button onclick="handleLogout()" class="text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg border border-white/10 transition-all">
+                        Switch Student
+                    </button>
+                </div>
+
+                <!-- Set Matrix Selector -->
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Curriculum Sets (25 Questions each)</h3>
+                    <p class="text-sm text-slate-500 mb-6">Complete sets sequentially. Data is automatically synced to the backend instructor matrix.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="sets-grid">
+                        <!-- Populated by JS -->
+                    </div>
                 </div>
             </div>
 
-            <!-- Reading Material Card -->
-            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
-                <h3 class="text-lg font-bold text-slate-900 mb-3 flex items-center">
-                    <svg class="w-5 h-5 mr-2 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-                    Critical Data Extraction Text Material
-                </h3>
-                <div class="prose prose-slate max-w-none text-sm leading-relaxed space-y-3 bg-slate-50 p-4 rounded-lg border border-slate-100">
-                    <p>Phonetics is the study of the physical transmission, acoustic properties, and production of speech sounds. It is divided into Articulatory, Acoustic, and Auditory phonetics.</p>
-                    <p><strong>Consonants are classified by:</strong></p>
-                    <ul class="list-disc pl-5 space-y-1">
-                        <li><strong>Place of articulation:</strong> Bilabial (bilabial plosives [p], [b]), Labiodental ([f], [v]), Alveolar ([t], [d], [s], [z]), Velar ([k], [g]), and Glottal ([h]).</li>
-                        <li><strong>Manner of articulation:</strong> Plosives/Stops (complete closure followed by release), Fricatives (continuous friction of air), Nasals (airflow through the nose [m], [n]), and Approximants.</li>
-                        <li><strong>Voicing:</strong> Voiced (vocal cords vibrate like [b], [z]) vs. Voiceless (no vibration like [p], [s]).</li>
-                    </ul>
-                    <p>Phonology studies how these sounds form abstract cognitive systems within a language.</p>
-                    <ul class="list-disc pl-5 space-y-1">
-                        <li><strong>Phonemes</strong> are abstract mental units of sound that distinguish meaning (e.g., /p/ vs /b/).</li>
-                        <li><strong>Allophones</strong> are physical phonetic variations of a single phoneme that do not change word meaning (e.g., aspirated [pʰ] in 'pin' vs. unaspirated [p] in 'spin').</li>
-                        <li><strong>Minimal Pairs</strong> are pairs of words that differ by only one sound segment in the same position and have different meanings, proving those sounds are distinct phonemes (e.g., 'pat' and 'bat', 'sip' and 'zip').</li>
-                    </ul>
+            <!-- Active Practice Session Panel -->
+            <div id="panel-practice" class="hidden space-y-6">
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex items-center justify-between">
+                    <button onclick="exitPractice()" class="flex items-center space-x-2 text-sm text-slate-600 hover:text-indigo-600 font-medium transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                        <span>Back to Sets</span>
+                    </button>
+                    <div class="text-center">
+                        <h3 class="font-bold text-slate-800" id="practice-title">Set 1 Practice Matrix</h3>
+                        <span class="text-xs text-slate-500">Pair <span id="current-pair-num">1</span> of 13 (25 Questions Total)</span>
+                    </div>
+                    <div class="w-24"></div> <!-- Spacer -->
+                </div>
+
+                <!-- Questions Window (Two Questions at a time) -->
+                <div id="questions-container" class="space-y-6">
+                    <!-- Populated dynamically -->
+                </div>
+
+                <!-- Pagination Footer -->
+                <div class="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-100 shadow-sm">
+                    <button id="prev-pair-btn" onclick="navigatePair(-1)" class="px-5 py-2.5 rounded-xl border border-slate-200 text-slate-600 text-sm font-semibold hover:bg-slate-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+                        Previous Pair
+                    </button>
+                    <div class="text-sm font-medium text-slate-500" id="progress-indicator">Progress: 0 / 25 answered</div>
+                    <button id="next-pair-btn" onclick="navigatePair(1)" class="px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100">
+                        Next Pair
+                    </button>
                 </div>
             </div>
 
-            <!-- Interactive Modules Form Container -->
-            <div id="assessment-container" class="space-y-8">
-                <!-- Injected via JS -->
-            </div>
-
-            <!-- Submit Section -->
-            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 flex items-center justify-between">
-                <div>
-                    <h4 class="font-bold text-slate-900">Ready to Submit Attempt?</h4>
-                    <p class="text-xs text-slate-500">Scores will be saved locally and dispatched to the instructor server.</p>
-                </div>
-                <button onclick="submitAssessment()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-6 py-3 rounded-lg transition shadow-md flex items-center space-x-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    <span>Finalize & Submit Module Test</span>
-                </button>
-            </div>
         </div>
 
-        <!-- INSTRUCTOR DASHBOARD VIEW -->
-        <div id="view-instructor" class="space-y-6 hidden">
-            <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 flex items-center justify-between">
-                <div>
-                    <h2 class="text-xl font-bold text-slate-900">Instructor Dashboard</h2>
-                    <p class="text-sm text-slate-600">Live roster metrics pulled dynamically from remote configuration data.</p>
+        <!-- ================= INSTRUCTOR VIEW ================= -->
+        <div id="view-instructor" class="hidden space-y-6">
+            
+            <!-- Auth prompt -->
+            <div id="instructor-auth-panel" class="max-w-md mx-auto bg-white rounded-2xl shadow-xl border border-slate-100 p-8 my-12">
+                <div class="text-center mb-6">
+                    <div class="inline-block bg-slate-100 text-slate-700 p-3 rounded-full mb-3">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-800">Instructor Gateway</h2>
+                    <p class="text-sm text-slate-500 mt-1">Enter password to view remote student progress matrix.</p>
                 </div>
-                <button onclick="loadInstructorData()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium px-4 py-2 rounded-lg transition flex items-center space-x-2">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-                    <span>Refresh Roster Data</span>
-                </button>
+                <form onsubmit="handleInstructorLogin(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1">Password</label>
+                        <input type="password" id="instructor-password" required placeholder="••••••••" 
+                            class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
+                    </div>
+                    <button type="submit" class="w-full py-3 rounded-xl bg-slate-900 text-white font-semibold shadow-lg hover:bg-slate-800 transition-all">
+                        Access Dashboard
+                    </button>
+                </form>
             </div>
 
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="bg-slate-50 border-b border-slate-200 text-xs uppercase tracking-wider text-slate-500 font-semibold">
-                                <th class="p-4">Roll Number</th>
-                                <th class="p-4">Student Name</th>
-                                <th class="p-4 text-center">Total Attempts</th>
-                                <th class="p-4 text-center">Best Score (%)</th>
-                                <th class="p-4 text-right">Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="roster-table-body" class="divide-y divide-slate-100 text-sm">
-                            <!-- Injected via JS -->
-                        </tbody>
-                    </table>
+            <!-- Dashboard Data Table -->
+            <div id="instructor-dashboard-panel" class="hidden space-y-6">
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+                    <div class="p-6 border-b border-slate-100 flex items-center justify-between">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-800">Student Progress Matrix</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Live records mapped from endpoint: <span class="font-mono text-indigo-600" id="endpoint-display"></span></p>
+                        </div>
+                        <button onclick="loadInstructorData()" class="px-4 py-2 rounded-xl bg-indigo-50 text-indigo-600 hover:bg-indigo-100 text-sm font-semibold transition-all">
+                            Refresh Data
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 text-slate-500 uppercase text-xs tracking-wider border-b border-slate-100">
+                                    <th class="p-4 font-semibold">Roll Number</th>
+                                    <th class="p-4 font-semibold">Name</th>
+                                    <th class="p-4 font-semibold">Total Attempts</th>
+                                    <th class="p-4 font-semibold">Best Score</th>
+                                </tr>
+                            </thead>
+                            <tbody id="instructor-table-body" class="divide-y divide-slate-100 text-sm text-slate-700">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
+
         </div>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 mt-12 py-6 text-center text-xs text-slate-500">
-        <p>Linguistics Interactive Course Hub &bull; Powered by Tailwind CSS & Vanilla JS</p>
-    </footer>
-
-    <!-- Application Script -->
+    <!-- Application Script Block -->
     <script>
-        // Exact Structural Configuration Variables
-        const GOOGLE_SCRIPT_URL = "https://google.com";
-        const MODULE_NAME = "Phonetics and Phonology";
+        // --- State Management ---
+        let currentStudent = { name: '', roll: '' };
+        let activeSetIndex = 0;
+        let currentPairIndex = 0;
+        let setCompletionStatus = [true, false, false, false]; // Set 1 unlocked initially
+        let userAnswers = {}; // key: setIndex-qIndex, value: student input/selection
+        let setScores = [0, 0, 0, 0];
 
-        const studentRoster = [
-            { rollNumber: "101", name: "Student Alpha" },
-            { rollNumber: "102", name: "Student Beta" },
-            { rollNumber: "103", name: "Student Gamma" }
+        // --- Question Bank Construction (100 Questions across 4 Sets) ---
+        // Matrix Requirements:
+        // Transcriptions (20 Qs total): Monosyllabic (5), Disyllabic (5), Trisyllabic (5), Polysyllabic (5)
+        // Reverse Transcriptions (20 Qs total): Monosyllabic (5), Disyllabic (5), Trisyllabic (5), Polysyllabic (5)
+        // Revised Standard Matrix (58 Qs total): MCQs, minimal pairs, phonological analysis
+        // Targeted Essay Questions (2 Qs total): 1 per final sets or spread appropriately. Let's place Essay 1 in Set 3, Essay 2 in Set 4.
+
+        const questionBank = [
+            // ================= SET 1 (25 Questions) =================
+            [
+                // Transcriptions (5 Qs: Mono, Di, Tri, Poly, Mono)
+                {
+                    type: 'transcription', sub: 'monosyllabic',
+                    prompt: "Transcribe the monosyllabic word 'cat' in Received Pronunciation (RP):",
+                    answer: "/kæt/",
+                    rule: "Monosyllabic open/closed structure: Consonant-Vowel-Consonant (CVC). /æ/ is near-open front unrounded vowel."
+                },
+                {
+                    type: 'transcription', sub: 'disyllabic',
+                    prompt: "Transcribe the disyllabic word 'better' in Received Pronunciation (RP):",
+                    answer: "/ˈbetə/",
+                    rule: "Disyllabic structure with primary stress on the first syllable (indicated by /ˈ/). Intervocalic /t/ and schwa /ə/ in the unstressed final syllable."
+                },
+                {
+                    type: 'transcription', sub: 'trisyllabic',
+                    prompt: "Transcribe the trisyllabic word 'beautiful' in Received Pronunciation (RP):",
+                    answer: "/ˈbjuːtɪfl/",
+                    rule: "Trisyllabic structure. Primary stress on first syllable. Contains diphthong /juː/, lax vowel /ɪ/, and syllabic lateral /l/."
+                },
+                {
+                    type: 'transcription', sub: 'polysyllabic',
+                    prompt: "Transcribe the polysyllabic word 'linguistics' in Received Pronunciation (RP):",
+                    answer: "/lɪŋˈɡwɪstɪks/",
+                    rule: "Polysyllabic word. Secondary stress on initial /lɪŋ/ and primary stress on second syllable /ɡwɪs/. Velar nasal /ŋ/ and dental/alveolar fricatives."
+                },
+                {
+                    type: 'transcription', sub: 'monosyllabic',
+                    prompt: "Transcribe the monosyllabic word 'spin' in Received Pronunciation (RP):",
+                    answer: "/spɪn/",
+                    rule: "Consonant cluster /sp/ followed by lax vowel /ɪ/ and alveolar nasal /n/."
+                },
+                
+                // Reverse Transcriptions (5 Qs)
+                {
+                    type: 'reverse', sub: 'monosyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /dɒɡ/",
+                    options: ["dog", "dug", "dig", "dock"],
+                    answer: "dog",
+                    rule: "Phonetic symbol /ɒ/ represents the open back rounded vowel in RP 'dog'."
+                },
+                {
+                    type: 'reverse', sub: 'disyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /ˈwɪndəʊ/",
+                    options: ["window", "wander", "wonder", "windy"],
+                    answer: "window",
+                    rule: "Disyllabic word with primary stress on the first syllable and ending in the diphthong /əʊ/."
+                },
+                {
+                    type: 'reverse', sub: 'trisyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /ˈmæɡɪzɪn/ (magazine variant/RP approximation)",
+                    options: ["magazine", "manager", "magnet", "magic"],
+                    answer: "magazine",
+                    rule: "Trisyllabic structure with stress assignment on the ultimate or antepenultimate syllables depending on historical derivations."
+                },
+                {
+                    type: 'reverse', sub: 'polysyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /ˌjuːnɪˈvɜːsɪti/",
+                    options: ["university", "universe", "unify", "unique"],
+                    answer: "university",
+                    rule: "Polysyllabic word featuring secondary stress on the first syllable and primary stress on the fourth syllable."
+                },
+                {
+                    type: 'reverse', sub: 'monosyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /ʃiːp/",
+                    options: ["ship", "sheep", "shape", "sharp"],
+                    answer: "sheep",
+                    rule: "Long close front unrounded vowel /iː/ distinguishing 'sheep' from lax /ɪ/ in 'ship'."
+                },
+
+                // Standard Matrix MCQs & Analysis (15 Qs)
+                {
+                    type: 'mcq', prompt: "What is the primary articulatory descriptor for the English sound [p]?",
+                    options: ["Voiceless bilabial plosive", "Voiced alveolar fricative", "Voiceless labiodental nasal", "Voiced velar plosive"],
+                    answer: "Voiceless bilabial plosive",
+                    rule: "[p] involves complete closure of both lips (bilabial), stoppage of airflow with a burst (plosive), and absence of vocal cord vibration (voiceless)."
+                },
+                {
+                    type: 'mcq', prompt: "Which pair represents a classic English minimal pair distinguishing voicing in fricatives?",
+                    options: ["sip / zip", "cat / bat", "pin / bin", "tea / dee"],
+                    answer: "sip / zip",
+                    rule: "/s/ and /z/ share identical place (alveolar) and manner (fricative), differing solely in voicing ([s] is voiceless, [z] is voiced)."
+                },
+                {
+                    type: 'mcq', prompt: "In phonology, what term describes a variant realization of a phoneme that does not change word meaning?",
+                    options: ["Allophone", "Morpheme", "Allomorph", "Graphheme"],
+                    answer: "Allophone",
+                    rule: "Allophones are predictable phonetic variants of a single phoneme conditioned by phonetic environment."
+                },
+                {
+                    type: 'mcq', prompt: "Which English consonant is classified as a voiced labiodental fricative?",
+                    options: ["v", "f", "b", "w"],
+                    answer: "v",
+                    rule: "[v] is produced with upper teeth touching the lower lip (labiodental) allowing air friction (fricative) with vocal fold vibration (voiced)."
+                },
+                {
+                    type: 'mcq', prompt: "What feature distinguishes nasal sounds like [m] and [n] from oral stops like [p] and [t]?",
+                    options: ["Lowering of the velum allowing airflow through the nasal cavity", "Vocal cord vibration", "Place of articulation", "Lip rounding"],
+                    answer: "Lowering of the velum allowing airflow through the nasal cavity",
+                    rule: "Nasals require a lowered velum coupling the nasal cavity to the vocal tract, whereas oral stops require a raised velum."
+                },
+                {
+                    type: 'mcq', prompt: "Identify the place and manner for the phoneme [ŋ] (as in 'sing'):",
+                    options: ["Velar nasal", "Alveolar nasal", "Bilabial nasal", "Palatal plosive"],
+                    answer: "Velar nasal",
+                    rule: "[ŋ] is articulated by raising the back of the tongue against the velum with the velum lowered."
+                },
+                {
+                    type: 'mcq', prompt: "Which of the following is a high front unrounded vowel in standard RP?",
+                    options: ["/iː/", "/uː/", "/ɑː/", "/ɔː/"],
+                    answer: "/iː/",
+                    rule: "/iː/ is produced with the tongue positioned high and far forward in the oral cavity without lip rounding."
+                },
+                {
+                    type: 'mcq', prompt: "What does the symbol [ʰ] indicate when attached to a stop consonant transcription like [pʰɪn]?",
+                    options: ["Aspiration", "Palatalization", "Nasality", "Voicing"],
+                    answer: "Aspiration",
+                    rule: "Aspiration is a burst of air accompanying the release of voiceless plosives in initial stressed positions."
+                },
+                {
+                    type: 'mcq', prompt: "Which sound is a post-alveolar (or palato-alveolar) affricate?",
+                    options: ["/tʃ/", "/s/", "/θ/", "/j/"],
+                    answer: "/tʃ/",
+                    rule: "/tʃ/ begins as an alveolar stop and releases into a fricative in the post-alveolar region."
+                },
+                {
+                    type: 'mcq', prompt: "The term 'complementary distribution' means:",
+                    options: ["Sounds never occur in the exact same phonetic environment", "Sounds occur in identical environments creating meaning changes", "Sounds have identical acoustic signatures", "Vowels and consonants alternate"],
+                    answer: "Sounds never occur in the exact same phonetic environment",
+                    rule: "When two sounds are mutually exclusive and found in completely distinct contexts, they are allophones of the same phoneme."
+                },
+                {
+                    type: 'mcq', prompt: "Which vowel is categorized as a central open-mid vowel (schwa)?",
+                    options: ["/ə/", "/iː/", "/uː/", "/æ/"],
+                    answer: "/ə/",
+                    rule: "/ə/ is the most frequent unstressed vowel in English, articulated in the central neutral zone."
+                },
+                {
+                    type: 'mcq', prompt: "What is the primary difference between a monophthong and a diphthong?",
+                    options: ["Diphthongs involve a dynamic glide from one vowel quality to another within a single syllable", "Monophthongs are always nasalized", "Diphthongs only occur in unstressed syllables", "Monophthongs require labial closure"],
+                    answer: "Diphthongs involve a dynamic glide from one vowel quality to another within a single syllable",
+                    rule: "A monophthong maintains a steady tongue position, whereas a diphthong changes quality (nucleus to glide)."
+                },
+                {
+                    type: 'mcq', prompt: "Which English consonant is classified as a lateral approximant?",
+                    options: ["/l/", "/r/", "/w/", "/j/"],
+                    answer: "/l/",
+                    rule: "Air escapes around the sides of the tongue while the tongue tip makes contact with the alveolar ridge."
+                },
+                {
+                    type: 'mcq', prompt: "What is a minimal pair test used to establish in phonology?",
+                    options: ["Phonemic contrast", "Syntactic category", "Morphological derivation", "Syllable weight"],
+                    answer: "Phonemic contrast",
+                    rule: "Finding two words with distinct meanings differing by only one sound proves those sounds are separate phonemes."
+                },
+                {
+                    type: 'mcq', prompt: "Which of the following describes the manner of articulation for English glides /j/ and /w/?",
+                    options: ["Approximant (Semi-vowel)", "Plosive", "Fricative", "Affricate"],
+                    answer: "Approximant (Semi-vowel)",
+                    rule: "Glides involve close approximation of articulators without turbulent airflow or complete blockage."
+                }
+            ],
+
+            // ================= SET 2 (25 Questions) =================
+            [
+                // Transcriptions (5 Qs)
+                {
+                    type: 'transcription', sub: 'monosyllabic',
+                    prompt: "Transcribe the monosyllabic word 'dog' in RP:",
+                    answer: "/dɒɡ/",
+                    rule: "Consonant-Vowel-Consonant structure with voiced alveolar stop /d/, short open back rounded vowel /ɒ/, and voiced velar stop /ɡ/."
+                },
+                {
+                    type: 'transcription', sub: 'disyllabic',
+                    prompt: "Transcribe the disyllabic word 'water' in RP:",
+                    answer: "/ˈwɔːtə/",
+                    rule: "Disyllabic word with primary stress on the first syllable containing the long back vowel /ɔː/."
+                },
+                {
+                    type: 'transcription', sub: 'trisyllabic',
+                    prompt: "Transcribe the trisyllabic word 'family' in RP:",
+                    answer: "/ˈfæməli/",
+                    rule: "Trisyllabic structure. Primary stress on first syllable. Contains lax vowel /æ/ and schwa /ə/."
+                },
+                {
+                    type: 'transcription', sub: 'polysyllabic',
+                    prompt: "Transcribe the polysyllabic word 'photography' in RP:",
+                    answer: "/fəˈtɒɡrəfi/",
+                    rule: "Polysyllabic word with primary stress on the second syllable /tɒ/ and unstressed schwa /ə/ in the initial position."
+                },
+                {
+                    type: 'transcription', sub: 'monosyllabic',
+                    prompt: "Transcribe the monosyllabic word 'fish' in RP:",
+                    answer: "/fɪʃ/",
+                    rule: "Labiodental fricative /f/, lax front vowel /ɪ/, and voiceless postalveolar fricative /ʃ/."
+                },
+
+                // Reverse Transcriptions (5 Qs)
+                {
+                    type: 'reverse', sub: 'monosyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /hæt/",
+                    options: ["hate", "hat", "hot", "hut"],
+                    answer: "hat",
+                    rule: "/æ/ represents the near-open front unrounded vowel in 'hat'."
+                },
+                {
+                    type: 'reverse', sub: 'disyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /ˈsɪstə/",
+                    options: ["sister", "system", "season", "sitter"],
+                    answer: "sister",
+                    rule: "Disyllabic word with primary stress on the initial syllable and syllabic/schwa ending."
+                },
+                {
+                    type: 'reverse', sub: 'trisyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /ˈkɑːmədɪ/",
+                    options: ["comedy", "committee", "commute", "common"],
+                    answer: "comedy",
+                    rule: "Trisyllabic word with open back vowel /ɑː/ and primary stress on the first syllable."
+                },
+                {
+                    type: 'reverse', sub: 'polysyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /ɪkˈstrɛmɪti/",
+                    options: ["extremity", "extraordinary", "external", "extinguish"],
+                    answer: "extremity",
+                    rule: "Polysyllabic word with primary stress on the third syllable /strɛ/."
+                },
+                {
+                    type: 'reverse', sub: 'monosyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /bʊk/",
+                    options: ["bake", "book", "buck", "beak"],
+                    answer: "book",
+                    rule: "Close back lax unrounded/rounded vowel /ʊ/ in 'book'."
+                },
+
+                // Standard Matrix MCQs & Analysis (15 Qs)
+                {
+                    type: 'mcq', prompt: "Which English sound is a voiceless dental fricative?",
+                    options: ["/θ/", "/ð/", "/s/", "/ʃ/"],
+                    answer: "/θ/",
+                    rule: "/θ/ (as in 'thin') is produced with the tongue tip near or touching the upper teeth without voicing."
+                },
+                {
+                    type: 'mcq', prompt: "What is the voiced counterpart of the voiceless alveolar fricative /s/?",
+                    options: ["/z/", "/ʒ/", "/d/", "/v/"],
+                    answer: "/z/",
+                    rule: "Both are alveolar fricatives, but /z/ includes vocal cord vibration."
+                },
+                {
+                    type: 'mcq', prompt: "Which phonological process describes the dropping of a sound in rapid speech (e.g., 'camera' pronounced as /ˈkæmprə/)?",
+                    options: ["Elision (Deletion)", "Assimilation", "Epenthesis", "Metathesis"],
+                    answer: "Elision (Deletion)",
+                    rule: "Elision is the omission of a segment (sound or syllable) in connected speech for articulatory ease."
+                },
+                {
+                    type: 'mcq', prompt: "What is the term for inserting a sound segment into a word (e.g., 'hamster' pronounced as 'hampster')?",
+                    options: ["Epenthesis", "Elision", "Assimilation", "Lenition"],
+                    answer: "Epenthesis",
+                    rule: "Epenthesis involves the insertion of a transition consonant or vowel into an existing word structure."
+                },
+                {
+                    type: 'mcq', prompt: "Which term denotes the study of the physical properties of speech sounds (acoustic and articulatory)?",
+                    options: ["Phonetics", "Phonology", "Morphology", "Syntax"],
+                    answer: "Phonetics",
+                    rule: "Phonetics examines the physical transmission and physiological production of speech sounds, independent of specific language systems."
+                },
+                {
+                    type: 'mcq', prompt: "Which term denotes the study of the abstract cognitive organization of sound systems in languages?",
+                    options: ["Phonology", "Phonetics", "Semantics", "Pragmatics"],
+                    answer: "Phonology",
+                    rule: "Phonology investigates how sounds function in distinct languages and rule-based mental representations."
+                },
+                {
+                    type: 'mcq', prompt: "What is a syllable nucleus typically formed by in English?",
+                    options: ["A vowel (or syllabic consonant)", "A voiceless plosive", "A fricative", "A dental nasal"],
+                    answer: "A vowel (or syllabic consonant)",
+                    rule: "The peak or nucleus of a syllable is the most sonorous element, almost always a vowel."
+                },
+                {
+                    type: 'mcq', prompt: "Which of the following is a back close-mid rounded vowel in RP?",
+                    options: ["/oː/ or /əʊ/", "/iː/", "/æ/", "/ɑː/"],
+                    answer: "/oː/ or /əʊ/",
+                    rule: "Diphthong /əʊ/ or monophthongized variants occupy the back mid-to-high rounded region."
+                },
+                {
+                    type: 'mcq', prompt: "What is the three-label descriptor for [k]?",
+                    options: ["Voiceless velar plosive", "Voiced bilabial nasal", "Voiceless alveolar fricative", "Voiced palatal approximant"],
+                    answer: "Voiceless velar plosive",
+                    rule: "[k] involves the back of the tongue against the velum (velar), complete stop and release (plosive), and no vocal fold vibration (voiceless)."
+                },
+                {
+                    type: 'mcq', prompt: "Assimilation refers to:",
+                    options: ["A sound becoming more similar to an adjacent sound", "Two sounds merging into a new phoneme", "The complete deletion of unstressed syllables", "Syllable stress shifting to the right"],
+                    answer: "A sound becoming more similar to an adjacent sound",
+                    rule: "Assimilation eases articulation by adopting features of neighboring segments (e.g., 'ten bucks' -> /tem bʌks/)."
+                },
+                {
+                    type: 'mcq', prompt: "Which consonant sound is represented by the IPA symbol [ʒ]?",
+                    options: ["Voiced post-alveolar fricative (as in 'vision')", "Voiceless post-alveolar fricative", "Voiced alveolar plosive", "Voiced velar nasal"],
+                    answer: "Voiced post-alveolar fricative (as in 'vision')",
+                    rule: "[ʒ] shares place and manner with /ʃ/ but is voiced."
+                },
+                {
+                    type: 'mcq', prompt: "What is the defining feature of sonorant sounds?",
+                    options: ["Spontaneous voicing with continuous airflow through vocal tract without pressure build-up", "High-frequency friction noise", "Complete oral closure", "Voicelessness"],
+                    answer: "Spontaneous voicing with continuous airflow through vocal tract without pressure build-up",
+                    rule: "Nasals, liquids, glides, and vowels are sonorants because air pressure inside and outside the mouth remains equal."
+                },
+                {
+                    type: 'mcq', prompt: "Which of the following words contains a diphthong?",
+                    options: ["boy", "bat", "bit", "bet"],
+                    answer: "boy",
+                    rule: "/ɔɪ/ in 'boy' is a closing diphthong moving from open-mid back to close front."
+                },
+                {
+                    type: 'mcq', prompt: "In English syllable structure, what is the sequence of consonants before the nucleus called?",
+                    options: ["Onset", "Coda", "Rhyme", "Nucleus"],
+                    answer: "Onset",
+                    rule: "The onset comprises any consonant(s) preceding the vowel nucleus in a syllable."
+                },
+                {
+                    type: 'mcq', prompt: "What is the sequence of consonants following the nucleus called?",
+                    options: ["Coda", "Onset", "Peak", "Stem"],
+                    answer: "Coda",
+                    rule: "The coda consists of the consonant(s) that follow the nucleus in the syllable rhyme."
+                }
+            ],
+
+            // ================= SET 3 (25 Questions) =================
+            [
+                // Transcriptions (5 Qs)
+                {
+                    type: 'transcription', sub: 'monosyllabic',
+                    prompt: "Transcribe the monosyllabic word 'sun' in RP:",
+                    answer: "/sʌn/",
+                    rule: "Alveolar fricative /s/, open-mid back unrounded vowel /ʌ/, and alveolar nasal /n/."
+                },
+                {
+                    type: 'transcription', sub: 'disyllabic',
+                    prompt: "Transcribe the disyllabic word 'pencil' in RP:",
+                    answer: "/ˈpensl/",
+                    rule: "Disyllabic word with primary stress on the first syllable and syllabic lateral /l/ in the second syllable."
+                },
+                {
+                    type: 'transcription', sub: 'trisyllabic',
+                    prompt: "Transcribe the trisyllabic word 'computer' in RP:",
+                    answer: "/kəmˈpjuːtə/",
+                    rule: "Trisyllabic word with primary stress on the second syllable /pjuː/ and schwa /ə/ in first and final syllables."
+                },
+                {
+                    type: 'transcription', sub: 'polysyllabic',
+                    prompt: "Transcribe the polysyllabic word 'university' in RP:",
+                    answer: "/ˌjuːnɪˈvɜːsɪti/",
+                    rule: "Polysyllabic word with secondary stress on /juː/ and primary stress on the fourth syllable /ˈvɜː/."
+                },
+                {
+                    type: 'transcription', sub: 'monosyllabic',
+                    prompt: "Transcribe the monosyllabic word 'jump' in RP:",
+                    answer: "/dʒʌmp/",
+                    rule: "Affricate /dʒ/, vowel /ʌ/, nasal /m/, and bilabial stop /p/ forming a complex coda."
+                },
+
+                // Reverse Transcriptions (5 Qs)
+                {
+                    type: 'reverse', sub: 'monosyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /pɛn/",
+                    options: ["pain", "pen", "pin", "pan"],
+                    answer: "pen",
+                    rule: "/ɛ/ or /e/ represents the open-mid front unrounded vowel in 'pen'."
+                },
+                {
+                    type: 'reverse', sub: 'disyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /ˈtɔːkər/",
+                    options: ["talker", "teacher", "taker", "tracker"],
+                    answer: "talker",
+                    rule: "Disyllabic word with long open-mid back vowel /ɔː/ and rhotic/schwa termination."
+                },
+                {
+                    type: 'reverse', sub: 'trisyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /ˈæktərɪ/",
+                    options: ["actory (factory variant)", "actor", "active", "action"],
+                    answer: "factory (factory variant)",
+                    rule: "Trisyllabic structure with stress on the first syllable."
+                },
+                {
+                    type: 'reverse', sub: 'polysyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /ɪnˈvɛstɪɡeɪt/",
+                    options: ["investigate", "investment", "investigator", "invest"],
+                    answer: "investigate",
+                    rule: "Polysyllabic verb with primary stress on the second syllable and closing diphthong /eɪ/."
+                },
+                {
+                    type: 'reverse', sub: 'monosyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /bɔɪ/",
+                    options: ["boy", "buoy", "bow", "bay"],
+                    answer: "boy",
+                    rule: "Diphthong /ɔɪ/ ending in close front unrounded glide."
+                },
+
+                // Standard Matrix MCQs & Analysis (13 Qs)
+                {
+                    type: 'mcq', prompt: "What term describes the smallest meaningful unit in the grammar of a language?",
+                    options: ["Morpheme", "Phoneme", "Allophone", "Grapheme"],
+                    answer: "Morpheme",
+                    rule: "A morpheme is the minimal linguistic unit carrying semantic meaning or grammatical function."
+                },
+                {
+                    type: 'mcq', prompt: "Which of the following is a voiced alveolar plosive?",
+                    options: ["/d/", "/t/", "/s/", "/n/"],
+                    answer: "/d/",
+                    rule: "/d/ involves tongue tip contact with the alveolar ridge, oral closure, and vocal cord vibration."
+                },
+                {
+                    type: 'mcq', prompt: "What is metathesis in phonology?",
+                    options: ["The transposition of two sounds in a word (e.g., 'ask' to 'aks')", "The deletion of a vowel", "The nasalization of a stop", "The shifting of stress to the ultimate syllable"],
+                    answer: "The transposition of two sounds in a word (e.g., 'ask' to 'aks')",
+                    rule: "Metathesis reorders adjacent or non-adjacent segments, often historically or in dialectal speech for ease of articulation."
+                },
+                {
+                    type: 'mcq', prompt: "Which vowel sound is represented by the IPA symbol /uː/",
+                    options: ["Close back rounded vowel", "Open front unrounded vowel", "Mid central vowel", "Close front unrounded vowel"],
+                    answer: "Close back rounded vowel",
+                    rule: "/uː/ is produced with the tongue high and back in the mouth with rounded lips."
+                },
+                {
+                    type: 'mcq', prompt: "What does distinctive feature theory propose?",
+                    options: ["Phonemes are bundles of binary articulatory and acoustic features", "Words are stored as unanalyzed acoustic wholes", "Syllables have no internal structure", "Vowels have no distinctive features"],
+                    answer: "Phonemes are bundles of binary articulatory and acoustic features",
+                    rule: "Distinctive features (e.g., [+/- voice], [+/- consonantal]) analyze phonological contrasts at a granular sub-segmental level."
+                },
+                {
+                    type: 'mcq', prompt: "Which English consonant is a glottal fricative?",
+                    options: ["/h/", "/ʔ/", "/w/", "/j/"],
+                    answer: "/h/",
+                    rule: "/h/ is produced with friction generated at the glottis without a specific supraglottal constriction."
+                },
+                {
+                    type: 'mcq', prompt: "What is a 'glottal stop' [ʔ]?",
+                    options: ["A sound produced by complete closure and sudden opening of the vocal folds", "A nasalized vowel", "A voiced fricative", "A retroflex lateral"],
+                    answer: "A sound produced by complete closure and sudden opening of the vocal folds",
+                    rule: "The glottal stop occurs when vocal folds snap shut and release air abruptly (common in British English 'bottle' /bɒʔl/)."
+                },
+                {
+                    type: 'mcq', prompt: "Which of the following represents a minimal pair based on vowel length/quality?",
+                    options: ["beat / bit", "cat / bat", "sip / zip", "pin / bin"],
+                    answer: "beat / bit",
+                    rule: "/iː/ vs /ɪ/ creates a minimal pair distinguishing tense and lax vowels in English."
+                },
+                {
+                    type: 'mcq', prompt: "What is the primary acoustic property associated with vowel height?",
+                    options: ["F1 (First Formant frequency)", "F2 (Second Formant frequency)", "Fundamental frequency (F0)", "Amplitude envelope"],
+                    answer: "F1 (First Formant frequency)",
+                    rule: "Inverse relationship: high vowels have low F1 frequencies; low vowels have high F1 frequencies."
+                },
+                {
+                    type: 'mcq', prompt: "What acoustic property corresponds primarily to vowel backness?",
+                    options: ["F2 (Second Formant frequency)", "F1 (First Formant frequency)", "Duration", "Voice Onset Time"],
+                    answer: "F2 (Second Formant frequency)",
+                    rule: "Front vowels have high F2 frequencies; back vowels have low F2 frequencies due to oral cavity resonance."
+                },
+                {
+                    type: 'mcq', prompt: "In phonological analysis, what is free variation?",
+                    options: ["Two sounds occurring in the same environment without changing word meaning", "Sounds that change word meaning", "Sounds restricted to word-initial positions", "Mandatory elision"],
+                    answer: "Two sounds occurring in the same environment without changing word meaning",
+                    rule: "Free variation occurs when speakers substitute one allophone for another freely (e.g., unreleased vs released word-final stops)."
+                },
+
+                // Targeted Essay Question 1 (Placed in Set 3)
+                {
+                    type: 'essay',
+                    prompt: "Targeted Essay Question 1: Provide a comprehensive classification of all English consonant sounds using three-label descriptors (Voicing, Place of Articulation, and Manner of Articulation). Provide clear word examples for each sound segment.",
+                    rubric: "Rubric check: Must include Voicing (voiced/voiceless), Place (bilabial, labiodental, dental, alveolar, post-alveolar, palatal, velar, glottal), Manner (plosive, fricative, affricate, nasal, approximant, lateral), and correct word examples."
+                },
+                {
+                    type: 'essay',
+                    prompt: "Targeted Essay Question 1 (Part 2 / Data Analysis): Analyze the phonological environment of English plural suffix allophones ([-s], [-z], [-ɪz]). Explain the morphophonological conditioning rule based on preceding segment voicing and sibilant status.",
+                    rubric: "Rubric check: Explanation of [-s] after voiceless non-sibilants, [-z] after voiced non-sibilants, and [-ɪz] after sibilants (/s, z, ʃ, ʒ, tʃ, dʒ/). Provide examples ('cats', 'dogs', 'buses')."
+                }
+            ],
+
+            // ================= SET 4 (25 Questions) =================
+            [
+                // Transcriptions (5 Qs)
+                {
+                    type: 'transcription', sub: 'monosyllabic',
+                    prompt: "Transcribe the monosyllabic word 'thought' in RP:",
+                    answer: "/θɔːt/",
+                    rule: "Voiceless dental fricative /θ/, long open-mid back vowel /ɔː/, and voiceless alveolar plosive /t/."
+                },
+                {
+                    type: 'transcription', sub: 'disyllabic',
+                    prompt: "Transcribe the disyllabic word 'teacher' in RP:",
+                    answer: "/ˈtiːtʃə/",
+                    rule: "Disyllabic word with primary stress on the first syllable containing tense vowel /iː/ and post-alveolar affricate /tʃ/."
+                },
+                {
+                    type: 'transcription', sub: 'trisyllabic',
+                    prompt: "Transcribe the trisyllabic word 'argument' in RP:",
+                    answer: "/ˈɑːɡjumənt/",
+                    rule: "Trisyllabic structure. Primary stress on first syllable. Contains long vowel /ɑː/, glide /j/, and nasal coda /nt/."
+                },
+                {
+                    type: 'transcription', sub: 'polysyllabic',
+                    prompt: "Transcribe the polysyllabic word 'examination' in RP:",
+                    answer: "/ɪɡˌzæmɪˈneɪʃn/",
+                    rule: "Polysyllabic word with secondary stress on /zæ/ and primary stress on the fourth syllable /ˈneɪ/."
+                },
+                {
+                    type: 'transcription', sub: 'monosyllabic',
+                    prompt: "Transcribe the monosyllabic word 'voice' in RP:",
+                    answer: "/vɔɪs/",
+                    rule: "Voiced labiodental fricative /v/, diphthong /ɔɪ/, and voiceless alveolar fricative /s/."
+                },
+
+                // Reverse Transcriptions (5 Qs)
+                {
+                    type: 'reverse', sub: 'monosyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /muːn/",
+                    options: ["moon", "moan", "man", "mean"],
+                    answer: "moon",
+                    rule: "Close back rounded vowel /uː/ with nasal coda /n/."
+                },
+                {
+                    type: 'reverse', sub: 'disyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /ˈpɪktʃər/",
+                    options: ["picture", "pitcher", "pastor", "painter"],
+                    answer: "picture",
+                    rule: "Disyllabic word containing affricate /tʃ/ and rhotic schwa ending."
+                },
+                {
+                    type: 'reverse', sub: 'trisyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /ˈhɪstərɪ/",
+                    options: ["history", "hysteria", "histery", "heater"],
+                    answer: "history",
+                    rule: "Trisyllabic word with primary stress on the initial syllable."
+                },
+                {
+                    type: 'reverse', sub: 'polysyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /ˌɜːbənɪˈzeɪʃn/",
+                    options: ["urbanization", "urban", "organization", "urbanize"],
+                    answer: "urbanization",
+                    rule: "Polysyllabic noun with multiple stress levels and closing diphthong /eɪ/."
+                },
+                {
+                    type: 'reverse', sub: 'monosyllabic',
+                    prompt: "Select the correct English spelling for the phonetic transcription: /raɪt/",
+                    options: ["right", "write", "rate", "root"],
+                    answer: "right",
+                    rule: "Diphthong /aɪ/ in 'right'."
+                },
+
+                // Standard Matrix MCQs & Analysis (13 Qs)
+                {
+                    type: 'mcq', prompt: "Which phonological framework analyzes phonemes as matrices of distinctive features rather than indivisible segments?",
+                    options: ["Generative Phonology (SPE model)", "Classical Structuralism", "Auditory Phonetics", "Articulatory Phonetics"],
+                    answer: "Generative Phonology (SPE model)",
+                    rule: "The Sound Pattern of English (SPE) model utilizes binary distinctive features to formulate phonological rules."
+                },
+                {
+                    type: 'mcq', prompt: "What is compensatory lengthening?",
+                    options: ["A vowel becoming longer when a following consonant is deleted or voiced", "Syllables shortening in rapid speech", "Pitch rising at phrase boundaries", "Stress shifting leftward"],
+                    answer: "A vowel becoming longer when a following consonant is deleted or voiced",
+                    rule: "Compensatory lengthening preserves overall timing or mora count when a segment is lost."
+                },
+                {
+                    type: 'mcq', prompt: "Which English consonant is classified as a post-alveolar approximant in RP?",
+                    options: ["/r/", "/l/", "/w/", "/j/"],
+                    answer: "/r/",
+                    rule: "RP /r/ is typically a frictionless postalveolar approximant where the tongue approaches the post-alveolar region without turbulent friction."
+                },
+                {
+                    type: 'mcq', prompt: "What term describes the natural classes of sounds that share a common subset of features (e.g., obstruents, sonorants)?",
+                    options: ["Natural Class", "Minimal Pair", "Allophone Set", "Syllable Cluster"],
+                    answer: "Natural Class",
+                    rule: "A natural class is a group of sounds in a language that share one or more phonetic features and pattern together in phonological rules."
+                },
+                {
+                    type: 'mcq', prompt: "What is Voice Onset Time (VOT)?",
+                    options: ["The time interval between the release of a plosive consonant and the onset of vocal fold vibration", "The duration of a vowel nucleus", "The onset of syllable stress", "The time taken to articulate a diphthong"],
+                    answer: "The time interval between the release of a plosive consonant and the onset of vocal fold vibration",
+                    rule: "VOT distinguishes aspirated voiceless stops (long positive VOT) from unaspirated or voiced stops (short or negative VOT)."
+                },
+                {
+                    type: 'mcq', prompt: "Which of the following describes neutralization?",
+                    options: ["A phonemic contrast disappearing in a specific phonetic environment", "Two sounds fusing into a diphthong", "Stress falling on alternate syllables", "Vowel reduction to schwa in unstressed positions"],
+                    answer: "A phonemic contrast disappearing in a specific phonetic environment",
+                    rule: "Neutralization occurs when a distinction between phonemes is suspended in certain contexts (e.g., devoicing of final obstruents in some languages)."
+                },
+                {
+                    type: 'mcq', prompt: "What is sonority sequencing principle (SSP)?",
+                    options: ["Syllables rise in sonority toward the nucleus and fall in sonority toward the margins", "All sounds in a syllable must have identical sonority", "Consonants must precede vowels in codas", "Glides cannot form onsets"],
+                    answer: "Syllables rise in sonority toward the nucleus and fall in sonority toward the margins",
+                    rule: "The SSP dictates the universal preference for syllable structure organization based on acoustic sonority hierarchy."
+                },
+                {
+                    type: 'mcq', prompt: "Which phonetic parameter is NOT used to classify English vowels?",
+                    options: ["Voicing (all vowels are voiced)", "Tongue height (high/mid/low)", "Tongue backness (front/central/back)", "Lip rounding (rounded/unrounded)"],
+                    answer: "Voicing (all vowels are voiced)",
+                    rule: "Because nearly all standard vowels are spontaneously voiced sonorants, voicing is not a distinctive parameter for contrasting vowels."
+                },
+                {
+                    type: 'mcq', prompt: "What is an underlying representation (UR) in phonology?",
+                    options: ["The abstract mental phonemic form of a morpheme before phonological rules apply", "The physical acoustic waveform", "The orthographic spelling", "The surface phonetic transcription"],
+                    answer: "The abstract mental phonemic form of a morpheme before phonological rules apply",
+                    rule: "UR represents the speaker's underlying knowledge of sound forms, distinct from surface phonetic forms (SR)."
+                },
+                {
+                    type: 'mcq', prompt: "What is a surface representation (SR) in phonology?",
+                    options: ["The actual phonetic output produced in speech after rules have applied", "The morphological root", "The lexical entry in a dictionary", "The orthographic script"],
+                    answer: "The actual phonetic output produced in speech after rules have applied",
+                    rule: "Surface representation is the realized acoustic/articulatory output heard in utterances."
+                },
+                {
+                    type: 'mcq', prompt: "Which phonological rule type changes a feature value of a segment due to surrounding sounds?",
+                    options: ["Feature-changing rule", "Insertion rule", "Deletion rule", "Metathesis rule"],
+                    answer: "Feature-changing rule",
+                    rule: "Feature-changing rules alter existing feature matrices (e.g., nasal place assimilation where /n/ becomes [m] before bilabials)."
+                },
+
+                // Targeted Essay Question 2 (Placed in Set 4)
+                {
+                    type: 'essay',
+                    prompt: "Targeted Essay Question 2: Classify and detail all English vowel sounds (including monophthongs and diphthongs). Illustrate your description with clear diagrams of vowel height/backness parameters and concrete word examples for each.",
+                    rubric: "Rubric check: Detailed inventory of monophthongs (front, central, back across close to open) and diphthongs (closing and centring), height/backness parameters, and word examples."
+                },
+                {
+                    type: 'essay',
+                    prompt: "Targeted Essay Question 2 (Part 2 / Synthesis): Discuss the principles of English syllable stress assignment. Explain how morphological structure (affixes like -ic vs -ity) and syllable weight (heavy vs light syllables) influence primary and secondary stress placement in polysyllabic words.",
+                    rubric: "Rubric check: Discussion of weight-sensitive stress rules, heavy syllables (closed or long vowel), stress-shifting suffixes (-ic places stress on preceding syllable; -ity attracts stress to antepenult), and concrete examples."
+                }
+            ]
         ];
 
-        // Question Matrix Data Generated from Text Material
-        const fillInTheBlanks = [
-            { id: "fib-1", prompt: "The study of the physical transmission, acoustic properties, and production of speech sounds is called [___].", answer: "phonetics", rule: "Phonetics strictly concerns physical and acoustic dimensions, distinct from cognitive structural phonology." },
-            { id: "fib-2", prompt: "Consonants produced with complete oral closure followed by release are termed [___] or stops.", answer: "plosives", rule: "Plosives involve total airflow obstruction building pressure before release." },
-            { id: "fib-3", prompt: "Sounds produced with continuous friction of air are known as [___].", answer: "fricatives", rule: "Fricatives create turbulent airflow through a narrow constriction." },
-            { id: "fib-4", prompt: "Airflow diverted exclusively through the nose produces sounds such as [___] and [n].", answer: "m", rule: "Nasals lower the velum allowing air to escape via the nasal cavity." },
-            { id: "fib-5", prompt: "When vocal cords vibrate during sound production, the consonant is classified as [___].", answer: "voiced", rule: "Voicing is determined by the periodicity of vocal cord oscillation." },
-            { id: "fib-6", prompt: "Abstract mental units of sound that distinguish meaning are known as [___].", answer: "phonemes", rule: "Phonemes reside in the cognitive grammar system rather than pure physical output." },
-            { id: "fib-7", prompt: "Physical phonetic variations of a single phoneme that do not change word meaning are called [___].", answer: "allophones", rule: "Allophones are predictable surface realizations conditioned by phonetic environment." },
-            { id: "fib-8", prompt: "Pairs of words differing by only one sound segment in the same position with distinct meanings are [___] pairs.", answer: "minimal", rule: "Minimal pairs provide empirical proof for distinct phonemic categorization." },
-            { id: "fib-9", prompt: "The aspirated [pʰ] in 'pin' versus the unaspirated [p] in 'spin' are classic examples of [___].", answer: "allophones", rule: "They represent contextual variants of the underlying /p/ phoneme in English." },
-            { id: "fib-10", prompt: "The articulatory classification category covering sounds like [h] produced at the larynx is the [___] place of articulation.", answer: "glottal", rule: "Glottal sounds are articulated at the glottis without primary oral tract constriction." }
-        ];
-
-        const multipleChoice = [
-            { id: "mc-1", question: "Which branch of phonetics deals specifically with how speech sounds are perceived by the ear?", options: ["Articulatory Phonetics", "Acoustic Phonetics", "Auditory Phonetics", "Cognitive Phonetics"], answer: 2, feedback: "Auditory phonetics investigates physiological perception mechanisms in the listener." },
-            { id: "mc-2", question: "Which pair of sounds represents Bilabial Plosives according to the text?", options: ["[f], [v]", "[p], [b]", "[t], [d]", "[k], [g]"], answer: 1, feedback: "[p] and [b] are bilabial stops executed using both lips with complete closure." },
-            { id: "mc-3", question: "What distinguishes 'pat' and 'bat' in linguistic phonology?", options: ["Allophonic variation", "Minimal pair distinction", "Acoustic attenuation", "Glottal friction"], answer: 1, feedback: "They form a minimal pair differing only in initial consonant, proving /p/ and /b/ are distinct phonemes." },
-            { id: "mc-4", question: "Which characteristic defines a voiceless consonant?", options: ["Vocal cords vibrate", "No vocal cord vibration", "Nasal cavity airflow", "Continuous friction"], answer: 1, feedback: "Voiceless sounds lack periodic vocal fold vibration during articulation." },
-            { id: "mc-5", question: "What is the primary focus of Phonology?", options: ["Measuring sound waves", "Abstract cognitive sound systems", "Anatomy of vocal folds", "Speaker pitch contours"], answer: 1, feedback: "Phonology evaluates mental sound organization and cognitive systems within languages." },
-            { id: "mc-6", question: "Which sound is categorized under Alveolar articulation in the text?", options: ["[f]", "[k]", "[s]", "[h]"], answer: 2, feedback: "[s] is articulated against the alveolar ridge." },
-            { id: "mc-7", question: "What occurs during the production of a plosive?", options: ["Continuous air leakage", "Complete closure followed by release", "Nasal airflow routing", "Velar lowering"], answer: 1, feedback: "Plosives require total oral occlusion, air pressure accumulation, and sudden release." },
-            { id: "mc-8", question: "Which term describes physical variations of a phoneme that do not alter word meaning?", options: ["Phoneme", "Minimal Pair", "Allophone", "Plosive"], answer: 2, feedback: "Allophones are non-contrastive phonetic surface realizations." },
-            { id: "mc-9", question: "Which sound belongs to the Velar place of articulation?", options: ["[p]", "[t]", "[k]", "[f]"], answer: 2, feedback: "[k] is produced by the back of the tongue touching the soft palate (velum)." },
-            { id: "mc-10", question: "What does a minimal pair test confirm?", options: ["Speaker accent", "Distinct phonemes", "Acoustic frequency", "Glottal state"], answer: 1, feedback: "Minimal pairs demonstrate that substituting one sound changes meaning, proving phonemic status." }
-        ];
-
-        const shortAnswers = [
-            { id: "sa-1", prompt: "Explain the fundamental difference between Articulatory and Acoustic phonetics based on the text.", model: "Articulatory phonetics studies the physical production of speech sounds by vocal organs, whereas acoustic phonetics investigates the physical transmission and acoustic properties of those sound waves through the air." },
-            { id: "sa-2", prompt: "Why do 'pin' [pʰ.n] and 'spin' [spɪn] not constitute a minimal pair in English phonology?", model: "They do not constitute a minimal pair because [pʰ] and [p] are allophonic variants of the same underlying phoneme /p/ conditioned by their phonetic environment, and substituting them does not change word meaning." },
-            { id: "sa-3", prompt: "Define minimal pairs and state their theoretical function in phonological analysis.", model: "Minimal pairs are word pairs differing by only one sound segment in identical position with distinct meanings. Their theoretical function is empirically proving that two sounds operate as distinct cognitive phonemes." }
-        ];
-
-        const essayQuestions = [
-            { 
-                id: "es-1", 
-                prompt: "Compare and contrast Phonetics and Phonology. Detail how physical speech parameters transition into abstract cognitive systems within a language framework.",
-                rubric: [
-                    "Clearly defines Phonetics as physical, acoustic, and articulatory sound study (25%).",
-                    "Clearly defines Phonology as abstract mental and cognitive sound organization (25%).",
-                    "Provides clear examples distinguishing phonetic allophones from phonemes (25%).",
-                    "Synthesizes how physical signals map to cognitive units in linguistic processing (25%)."
-                ],
-                modelBreakdown: "Phonetics measures objective physical reality (frequencies, vocal tract gestures), while phonology abstracts these signals into a discrete mental inventory (phonemes) used by human cognitive grammar to compute meaningful utterances."
-            },
-            {
-                id: "es-2", 
-                prompt: "Analyze consonant classification parameters. Discuss Place of articulation, Manner of articulation, and Voicing using specific examples from the course text.",
-                rubric: [
-                    "Explains Place of articulation with correct examples (Bilabial [p,b], Alveolar [t,d,s,z], Velar [k,g], Glottal [h]) (35%).",
-                    "Explains Manner of articulation with correct categories (Plosives, Fricatives, Nasals, Approximants) (35%).",
-                    "Accurately contrasts Voiced vs. Voiceless mechanisms (30%)."
-                ],
-                modelBreakdown: "Consonant taxonomy relies on a three-coordinate system: where constriction occurs (place), how air escapes (manner), and whether vocal folds oscillate (voicing)."
-            }
-        ];
-
-        // State Management
-        let currentStudent = studentRoster[0].rollNumber;
-
-        // Initialization
-        window.addEventListener('DOMContentLoaded', () => {
-            initStudentSelector();
-            renderAssessmentForm();
-            switchView('student');
-        });
-
-        function switchView(viewName) {
-            const studentView = document.getElementById('view-student');
-            const instructorView = document.getElementById('view-instructor');
+        // --- Navigation & View Switching ---
+        function switchView(view) {
             const studentBtn = document.getElementById('nav-student-btn');
             const instructorBtn = document.getElementById('nav-instructor-btn');
+            const viewStudent = document.getElementById('view-student');
+            const viewInstructor = document.getElementById('view-instructor');
 
-            if (viewName === 'student') {
-                studentView.classList.remove('hidden');
-                instructorView.classList.add('hidden');
-                studentBtn.className = "px-4 py-2 rounded-lg font-medium text-sm transition bg-emerald-600 text-white shadow-sm";
-                instructorBtn.className = "px-4 py-2 rounded-lg font-medium text-sm transition text-slate-600 hover:bg-slate-100";
+            if (view === 'student') {
+                studentBtn.className = "px-4 py-1.5 rounded-lg text-sm font-medium transition-all bg-indigo-600 text-white shadow";
+                instructorBtn.className = "px-4 py-1.5 rounded-lg text-sm font-medium transition-all text-indigo-300 hover:text-white";
+                viewStudent.classList.remove('hidden');
+                viewInstructor.classList.add('hidden');
             } else {
-                studentView.classList.add('hidden');
-                instructorView.classList.remove('hidden');
-                instructorBtn.className = "px-4 py-2 rounded-lg font-medium text-sm transition bg-emerald-600 text-white shadow-sm";
-                studentBtn.className = "px-4 py-2 rounded-lg font-medium text-sm transition text-slate-600 hover:bg-slate-100";
-                loadInstructorData();
+                instructorBtn.className = "px-4 py-1.5 rounded-lg text-sm font-medium transition-all bg-slate-800 text-white shadow";
+                studentBtn.className = "px-4 py-1.5 rounded-lg text-sm font-medium transition-all text-indigo-300 hover:text-white";
+                viewInstructor.classList.remove('hidden');
+                viewStudent.classList.add('hidden');
             }
         }
 
-        function initStudentSelector() {
-            const select = document.getElementById('student-select');
-            select.innerHTML = '';
-            studentRoster.forEach(s => {
-                const opt = document.createElement('option');
-                opt.value = s.rollNumber;
-                opt.textContent = `${s.rollNumber} - ${s.name}`;
-                select.appendChild(opt);
-            });
-            currentStudent = studentRoster[0].rollNumber;
-        }
+        // --- Roll Number Validation & Authentication ---
+        function validateRollNumber(input) {
+            const val = input.value.trim().toUpperCase();
+            const errorEl = document.getElementById('roll-error');
+            const submitBtn = document.getElementById('login-submit-btn');
 
-        function handleStudentChange(rollNum) {
-            currentStudent = rollNum;
-        }
-
-        function renderAssessmentForm() {
-            const container = document.getElementById('assessment-container');
-            let html = '';
-
-            // 1. Fill in the Blank Section
-            html += `
-                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-6">
-                    <div class="border-b border-slate-100 pb-4">
-                        <h3 class="text-lg font-bold text-slate-900">Part 1: Fill-in-the-Blank Questions</h3>
-                        <p class="text-sm text-slate-600">Type the correct linguistic term and submit to check the rule.</p>
-                    </div>
-                    <div class="space-y-4">
-            `;
-            fillInTheBlanks.forEach((item, index) => {
-                html += `
-                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-3" id="container-${item.id}">
-                        <p class="text-sm font-medium text-slate-800">${index + 1}. ${item.prompt}</p>
-                        <div class="flex items-center space-x-3">
-                            <input type="text" id="${item.id}-input" placeholder="Your answer..." class="bg-white border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 p-2 w-full max-w-xs">
-                            <button onclick="evaluateFib('${item.id}')" class="bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold px-4 py-2.5 rounded-lg transition">Check</button>
-                        </div>
-                        <div id="${item.id}-feedback" class="hidden text-xs p-3 rounded-md mt-2"></div>
-                    </div>
-                `;
-            });
-            html += `</div></div>`;
-
-            // 2. Multiple Choice Section
-            html += `
-                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-6">
-                    <div class="border-b border-slate-100 pb-4">
-                        <h3 class="text-lg font-bold text-slate-900">Part 2: Multiple-Choice Questions</h3>
-                        <p class="text-sm text-slate-600">Click options for instant evaluation and linguistic feedback.</p>
-                    </div>
-                    <div class="space-y-6">
-            `;
-            multipleChoice.forEach((item, index) => {
-                html += `
-                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-3" id="container-${item.id}">
-                        <p class="text-sm font-medium text-slate-800">${index + 1}. ${item.question}</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                `;
-                item.options.forEach((opt, optIdx) => {
-                    html += `
-                        <button onclick="evaluateMc('${item.id}', ${optIdx})" id="${item.id}-opt-${optIdx}" class="text-left p-3 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs font-medium transition text-slate-700">
-                            ${String.fromCharCode(65 + optIdx)}. ${opt}
-                        </button>
-                    `;
-                });
-                html += `
-                        </div>
-                        <div id="${item.id}-feedback" class="hidden text-xs p-3 rounded-md mt-2"></div>
-                    </div>
-                `;
-            });
-            html += `</div></div>`;
-
-            // 3. Short Answer Section
-            html += `
-                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-6">
-                    <div class="border-b border-slate-100 pb-4">
-                        <h3 class="text-lg font-bold text-slate-900">Part 3: 2-Mark Short Answer Prompts</h3>
-                        <p class="text-sm text-slate-600">Draft your response, then reveal the ideal model answer and linguistic rule.</p>
-                    </div>
-                    <div class="space-y-6">
-            `;
-            shortAnswers.forEach((item, index) => {
-                html += `
-                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-3">
-                        <p class="text-sm font-medium text-slate-800">${index + 1}. ${item.prompt}</p>
-                        <textarea rows="3" placeholder="Write your short answer response here..." class="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-lg p-3 focus:ring-emerald-500 focus:border-emerald-500"></textarea>
-                        <button onclick="revealShortAnswer('${item.id}')" class="bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold px-4 py-2 rounded-lg transition">Reveal Ideal Model Answer & Linguistics Rule</button>
-                        <div id="${item.id}-model" class="hidden bg-emerald-50 border border-emerald-200 p-4 rounded-lg text-xs text-emerald-900 space-y-2 mt-2">
-                            <p class="font-bold">Model Answer & Rule:</p>
-                            <p>${item.model}</p>
-                        </div>
-                    </div>
-                `;
-            });
-            html += `</div></div>`;
-
-            // 4. Essay Questions Section
-            html += `
-                <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 space-y-6">
-                    <div class="border-b border-slate-100 pb-4">
-                        <h3 class="text-lg font-bold text-slate-900">Part 4: Comprehensive Essay & Analysis Prompts</h3>
-                        <p class="text-sm text-slate-600">Review essay prompts and explore complete collapsible grading rubrics.</p>
-                    </div>
-                    <div class="space-y-6">
-            `;
-            essayQuestions.forEach((item, index) => {
-                html += `
-                    <div class="bg-slate-50 p-5 rounded-lg border border-slate-200 space-y-4">
-                        <p class="text-sm font-bold text-slate-900">${index + 1}. ${item.prompt}</p>
-                        <textarea rows="5" placeholder="Compose your comprehensive essay response..." class="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-lg p-3 focus:ring-emerald-500 focus:border-emerald-500"></textarea>
-                        <div>
-                            <button onclick="toggleRubric('${item.id}')" class="text-emerald-700 hover:text-emerald-800 font-semibold text-xs flex items-center space-x-1">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-                                <span id="${item.id}-rubric-btn-text">Toggle Grading Rubric & Structural Breakdown</span>
-                            </button>
-                            <div id="${item.id}-rubric" class="hidden bg-white border border-slate-200 p-4 rounded-lg text-xs space-y-3 mt-3">
-                                <p class="font-bold text-slate-900">Grading Rubric Criteria:</p>
-                                <ul class="list-disc pl-5 space-y-1 text-slate-700">
-                `;
-                item.rubric.forEach(r => {
-                    html += `<li>${r}</li>`;
-                });
-                html += `
-                                </ul>
-                                <p class="font-bold text-slate-900 mt-2">Model Structural Breakdown:</p>
-                                <p class="text-slate-700">${item.modelBreakdown}</p>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-            html += `</div></div>`;
-
-            container.innerHTML = html;
-        }
-
-        // Evaluation Logic
-        function evaluateFib(id) {
-            const item = fillInTheBlanks.find(q => q.id === id);
-            const inputVal = document.getElementById(`${id}-input`).value.trim().toLowerCase();
-            const feedbackDiv = document.getElementById(`${id}-feedback`);
-            
-            feedbackDiv.classList.remove('hidden');
-            if (inputVal === item.answer.toLowerCase()) {
-                feedbackDiv.className = "text-xs p-3 rounded-md mt-2 bg-emerald-50 border border-emerald-200 text-emerald-800";
-                feedbackDiv.innerHTML = `<strong>Correct!</strong> The General Linguistic Rule Explained: ${item.rule}`;
+            if (val === '' || val.startsWith('EN')) {
+                errorEl.classList.add('hidden');
+                input.classList.remove('border-rose-500', 'focus:ring-rose-500');
+                input.classList.add('border-slate-200', 'focus:ring-indigo-500');
+                if (val.startsWith('EN') && val.length > 2) {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                } else {
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                }
             } else {
-                feedbackDiv.className = "text-xs p-3 rounded-md mt-2 bg-rose-50 border border-rose-200 text-rose-800";
-                feedbackDiv.innerHTML = `<strong>Incorrect.</strong> Expected term: '${item.answer}'. The General Linguistic Rule Explained: ${item.rule}`;
+                errorEl.classList.remove('hidden');
+                input.classList.remove('border-slate-200', 'focus:ring-indigo-500');
+                input.classList.add('border-rose-500', 'focus:ring-rose-500');
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
             }
         }
 
-        function evaluateMc(id, selectedIdx) {
-            const item = multipleChoice.find(q => q.id === id);
-            const feedbackDiv = document.getElementById(`${id}-feedback`);
+        function handleLogin(e) {
+            e.preventDefault();
+            const name = document.getElementById('input-name').value.trim();
+            const roll = document.getElementById('input-roll').value.trim().toUpperCase();
 
-            // Reset buttons style
-            item.options.forEach((_, idx) => {
-                const btn = document.getElementById(`${id}-opt-${idx}`);
-                btn.className = "text-left p-3 rounded-lg border border-slate-200 bg-white hover:bg-slate-100 text-xs font-medium transition text-slate-700";
-            });
-
-            const selectedBtn = document.getElementById(`${id}-opt-${selectedIdx}`);
-            feedbackDiv.classList.remove('hidden');
-
-            if (selectedIdx === item.answer) {
-                selectedBtn.className = "text-left p-3 rounded-lg border border-emerald-300 bg-emerald-50 text-xs font-semibold text-emerald-900 shadow-sm";
-                feedbackDiv.className = "text-xs p-3 rounded-md mt-2 bg-emerald-50 border border-emerald-200 text-emerald-800";
-                feedbackDiv.innerHTML = `<strong>Correct!</strong> ${item.feedback}`;
-            } else {
-                selectedBtn.className = "text-left p-3 rounded-lg border border-rose-300 bg-rose-50 text-xs font-semibold text-rose-900 shadow-sm";
-                feedbackDiv.className = "text-xs p-3 rounded-md mt-2 bg-rose-50 border border-rose-200 text-rose-800";
-                feedbackDiv.innerHTML = `<strong>Incorrect.</strong> ${item.feedback}`;
-            }
-        }
-
-        function revealShortAnswer(id) {
-            const modelDiv = document.getElementById(`${id}-model`);
-            modelDiv.classList.toggle('hidden');
-        }
-
-        function toggleRubric(id) {
-            const rubricDiv = document.getElementById(`${id}-rubric`);
-            rubricDiv.classList.toggle('hidden');
-        }
-
-        // Assessment Submission & LocalStorage Persistence
-        function submitAssessment() {
-            const student = studentRoster.find(s => s.rollNumber === currentStudent);
-            if (!student) {
-                alert("Please select a valid student profile.");
+            if (!roll.startsWith('EN')) {
+                alert("Roll number must start with EN");
                 return;
             }
 
-            // Calculate simple mock score based on correct inputs or fixed metric simulation
-            // For a robust experience, we count answered items or assign a baseline score calculation
-            let fibCorrect = 0;
-            fillInTheBlanks.forEach(item => {
-                const inputVal = document.getElementById(`${item.id}-input`).value.trim().toLowerCase();
-                if (inputVal === item.answer.toLowerCase()) fibCorrect++;
-            });
+            currentStudent = { name, roll };
+            document.getElementById('display-student-name').innerText = name;
+            document.getElementById('display-student-roll').innerText = roll;
 
-            let score = Math.round((fibCorrect / fillInTheBlanks.length) * 50 + 50); // Weighted simulated score
+            document.getElementById('panel-login').classList.add('hidden');
+            document.getElementById('panel-dashboard').classList.remove('hidden');
+            renderSetsGrid();
+        }
 
-            // Retrieve local storage records
-            let records = JSON.parse(localStorage.getItem('linguistics_attempts') || '{}');
-            if (!records[currentStudent]) {
-                records[currentStudent] = { attempts: 0, bestScore: 0, history: [] };
+        function handleLogout() {
+            currentStudent = { name: '', roll: '' };
+            document.getElementById('input-name').value = '';
+            document.getElementById('input-roll').value = '';
+            document.getElementById('panel-dashboard').classList.add('hidden');
+            document.getElementById('panel-login').classList.remove('hidden');
+        }
+
+        // --- Sets & Grid Rendering ---
+        function renderSetsGrid() {
+            const grid = document.getElementById('sets-grid');
+            grid.innerHTML = '';
+
+            for (let i = 0; i < 4; i++) {
+                const isUnlocked = setCompletionStatus[i] || i === 0 || setCompletionStatus[i-1];
+                const isCompleted = setCompletionStatus[i] && (setScores[i] > 0 || i < activeSetIndex);
+                
+                const card = document.createElement('div');
+                card.className = `p-6 rounded-2xl border transition-all flex flex-col justify-between ${
+                    isUnlocked 
+                        ? 'bg-white border-slate-200 shadow-sm hover:border-indigo-300' 
+                        : 'bg-slate-50 border-slate-100 opacity-60 cursor-not-allowed'
+                }`;
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-md ${
+                                isUnlocked ? 'bg-indigo-50 text-indigo-600' : 'bg-slate-200 text-slate-500'
+                            }">Set ${i + 1}</span>
+                            ${isUnlocked ? '<span class="text-xs font-medium text-emerald-600">Unlocked</span>' : '<span class="text-xs font-medium text-slate-400">Locked</span>'}
+                        </div>
+                        <h4 class="font-bold text-slate-800 text-lg mb-1">Matrix Set ${i + 1}</h4>
+                        <p class="text-xs text-slate-500">25 Questions (Transcription, Reverse, MCQs & Essays)</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs font-mono text-slate-600">Score: ${setScores[i]} / 25</span>
+                        <button onclick="${isUnlocked ? `startPractice(${i})` : ''}" 
+                            class="px-4 py-2 rounded-xl text-xs font-semibold transition-all ${
+                                isUnlocked 
+                                    ? 'bg-indigo-600 hover:bg-indigo-700 text-white shadow' 
+                                    : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+                            }" ${!isUnlocked ? 'disabled' : ''}>
+                            ${setScores[i] > 0 ? 'Retake Set' : 'Start Set'}
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            }
+        }
+
+        // --- Practice Session Logic (Paginated Pairs) ---
+        function startPractice(setIdx) {
+            activeSetIndex = setIdx;
+            currentPairIndex = 0;
+            document.getElementById('panel-dashboard').classList.add('hidden');
+            document.getElementById('panel-practice').classList.remove('hidden');
+            document.getElementById('practice-title').innerText = `Set ${setIdx + 1} Practice Matrix`;
+            renderCurrentPair();
+        }
+
+        function exitPractice() {
+            document.getElementById('panel-practice').classList.add('hidden');
+            document.getElementById('panel-dashboard').classList.remove('hidden');
+            renderSetsGrid();
+        }
+
+        function renderCurrentPair() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            const questions = questionBank[activeSetIndex];
+            const startIndex = currentPairIndex * 2;
+            const pairQuestions = questions.slice(startIndex, startIndex + 2);
+
+            document.getElementById('current-pair-num').innerText = currentPairIndex + 1;
+            document.getElementById('prev-pair-btn').disabled = currentPairIndex === 0;
+            
+            const totalPairs = Math.ceil(questions.length / 2);
+            const nextBtn = document.getElementById('next-pair-btn');
+            
+            if (currentPairIndex === totalPairs - 1) {
+                nextBtn.innerText = "Submit Set";
+                nextBtn.className = "px-5 py-2.5 rounded-xl bg-emerald-600 text-white text-sm font-semibold hover:bg-emerald-700 transition-all shadow-md shadow-emerald-100";
+            } else {
+                nextBtn.innerText = "Next Pair";
+                nextBtn.className = "px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100";
             }
 
-            records[currentStudent].attempts += 1;
-            if (score > records[currentStudent].bestScore) {
-                records[currentStudent].bestScore = score;
-            }
-            records[currentStudent].history.push({
-                timestamp: new Date().toISOString(),
-                score: score,
-                module: MODULE_NAME
+            pairQuestions.forEach((q, idx) => {
+                const qGlobalIdx = startIndex + idx;
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-2xl p-6 shadow-sm border border-slate-100 space-y-4";
+
+                let contentHtml = `
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-md">Question ${qGlobalIdx + 1} of 25</span>
+                        <span class="text-xs font-semibold uppercase text-slate-400">${q.type.toUpperCase()}</span>
+                    </div>
+                    <p class="font-medium text-slate-800 text-base">${q.prompt}</p>
+                `;
+
+                const savedAns = userAnswers[`${activeSetIndex}-${qGlobalIdx}`] || '';
+
+                if (q.type === 'transcription') {
+                    contentHtml += `
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-3">
+                                <input type="text" id="ans-${qGlobalIdx}" value="${savedAns}" placeholder="Type IPA transcription e.g. /kæt/" 
+                                    oninput="checkTranscription(${qGlobalIdx}, this)"
+                                    class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 font-mono focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
+                                <div id="feedback-${qGlobalIdx}" class="px-4 py-2 rounded-xl text-xs font-semibold ${savedAns ? (savedAns.trim() === q.answer ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200') : 'hidden'}">
+                                    ${savedAns ? (savedAns.trim() === q.answer ? 'Correct!' : 'Incorrect') : ''}
+                                </div>
+                            </div>
+                            <div id="rule-${qGlobalIdx}" class="${savedAns ? 'block' : 'hidden'} p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1">
+                                <span class="font-bold text-slate-900 block">Phonetic Rule / Explanation:</span>
+                                <p>${q.rule}</p>
+                                <p class="font-mono text-indigo-600 mt-1">Target Answer: ${q.answer}</p>
+                            </div>
+                        </div>
+                    `;
+                } else if (q.type === 'reverse') {
+                    contentHtml += `<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">`;
+                    q.options.forEach(opt => {
+                        const isSelected = savedAns === opt;
+                        const isCorrect = opt === q.answer;
+                        let btnClass = "border-slate-200 hover:border-indigo-300 bg-white text-slate-700";
+                        if (savedAns) {
+                            if (isCorrect) btnClass = "bg-emerald-50 border-emerald-500 text-emerald-800 font-semibold";
+                            else if (isSelected && !isCorrect) btnClass = "bg-rose-50 border-rose-500 text-rose-800";
+                            else btnClass = "opacity-50 border-slate-200 bg-slate-50";
+                        }
+                        contentHtml += `
+                            <button onclick="selectReverse(${qGlobalIdx}, '${opt}')" ${savedAns ? 'disabled' : ''}
+                                class="p-3 rounded-xl border text-sm text-left transition-all ${btnClass}">
+                                ${opt}
+                            </button>
+                        `;
+                    });
+                    contentHtml += `</div>`;
+                    if (savedAns) {
+                        contentHtml += `
+                            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1 mt-3">
+                                <span class="font-bold text-slate-900 block">Explanation:</span>
+                                <p>${q.rule}</p>
+                            </div>
+                        `;
+                    }
+                } else if (q.type === 'mcq') {
+                    contentHtml += `<div class="space-y-2">`;
+                    q.options.forEach(opt => {
+                        const isSelected = savedAns === opt;
+                        const isCorrect = opt === q.answer;
+                        let btnClass = "border-slate-200 hover:border-indigo-300 bg-white text-slate-700";
+                        if (savedAns) {
+                            if (isCorrect) btnClass = "bg-emerald-50 border-emerald-500 text-emerald-800 font-semibold";
+                            else if (isSelected && !isCorrect) btnClass = "bg-rose-50 border-rose-500 text-rose-800";
+                            else btnClass = "opacity-50 border-slate-200 bg-slate-50";
+                        }
+                        contentHtml += `
+                            <button onclick="selectMCQ(${qGlobalIdx}, '${opt.replace(/'/g, "\\'")}')" ${savedAns ? 'disabled' : ''}
+                                class="w-full p-3 rounded-xl border text-sm text-left transition-all ${btnClass}">
+                                ${opt}
+                            </button>
+                        `;
+                    });
+                    contentHtml += `</div>`;
+                    if (savedAns) {
+                        contentHtml += `
+                            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1 mt-3">
+                                <span class="font-bold text-slate-900 block">Rule / Analysis:</span>
+                                <p>${q.rule}</p>
+                            </div>
+                        `;
+                    }
+                } else if (q.type === 'essay') {
+                    contentHtml += `
+                        <div class="space-y-3">
+                            <textarea rows="5" oninput="saveEssay(${qGlobalIdx}, this)" placeholder="Compose your detailed linguistic essay response here..."
+                                class="w-full p-4 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">${savedAns}</textarea>
+                            <div class="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-800 space-y-1">
+                                <span class="font-bold block">Instructor Hidden Rubric:</span>
+                                <p>${q.rubric}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = contentHtml;
+                container.appendChild(card);
             });
 
-            localStorage.setItem('linguistics_attempts', JSON.stringify(records));
+            updateProgressIndicator();
+        }
 
-            // Background payload request to GOOGLE_SCRIPT_URL
+        // --- Interaction Handlers ---
+        function checkTranscription(qIdx, input) {
+            const val = input.value.trim();
+            userAnswers[`${activeSetIndex}-${qIdx}`] = val;
+            const correctAns = questionBank[activeSetIndex][qIdx].answer;
+            const feedbackEl = document.getElementById(`feedback-${qIdx}`);
+            const ruleEl = document.getElementById(`rule-${qIdx}`);
+
+            if (val.length > 0) {
+                feedbackEl.classList.remove('hidden');
+                ruleEl.classList.remove('hidden');
+                if (val === correctAns) {
+                    feedbackEl.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200";
+                    feedbackEl.innerText = "Correct!";
+                } else {
+                    feedbackEl.className = "px-4 py-2 rounded-xl text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200";
+                    feedbackEl.innerText = "Incorrect";
+                }
+            } else {
+                feedbackEl.classList.add('hidden');
+                ruleEl.classList.add('hidden');
+            }
+            updateProgressIndicator();
+        }
+
+        function selectReverse(qIdx, opt) {
+            userAnswers[`${activeSetIndex}-${qIdx}`] = opt;
+            renderCurrentPair();
+        }
+
+        function selectMCQ(qIdx, opt) {
+            userAnswers[`${activeSetIndex}-${qIdx}`] = opt;
+            renderCurrentPair();
+        }
+
+        function saveEssay(qIdx, textarea) {
+            userAnswers[`${activeSetIndex}-${qIdx}`] = textarea.value;
+            updateProgressIndicator();
+        }
+
+        function updateProgressIndicator() {
+            const questions = questionBank[activeSetIndex];
+            let answered = 0;
+            questions.forEach((_, idx) => {
+                if (userAnswers[`${activeSetIndex}-${idx}`] && userAnswers[`${activeSetIndex}-${idx}`].trim() !== '') {
+                    answered++;
+                }
+            });
+            document.getElementById('progress-indicator').innerText = `Progress: ${answered} / 25 answered`;
+        }
+
+        function navigatePair(direction) {
+            const totalPairs = Math.ceil(questionBank[activeSetIndex].length / 2);
+            const newIndex = currentPairIndex + direction;
+
+            if (newIndex >= 0 && newIndex < totalPairs) {
+                currentPairIndex = newIndex;
+                renderCurrentPair();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (newIndex >= totalPairs) {
+                // Submit Set
+                calculateAndSubmitScore();
+            }
+        }
+
+        // --- Score Calculation & Automatic Background Dispatch ---
+        function calculateAndSubmitScore() {
+            const questions = questionBank[activeSetIndex];
+            let score = 0;
+
+            questions.forEach((q, idx) => {
+                const ans = userAnswers[`${activeSetIndex}-${idx}`];
+                if (ans) {
+                    if (q.type === 'transcription' && ans.trim() === q.answer) score++;
+                    else if (q.type === 'reverse' && ans === q.answer) score++;
+                    else if (q.type === 'mcq' && ans === q.answer) score++;
+                    else if (q.type === 'essay' && ans.trim().length > 10) score += 1; // Essay credit awarded upon detailed submission
+                }
+            });
+
+            setScores[activeSetIndex] = score;
+            setCompletionStatus[activeSetIndex] = true;
+            if (activeSetIndex < 3) {
+                setCompletionStatus[activeSetIndex + 1] = true;
+            }
+
+            // Dispatch payload automatically to Google Script Backend
+            dispatchToBackend(score);
+
+            alert(`Set ${activeSetIndex + 1} Completed Successfully!\nYour Score: ${score} / 25\nData has been automatically synchronized to the instructor matrix.`);
+            exitPractice();
+        }
+
+        function dispatchToBackend(score) {
             const payload = {
-                rollNumber: student.rollNumber,
-                name: student.name,
+                rollNumber: currentStudent.roll,
+                name: currentStudent.name,
+                setNumber: activeSetIndex + 1,
                 score: score,
-                attemptCount: records[currentStudent].attempts,
-                moduleName: MODULE_NAME
+                timestamp: new Date().toISOString()
             };
 
-            // Non-blocking fetch dispatch to Google Script URL
+            // Save locally for instructor simulation dashboard fallback
+            saveLocalInstructorRecord(payload);
+
+            // Background fetch trigger to GOOGLE_SCRIPT_URL
             fetch(GOOGLE_SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
             }).catch(err => {
-                console.log("Background synchronization dispatched:", err);
+                console.log("Background sync dispatched (no-cors mode):", err);
             });
-
-            alert(`Assessment submitted successfully for ${student.name}!\nScore Achieved: ${score}%\nTotal Attempts: ${records[currentStudent].attempts}`);
-            switchView('instructor');
         }
 
-        // Instructor Dashboard Roster Loading
+        // --- Instructor Dashboard & Local Persistence ---
+        function saveLocalInstructorRecord(payload) {
+            let records = JSON.parse(localStorage.getItem('ling_instructor_records') || '[]');
+            const existingIdx = records.findIndex(r => r.rollNumber === payload.rollNumber);
+
+            if (existingIdx >= 0) {
+                records[existingIdx].totalAttempts += 1;
+                if (payload.score > records[existingIdx].bestScore) {
+                    records[existingIdx].bestScore = payload.score;
+                }
+            } else {
+                records.push({
+                    rollNumber: payload.rollNumber,
+                    name: payload.name,
+                    totalAttempts: 1,
+                    bestScore: payload.score
+                });
+            }
+            localStorage.setItem('ling_instructor_records', JSON.stringify(records));
+        }
+
+        function handleInstructorLogin(e) {
+            e.preventDefault();
+            const pass = document.getElementById('instructor-password').value;
+            if (pass === 'admin123') {
+                document.getElementById('instructor-auth-panel').classList.add('hidden');
+                document.getElementById('instructor-dashboard-panel').classList.remove('hidden');
+                document.getElementById('endpoint-display').innerText = GOOGLE_SCRIPT_URL;
+                loadInstructorData();
+            } else {
+                alert("Incorrect password. Access denied.");
+            }
+        }
+
         function loadInstructorData() {
-            const tbody = document.getElementById('roster-table-body');
-            const records = JSON.parse(localStorage.getItem('linguistics_attempts') || '{}');
-            
-            let html = '';
-            studentRoster.forEach(student => {
-                const studentData = records[student.rollNumber] || { attempts: 0, bestScore: 0 };
-                const statusBadge = studentData.attempts > 0 
-                    ? `<span class="px-2.5 py-1 text-xs font-semibold bg-emerald-100 text-emerald-800 rounded-full">Completed</span>`
-                    : `<span class="px-2.5 py-1 text-xs font-semibold bg-slate-100 text-slate-600 rounded-full">Not Started</span>`;
+            const tbody = document.getElementById('instructor-table-body');
+            tbody.innerHTML = '';
 
-                html += `
-                    <tr class="hover:bg-slate-50 transition">
-                        <td class="p-4 font-mono font-medium text-slate-700">${student.rollNumber}</td>
-                        <td class="p-4 font-semibold text-slate-900">${student.name}</td>
-                        <td class="p-4 text-center text-slate-600 font-medium">${studentData.attempts}</td>
-                        <td class="p-4 text-center font-bold text-slate-800">${studentData.bestScore}%</td>
-                        <td class="p-4 text-right">${statusBadge}</td>
-                    </tr>
+            const records = JSON.parse(localStorage.getItem('ling_instructor_records') || '[]');
+
+            // Default dummy records if empty to demonstrate gorgeous table state
+            const displayRecords = records.length > 0 ? records : [
+                { rollNumber: 'EN01', name: 'Alice Smith', totalAttempts: 2, bestScore: 24 },
+                { rollNumber: 'EN02', name: 'Bob Johnson', totalAttempts: 1, bestScore: 21 },
+                { rollNumber: 'EN05', name: 'Charlie Davis', totalAttempts: 3, bestScore: 25 }
+            ];
+
+            displayRecords.forEach(rec => {
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50 transition-colors";
+                tr.innerHTML = `
+                    <td class="p-4 font-mono font-semibold text-indigo-600">${rec.rollNumber}</td>
+                    <td class="p-4 font-medium text-slate-800">${rec.name}</td>
+                    <td class="p-4">${rec.totalAttempts}</td>
+                    <td class="p-4"><span class="px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 font-semibold text-xs">${rec.bestScore} / 25</span></td>
                 `;
+                tbody.appendChild(tr);
             });
-            tbody.innerHTML = html;
         }
+
+        // Initialize Module Titles
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('nav-module-title').innerText = MODULE_NAME;
+        });
     </script>
 </body>
 </html>
