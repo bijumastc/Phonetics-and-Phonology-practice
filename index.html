@@ -1,743 +1,163 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Linguistics Course Portal | Master 27-Question Matrix</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['Fira Code', 'monospace'],
-                    },
-                }
-            }
-        }
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linguistics Portal: Phonetics and Phonology</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://jsdelivr.net"></script>
+  <style>
+    body {
+      background-color: #FDFBF7;
+      color: #111111;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 18px;
+    }
+  </style>
 </head>
-<body class="h-full bg-[#FDFBF7] text-[#111111] flex flex-col font-sans antialiased text-lg">
+<body class="p-4 md:p-8">
 
-    <!-- Configuration Variables -->
-    <script>
-        const GOOGLE_SCRIPT_URL = "https://google.com";
-        const MODULE_NAME = "Phonetics and Phonology - Master 27-Question Matrix";
-    </script>
+  <!-- TOP NAVIGATION BAR -->
+  <nav class="max-w-5xl mx-auto mb-8 bg-neutral-900 text-white rounded-xl p-4 flex justify-between items-center shadow-md">
+    <span class="font-bold text-xl tracking-wide">🎓 Linguistics Lab Portal</span>
+    <div class="space-x-4">
+      <button onclick="switchView('student')" class="px-4 py-2 hover:bg-neutral-800 rounded transition font-medium">Student Practice</button>
+      <button onclick="switchView('instructor')" class="px-4 py-2 hover:bg-neutral-800 rounded transition font-medium">Instructor Dashboard</button>
+    </div>
+  </nav>
 
-    <!-- Top Navigation Bar -->
-    <header class="bg-[#1a202c] text-white shadow-md z-50">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-4">
-                <div class="bg-indigo-600 px-3 py-2 rounded-xl font-mono font-bold text-xl tracking-wider">IPA</div>
-                <div>
-                    <h1 class="font-bold text-xl leading-tight" id="nav-module-title">Phonetics and Phonology</h1>
-                    <span class="text-sm text-slate-300">Master 27-Question Evaluation Portal</span>
-                </div>
-            </div>
-            <div class="flex items-center space-x-2 bg-slate-800 p-1.5 rounded-2xl border border-slate-700">
-                <button id="nav-student-btn" onclick="switchView('student')" class="px-5 py-2 rounded-xl text-base font-semibold transition-all bg-indigo-600 text-white shadow">
-                    Student Practice Lab
-                </button>
-                <button id="nav-instructor-btn" onclick="switchView('instructor')" class="px-5 py-2 rounded-xl text-base font-semibold transition-all text-slate-300 hover:text-white">
-                    Instructor Dashboard
-                </button>
-            </div>
+  <!-- MAIN CONTAINER CONTAINER -->
+  <main class="max-w-5xl mx-auto">
+
+    <!-- 1. STUDENT AUTHENTICATION LOGIN CARD -->
+    <div id="login-screen" class="bg-white border-2 border-neutral-200 rounded-2xl p-6 md:p-10 shadow-lg text-center max-w-lg mx-auto">
+      <span class="text-4xl block mb-4">✨</span>
+      <h2 class="text-3xl font-extrabold mb-2 text-neutral-900">Student Authentication</h2>
+      <p class="text-neutral-600 mb-6 text-base">Enter your details to access the Master 27-Question matrix across 4 sets (108 questions total).</p>
+      
+      <div class="space-y-4 text-left">
+        <div>
+          <label class="block font-bold text-neutral-800 mb-1 text-base">Full Name</label>
+          <input type="text" id="input-name" placeholder="e.g. Jane Doe" class="w-full border-2 border-neutral-300 rounded-xl p-3 focus:outline-none focus:border-neutral-900 bg-neutral-50 text-lg">
         </div>
-    </header>
-
-    <!-- Main Container -->
-    <main class="flex-1 max-w-6xl w-full mx-auto p-6 lg:p-10 overflow-y-auto">
-
-        <!-- ================= STUDENT VIEW ================= -->
-        <div id="view-student" class="space-y-8">
-            
-            <!-- Login Panel -->
-            <div id="panel-login" class="max-w-lg mx-auto bg-white rounded-3xl shadow-xl border border-slate-200 p-10 my-10">
-                <div class="text-center mb-8">
-                    <div class="inline-block bg-indigo-50 text-indigo-600 p-4 rounded-2xl mb-4 text-2xl font-bold">✨</div>
-                    <h2 class="text-3xl font-bold text-[#111111]">Student Authentication</h2>
-                    <p class="text-base text-slate-600 mt-2">Enter your details to access the Master 27-Question matrix across 4 sets (108 questions total).</p>
-                </div>
-                
-                <form id="login-form" onsubmit="handleLogin(event)" class="space-y-5">
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 uppercase tracking-wider mb-2">Full Name</label>
-                        <input type="text" id="input-name" required placeholder="e.g. Jane Doe" 
-                            class="w-full px-5 py-3.5 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-lg">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 uppercase tracking-wider mb-2">Roll Number</label>
-                        <input type="text" id="input-roll" required placeholder="e.g. 1045 or EN01" 
-                            class="w-full px-5 py-3.5 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-lg">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 uppercase tracking-wider mb-2">College Name</label>
-                        <input type="text" id="input-college" required placeholder="e.g. University College of Humanities" 
-                            class="w-full px-5 py-3.5 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-lg">
-                    </div>
-                    <button type="submit" id="login-submit-btn" 
-                        class="w-full py-4 rounded-2xl bg-indigo-600 text-white font-semibold text-lg shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition-all cursor-pointer">
-                        Enter Practice Lab
-                    </button>
-                </form>
-            </div>
-
-            <!-- Dashboard / Set Selector Panel -->
-            <div id="panel-dashboard" class="hidden space-y-8">
-                <div class="bg-[#1a202c] text-white p-8 rounded-3xl shadow-lg flex flex-col md:flex-row items-center justify-between gap-6">
-                    <div>
-                        <span class="text-xs uppercase tracking-widest text-indigo-400 font-semibold">Active Student Portal</span>
-                        <h2 class="text-3xl font-bold mt-1" id="display-student-name">Student Name</h2>
-                        <p class="text-base text-slate-300 font-mono mt-1">Roll ID: <span id="display-student-roll" class="text-indigo-300 font-semibold"></span> | College: <span id="display-student-college" class="text-indigo-300 font-semibold"></span></p>
-                    </div>
-                    <button onclick="handleLogout()" class="text-sm bg-white/10 hover:bg-white/20 px-5 py-2.5 rounded-xl border border-white/10 transition-all font-medium cursor-pointer">
-                        Switch Student
-                    </button>
-                </div>
-
-                <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-200">
-                    <h3 class="text-2xl font-bold text-[#111111] mb-2">Curriculum Sets (27 Questions each)</h3>
-                    <p class="text-base text-slate-600 mb-8">Complete sets sequentially across Sections A to E. Enjoy motivational smiley rewards upon completing each section!</p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6" id="sets-grid">
-                        <!-- Populated by JS -->
-                    </div>
-                </div>
-            </div>
-
-            <!-- Active Practice Session Panel -->
-            <div id="panel-practice" class="hidden space-y-8">
-                <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex items-center justify-between">
-                    <button onclick="exitPractice()" class="flex items-center space-x-2 text-base text-slate-700 hover:text-indigo-600 font-semibold transition-colors cursor-pointer">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                        <span>Back to Sets</span>
-                    </button>
-                    <div class="text-center">
-                        <h3 class="text-xl font-bold text-[#111111]" id="practice-title">Set 1 Practice Matrix</h3>
-                        <span class="text-sm text-slate-600" id="section-tracker-label">Section A: Transcription Practice (Pair <span id="current-pair-num">1</span> of <span id="total-pair-num">3</span>)</span>
-                    </div>
-                    <div class="w-28"></div>
-                </div>
-
-                <!-- Section Banner & Motivational Badge Container -->
-                <div id="section-banner" class="hidden bg-emerald-50 border border-emerald-200 p-6 rounded-3xl text-center space-y-2">
-                    <div class="text-4xl" id="section-reward-emoji">🌟</div>
-                    <h4 class="text-2xl font-bold text-emerald-900" id="section-reward-title">Section Completed!</h4>
-                    <p class="text-base text-emerald-700" id="section-reward-desc">Great job! Keep up the brilliant momentum!</p>
-                </div>
-
-                <!-- Questions Window -->
-                <div id="questions-container" class="space-y-8">
-                    <!-- Populated dynamically -->
-                </div>
-
-                <!-- Pagination Footer -->
-                <div class="flex items-center justify-between bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-                    <button id="prev-pair-btn" onclick="navigatePair(-1)" class="px-6 py-3 rounded-2xl border border-slate-300 text-slate-700 text-base font-semibold hover:bg-slate-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">
-                        Previous Pair
-                    </button>
-                    <div class="text-base font-semibold text-slate-700" id="progress-indicator">Progress: 0 / 27 answered</div>
-                    <button id="next-pair-btn" onclick="navigatePair(1)" class="px-6 py-3 rounded-2xl bg-indigo-600 text-white text-base font-semibold hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100 cursor-pointer">
-                        Next Pair
-                    </button>
-                </div>
-            </div>
-
+        <div>
+          <label class="block font-bold text-neutral-800 mb-1 text-base">Roll Number</label>
+          <input type="text" id="input-roll" placeholder="e.g. 1045 or EN01" class="w-full border-2 border-neutral-300 rounded-xl p-3 focus:outline-none focus:border-neutral-900 bg-neutral-50 text-lg">
         </div>
-
-        <!-- ================= INSTRUCTOR VIEW ================= -->
-        <div id="view-instructor" class="hidden space-y-8">
-            <div id="instructor-auth-panel" class="max-w-md mx-auto bg-white rounded-3xl shadow-xl border border-slate-200 p-10 my-12">
-                <div class="text-center mb-6">
-                    <div class="inline-block bg-slate-100 text-slate-700 p-4 rounded-2xl mb-4 text-2xl font-bold">🔒</div>
-                    <h2 class="text-3xl font-bold text-[#111111]">Instructor Gateway</h2>
-                    <p class="text-base text-slate-600 mt-2">Enter password to view remote student progress matrix.</p>
-                </div>
-                <form onsubmit="handleInstructorLogin(event)" class="space-y-5">
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-700 uppercase tracking-wider mb-2">Password</label>
-                        <input type="password" id="instructor-password" required placeholder="••••••••" 
-                            class="w-full px-5 py-3.5 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-lg">
-                    </div>
-                    <button type="submit" class="w-full py-4 rounded-2xl bg-[#111111] text-white font-semibold text-lg shadow-lg hover:bg-slate-800 transition-all cursor-pointer">
-                        Access Dashboard
-                    </button>
-                </form>
-            </div>
-
-            <div id="instructor-dashboard-panel" class="hidden space-y-8">
-                <div class="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
-                    <div class="p-8 border-b border-slate-200 flex items-center justify-between">
-                        <div>
-                            <h2 class="text-2xl font-bold text-[#111111]">Student Progress Matrix</h2>
-                            <p class="text-base text-slate-600 mt-1">Live records mapped from endpoint: <span class="font-mono text-indigo-600" id="endpoint-display"></span></p>
-                        </div>
-                        <button onclick="loadInstructorData()" class="px-5 py-2.5 rounded-2xl bg-indigo-50 text-indigo-600 hover:bg-indigo-100 text-base font-semibold transition-all cursor-pointer">
-                            Refresh Data
-                        </button>
-                    </div>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
-                            <thead>
-                                <tr class="bg-slate-50 text-slate-600 uppercase text-sm tracking-wider border-b border-slate-200">
-                                    <th class="p-5 font-semibold">Roll Number</th>
-                                    <th class="p-5 font-semibold">Name</th>
-                                    <th class="p-5 font-semibold">College</th>
-                                    <th class="p-5 font-semibold">Total Attempts</th>
-                                    <th class="p-5 font-semibold">Best Score</th>
-                                </tr>
-                            </thead>
-                            <tbody id="instructor-table-body" class="divide-y divide-slate-200 text-base text-slate-800">
-                                <!-- Populated dynamically -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+        <div>
+          <label class="block font-bold text-neutral-800 mb-1 text-base">College Name</label>
+          <input type="text" id="input-college" placeholder="e.g. University College of Humanities" class="w-full border-2 border-neutral-300 rounded-xl p-3 focus:outline-none focus:border-neutral-900 bg-neutral-50 text-lg">
         </div>
-
-    </main>
-
-    <!-- Application Script Block -->
-    <script>
-        // --- State Management ---
-        let currentStudent = { name: '', roll: '', college: '' };
-        let activeSetIndex = 0;
-        let currentGlobalIndex = 0; // 0 to 26 (27 questions per set)
-        let setCompletionStatus = [true, false, false, false];
-        let userAnswers = {}; 
-        let submittedQuestions = {}; 
-        let setScores = [0, 0, 0, 0];
-
-        // --- IPA Virtual Keyboard Symbols ---
-        const ipaSymbols = [
-            'ɪ', 'iː', 'e', 'æ', 'ʌ', 'ɑː', 'ɒ', 'ɔː', 'ʊ', 'uː', 
-            'ɜː', 'ə', 'eɪ', 'aɪ', 'ɔɪ', 'əʊ', 'aʊ', 'ɪə', 'eə', 'ʊə', 
-            'θ', 'ð', 'ʃ', 'ʒ', 'ŋ', 'tʃ', 'dʒ', 'j', 'w', 'ˈ'
-        ];
-
-        function getSectionMeta(qIdx) {
-            if (qIdx <= 4) return { sec: 'A', name: 'Section A: Transcription Practice', rewardEmoji: '🌟', rewardTitle: 'Section A Completed! Great job!', rewardDesc: 'You have mastered the IPA transcription practice pairs!' };
-            if (qIdx <= 9) return { sec: 'B', name: 'Section B: Reverse Transcription Identification', rewardEmoji: '🎉', rewardTitle: 'Section B Completed! Keep it up!', rewardDesc: 'Brilliant recognition of phonetic spelling patterns!' };
-            if (qIdx <= 19) return { sec: 'C', name: 'Section C: Short Answer Conceptual Questions', rewardEmoji: '🎓', rewardTitle: 'Section C Completed! Outstanding!', rewardDesc: 'Your phonetic & phonological knowledge is shining!' };
-            if (qIdx <= 24) return { sec: 'D', name: 'Section D: Paragraph Data Analysis', rewardEmoji: '✨', rewardTitle: 'Section D Completed! Phenomenal!', rewardDesc: 'Exceptional data analysis and allophonic breakdown!' };
-            return { sec: 'E', name: 'Section E: Targeted Essay Questions', rewardEmoji: '🏆', rewardTitle: 'Final Set Completed! Champion!', rewardDesc: 'You have completed the entire 27-question master matrix!' };
-        }
-
-        // --- Question Bank Construction (108 Questions across 4 Sets) ---
-        const questionBank = [];
-
-        function buildQuestionBank() {
-            for (let setNum = 0; setNum < 4; setNum++) {
-                const setQs = [];
-
-                // SECTION A: Transcription (5 Qs)
-                setQs.push(
-                    { type: 'transcription', prompt: `Set ${setNum+1} - Q1: Transcribe the monosyllabic word 'cat' in RP:`, answer: "/kæt/", rule: "Monosyllabic CVC structure. /æ/ is near-open front unrounded vowel." },
-                    { type: 'transcription', prompt: `Set ${setNum+1} - Q2: Transcribe the disyllabic word 'better' in RP:`, answer: "/ˈbetə/", rule: "Disyllabic word with primary stress on the first syllable and schwa /ə/ in the final unstressed syllable." },
-                    { type: 'transcription', prompt: `Set ${setNum+1} - Q3: Transcribe the trisyllabic word 'beautiful' in RP:`, answer: "/ˈbjuːtɪfl/", rule: "Trisyllabic structure with diphthong /juː/, lax vowel /ɪ/, and syllabic lateral /l/." },
-                    { type: 'transcription', prompt: `Set ${setNum+1} - Q4: Transcribe the polysyllabic word 'linguistics' in RP:`, answer: "/lɪŋˈɡwɪstɪks/", rule: "Polysyllabic word featuring secondary stress on /lɪŋ/ and primary stress on /ɡwɪs/ with velar nasal /ŋ/." },
-                    { type: 'transcription', prompt: `Set ${setNum+1} - Q5: Transcribe the monosyllabic word 'spin' in RP:`, answer: "/spɪn/", rule: "Consonant cluster onset /sp/, lax vowel /ɪ/, and alveolar nasal coda /n/." }
-                );
-
-                // SECTION B: Reverse Transcription MCQs (5 Qs)
-                setQs.push(
-                    { type: 'reverse', prompt: `Set ${setNum+1} - Q6: Select correct spelling for phonetic transcription: /dɒɡ/`, options: ["dog", "dug", "dig", "dock"], answer: "dog", rule: "/ɒ/ represents the open back rounded vowel in RP 'dog'." },
-                    { type: 'reverse', prompt: `Set ${setNum+1} - Q7: Select correct spelling for phonetic transcription: /ˈwɪndəʊ/`, options: ["window", "wander", "wonder", "windy"], answer: "window", rule: "Disyllabic word with primary stress and closing diphthong /əʊ/." },
-                    { type: 'reverse', prompt: `Set ${setNum+1} - Q8: Select correct spelling for phonetic transcription: /ˈmæɡɪzɪn/`, options: ["magazine", "manager", "magnet", "magic"], answer: "magazine", rule: "Trisyllabic structure with stress assignment on the ultimate syllable." },
-                    { type: 'reverse', prompt: `Set ${setNum+1} - Q9: Select correct spelling for phonetic transcription: /ˌjuːnɪˈvɜːsɪti/`, options: ["university", "universe", "unify", "unique"], answer: "university", rule: "Polysyllabic word with secondary stress on first syllable and primary stress on fourth." },
-                    { type: 'reverse', prompt: `Set ${setNum+1} - Q10: Select correct spelling for phonetic transcription: /ʃiːp/`, options: ["ship", "sheep", "shape", "sharp"], answer: "sheep", rule: "Long close front unrounded vowel /iː/ distinguishing 'sheep' from lax /ɪ/." }
-                );
-
-                // SECTION C: Short Answer (10 Qs - Conceptual 2-mark)
-                setQs.push(
-                    { type: 'short', prompt: `Set ${setNum+1} - Q11: What is the primary articulatory difference between plosives and fricatives?`, answer: "complete closure vs turbulent airflow", rule: "Plosives involve a complete oral closure followed by a sudden release burst, whereas fricatives involve narrow constriction producing continuous turbulent friction noise." },
-                    { type: 'short', prompt: `Set ${setNum+1} - Q12: Define the term 'phoneme' in structural phonology.`, answer: "abstract contrastive sound unit", rule: "A phoneme is the smallest distinctive sound unit in a language that can distinguish meaning (demonstrated via minimal pairs)." },
-                    { type: 'short', prompt: `Set ${setNum+1} - Q13: Explain what is meant by 'complementary distribution' among allophones.`, answer: "mutually exclusive environments", rule: "Complementary distribution occurs when two allophones never appear in the same phonetic context, rendering their distribution predictable." },
-                    { type: 'short', prompt: `Set ${setNum+1} - Q14: What distinguishes tense vowels from lax vowels in English?`, answer: "duration and muscular tension", rule: "Tense vowels are produced with greater muscular effort and tongue displacement, typically longer in duration, whereas lax vowels are shorter and more centralized." },
-                    { type: 'short', prompt: `Set ${setNum+1} - Q15: What is the acoustic property corresponding primarily to vowel height?`, answer: "first formant frequency f1", rule: "High vowels have low F1 frequencies due to pharyngeal cavity resonance, while low vowels exhibit high F1 frequencies." },
-                    { type: 'short', prompt: `Set ${setNum+1} - Q16: Describe the articulatory mechanism of nasal sounds like [m] and [n].`, answer: "lowered velum with oral closure", rule: "Nasals require complete closure in the oral cavity paired with a lowered velum, allowing air to resonate through the nasal tract." },
-                    { type: 'short', prompt: `Set ${setNum+1} - Q17: What is Voice Onset Time (VOT)?`, answer: "time between stop release and vocal voicing", rule: "VOT measures the temporal interval between the release of a plosive burst and the onset of periodic vocal fold vibration." },
-                    { type: 'short', prompt: `Set ${setNum+1} - Q18: What is an epenthetic vowel or consonant?`, answer: "inserted transition sound", rule: "Epenthesis is the insertion of a sound segment into a word during speech to ease articulatory transitions (e.g., [p] in 'hamster')." },
-                    { type: 'short', prompt: `Set ${setNum+1} - Q19: Define the Sonority Sequencing Principle (SSP).`, answer: "syllable sonority peak at nucleus", rule: "The SSP states that syllable structure rises in sonority from onset margins to a peak at the nucleus and falls toward the coda." },
-                    { type: 'short', prompt: `Set ${setNum+1} - Q20: What is neutralisation in phonological theory?`, answer: "suspension of phonemic contrast", rule: "Neutralisation occurs when a phonemic contrast is suspended in specific phonetic environments (e.g., devoicing of final obstruents)." }
-                );
-
-                // SECTION D: Paragraph Data Analysis (5 Qs)
-                setQs.push(
-                    { type: 'paragraph', prompt: `Set ${setNum+1} - Q21: Context: English Plural Allophones ('cats' [kæts], 'dogs' [dɒɡz], 'buses' [bʌsɪz]).\nQuestion: What phonological rule conditions the voiced alveolar suffix [z]?`, answer: "preceding voiced segment", rule: "Rule: The plural suffix surfaces as [z] when attached to stems ending in a voiced non-sibilant sound." },
-                    { type: 'paragraph', prompt: `Set ${setNum+1} - Q22: Context: Connected Speech Assimilation ('ten books' -> [tɛm bʊks]).\nQuestion: What assimilation process converts /n/ into [m] before /b/?`, answer: "place assimilation", rule: "Rule: Alveolar nasal /n/ assimilates to the bilabial place of articulation of the following stop /b/." },
-                    { type: 'paragraph', prompt: `Set ${setNum+1} - Q23: Context: Aspiration in English Stops ('pin' [pʰɪn] vs 'spin' [spɪn]).\nQuestion: Why is the stop in 'spin' unaspirated?`, answer: "after s", rule: "Rule: Voiceless plosives are unaspirated when immediately preceded by /s/ in the syllable onset." },
-                    { type: 'paragraph', prompt: `Set ${setNum+1} - Q24: Context: Syllabic Consonants ('bottle' [bɒtl̩]).\nQuestion: What term describes sonorant consonants acting as syllable peaks?`, answer: "syllabic consonant", rule: "Rule: Unstressed sonorants like /l/ and /n/ can function directly as syllable nuclei without an adjacent vowel." },
-                    { type: 'paragraph', prompt: `Set ${setNum+1} - Q25: Context: Velarized Lateral Approximant ('feel' [fiːɫ]).\nQuestion: What phonetic environment conditions dark l [ɫ] in English?`, answer: "syllable coda", rule: "Rule: Lateral approximant /l/ is velarized (dark l) when occurring in syllable codas or word-finally." }
-                );
-
-                // SECTION E: Targeted Essay Questions (2 Qs)
-                setQs.push(
-                    { type: 'essay', prompt: `Set ${setNum+1} - Q26: Provide a comprehensive classification of all English consonant sounds using three-label descriptors (Voicing, Place of Articulation, and Manner of Articulation) along with clear word examples.`, rubric: "Rubric: Must cover Voicing (voiced/voiceless), Place (bilabial through glottal), Manner (plosive, fricative, affricate, nasal, approximant, lateral), and provide concrete word examples for each category." },
-                    { type: 'essay', prompt: `Set ${setNum+1} - Q27: Classify and detail all English vowel sounds (monophthongs and diphthongs), illustrating their structural positions with backness/height parameters and concrete word examples.`, rubric: "Rubric: Detailed inventory of monophthongs (front, central, back across close to open) and diphthongs (closing and centring), height/backness parameters, and word examples." }
-                );
-
-                questionBank.push(setQs);
-            }
-        }
-
-        buildQuestionBank();
-
-        // --- Navigation & View Switching ---
-        function switchView(view) {
-            const studentBtn = document.getElementById('nav-student-btn');
-            const instructorBtn = document.getElementById('nav-instructor-btn');
-            const viewStudent = document.getElementById('view-student');
-            const viewInstructor = document.getElementById('view-instructor');
-
-            if (view === 'student') {
-                studentBtn.className = "px-5 py-2 rounded-xl text-base font-semibold transition-all bg-indigo-600 text-white shadow";
-                instructorBtn.className = "px-5 py-2 rounded-xl text-base font-semibold transition-all text-slate-300 hover:text-white";
-                viewStudent.classList.remove('hidden');
-                viewInstructor.classList.add('hidden');
-            } else {
-                instructorBtn.className = "px-5 py-2 rounded-xl text-base font-semibold transition-all bg-slate-800 text-white shadow";
-                studentBtn.className = "px-5 py-2 rounded-xl text-base font-semibold transition-all text-slate-300 hover:text-white";
-                viewInstructor.classList.remove('hidden');
-                viewStudent.classList.add('hidden');
-            }
-        }
-
-        // --- Critical Login Button Fix Implementation ---
-        function handleLogin(e) {
-            e.preventDefault();
-            const nameInput = document.getElementById('input-name');
-            const rollInput = document.getElementById('input-roll');
-            const collegeInput = document.getElementById('input-college');
-
-
-            const name = nameInput.value.trim();
-            const roll = rollInput.value.trim();
-            const college = collegeInput.value.trim();
-
-            if (!name || !roll || !college) {
-                alert("Please fill out all fields before entering the practice lab.");
-                return;
-            }
-
-            currentStudent = { name, roll, college };
-            localStorage.setItem('loggedInState', JSON.stringify(currentStudent));
-
-            document.getElementById('display-student-name').innerText = name;
-            document.getElementById('display-student-roll').innerText = roll;
-            document.getElementById('login-screen').style.display = 'none';
-            document.getElementById('practice-lab-screen').style.display = 'block';
-
-            document.getElementById('display-student-college').innerText = college;
-
-            // Hide login container card and reveal dashboard/practice layout instantly
-            document.getElementById('panel-login').classList.add('hidden');
-            document.getElementById('panel-dashboard').classList.remove('hidden');
-            renderSetsGrid();
-        }
-
-        function handleLogout() {
-            localStorage.removeItem('loggedInState');
-            currentStudent = { name: '', roll: '', college: '' };
-            document.getElementById('input-name').value = '';
-            document.getElementById('input-roll').value = '';
-            document.getElementById('input-college').value = '';
-            document.getElementById('panel-dashboard').classList.add('hidden');
-            document.getElementById('panel-login').classList.remove('hidden');
-        }
-
-        // Check persistent login state on page load
-        window.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('nav-module-title').innerText = MODULE_NAME;
-            const savedLogin = localStorage.getItem('loggedInState');
-            if (savedLogin) {
-                try {
-                    currentStudent = JSON.parse(savedLogin);
-                    if (currentStudent.name && currentStudent.roll) {
-                        document.getElementById('display-student-name').innerText = currentStudent.name;
-                        document.getElementById('display-student-roll').innerText = currentStudent.roll;
-                        document.getElementById('display-student-college').innerText = currentStudent.college || '';
-                        document.getElementById('panel-login').classList.add('hidden');
-                        document.getElementById('panel-dashboard').classList.remove('hidden');
-                        renderSetsGrid();
-                    }
-                } catch(e) {
-                    localStorage.removeItem('loggedInState');
-                }
-            }
-        });
-
-        // --- Sets & Grid Rendering ---
-        function renderSetsGrid() {
-            const grid = document.getElementById('sets-grid');
-            grid.innerHTML = '';
-
-            for (let i = 0; i < 4; i++) {
-                const isUnlocked = setCompletionStatus[i] || i === 0 || setCompletionStatus[i-1];
-                
-                const card = document.createElement('div');
-                card.className = `p-8 rounded-3xl border transition-all flex flex-col justify-between ${
-                    isUnlocked 
-                        ? 'bg-white border-slate-300 shadow-sm hover:border-indigo-400' 
-                        : 'bg-slate-50 border-slate-200 opacity-60 cursor-not-allowed'
-                }`;
-
-                card.innerHTML = `
-                    <div>
-                        <div class="flex items-center justify-between mb-4">
-                            <span class="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-lg ${
-                                isUnlocked ? 'bg-indigo-50 text-indigo-600' : 'bg-slate-200 text-slate-500'
-                            }">Set ${i + 1}</span>
-                            ${isUnlocked ? '<span class="text-sm font-semibold text-emerald-600">Unlocked</span>' : '<span class="text-sm font-semibold text-slate-400">Locked</span>'}
-                        </div>
-                        <h4 class="font-bold text-[#111111] text-xl mb-2">Master Matrix Set ${i + 1}</h4>
-                        <p class="text-base text-slate-600">27 Questions across Sections A to E with motivational rewards.</p>
-                    </div>
-                    <div class="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between">
-                        <span class="text-base font-mono font-semibold text-slate-700">Score: ${setScores[i]} / 27</span>
-                        <button onclick="${isUnlocked ? `startPractice(${i})` : ''}" 
-                            class="px-5 py-2.5 rounded-xl text-base font-semibold transition-all cursor-pointer ${
-                                isUnlocked 
-                                    ? 'bg-indigo-600 hover:bg-indigo-700 text-white shadow' 
-                                    : 'bg-slate-200 text-slate-400 cursor-not-allowed'
-                            }" ${!isUnlocked ? 'disabled' : ''}>
-                            ${setScores[i] > 0 ? 'Retake Set' : 'Start Set'}
-                        </button>
-                    </div>
-                `;
-                grid.appendChild(card);
-            }
-        }
-
-        // --- Practice Session Logic (Paginated Pairs) ---
-        function startPractice(setIdx) {
-            activeSetIndex = setIdx;
-            currentGlobalIndex = 0;
-            document.getElementById('panel-dashboard').classList.add('hidden');
-            document.getElementById('panel-practice').classList.remove('hidden');
-            document.getElementById('practice-title').innerText = `Set ${setIdx + 1} Practice Matrix`;
-            renderCurrentPair();
-        }
-
-        function exitPractice() {
-            document.getElementById('panel-practice').classList.add('hidden');
-            document.getElementById('panel-dashboard').classList.remove('hidden');
-            renderSetsGrid();
-        }
-
-        // --- Insert IPA Symbol ---
-        function insertIpaSymbol(qIdx, symbol) {
-            const inputEl = document.getElementById(`input-${qIdx}`);
-            if (!inputEl) return;
-
-            const startPos = inputEl.selectionStart;
-            const endPos = inputEl.selectionEnd;
-            const text = inputEl.value;
-
-            inputEl.value = text.substring(0, startPos) + symbol + text.substring(endPos, text.length);
-            inputEl.selectionStart = inputEl.selectionEnd = startPos + symbol.length;
-            inputEl.focus();
-        }
-
-        function renderCurrentPair() {
-            const container = document.getElementById('questions-container');
-            container.innerHTML = '';
-
-            const questions = questionBank[activeSetIndex];
-            const startIndex = currentGlobalIndex;
-            const pairQuestions = questions.slice(startIndex, startIndex + 2);
-
-            const totalPairs = Math.ceil(questions.length / 2);
-            const currentPairNum = Math.floor(startIndex / 2) + 1;
-
-            document.getElementById('current-pair-num').innerText = currentPairNum;
-            document.getElementById('total-pair-num').innerText = totalPairs;
-            document.getElementById('prev-pair-btn').disabled = currentGlobalIndex === 0;
-
-            const meta = getSectionMeta(startIndex);
-            document.getElementById('section-tracker-label').innerText = `${meta.name} (Pair ${currentPairNum} of ${totalPairs})`;
-
-            const sectionBanner = document.getElementById('section-banner');
-            if (startIndex > 0 && startIndex % 5 === 0) {
-                sectionBanner.classList.remove('hidden');
-                document.getElementById('section-reward-emoji').innerText = meta.rewardEmoji;
-                document.getElementById('section-reward-title').innerText = meta.rewardTitle;
-                document.getElementById('section-reward-desc').innerText = meta.rewardDesc;
-            } else {
-                sectionBanner.classList.add('hidden');
-            }
-
-            const nextBtn = document.getElementById('next-pair-btn');
-            if (startIndex + 2 >= questions.length) {
-                nextBtn.innerText = "Submit Set";
-                nextBtn.className = "px-6 py-3 rounded-2xl bg-emerald-600 text-white text-base font-semibold hover:bg-emerald-700 transition-all shadow-md shadow-emerald-100 cursor-pointer";
-            } else {
-                nextBtn.innerText = "Next Pair";
-                nextBtn.className = "px-6 py-3 rounded-2xl bg-indigo-600 text-white text-base font-semibold hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100 cursor-pointer";
-            }
-
-            pairQuestions.forEach((q, idx) => {
-                const qGlobalIdx = startIndex + idx;
-                const card = document.createElement('div');
-                card.className = "bg-white rounded-3xl p-8 shadow-sm border border-slate-200 space-y-6";
-
-                const savedAns = userAnswers[`${activeSetIndex}-${qGlobalIdx}`] || '';
-                const isSubmitted = submittedQuestions[`${activeSetIndex}-${qGlobalIdx}`] || false;
-
-                let contentHtml = `
-                    <div class="flex items-center justify-between">
-                        <span class="text-sm font-bold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-3.5 py-1.5 rounded-xl">Question ${qGlobalIdx + 1} of 27</span>
-                        <span class="text-sm font-semibold uppercase text-slate-500">${q.type.toUpperCase()}</span>
-                    </div>
-                    <p class="font-bold text-[#111111] text-2xl whitespace-pre-line leading-snug">${q.prompt}</p>
-                `;
-
-                if (q.type === 'transcription' || q.type === 'paragraph' || q.type === 'short' || q.type === 'essay') {
-                    const isEssay = q.type === 'essay';
-                    const isShort = q.type === 'short';
-                    const requiresIpa = q.type === 'transcription' || q.type === 'paragraph';
-
-                    let ipaKeyboardHtml = '';
-                    if (requiresIpa && !isSubmitted) {
-                        ipaKeyboardHtml = `
-                            <div class="bg-slate-50 border border-slate-200 p-3 rounded-2xl space-y-2">
-                                <span class="text-xs font-bold text-slate-600 uppercase tracking-wider block">IPA Virtual Keyboard (Click symbol to insert)</span>
-                                <div class="flex flex-wrap gap-1.5">
-                        `;
-                        ipaSymbols.forEach(sym => {
-                            ipaKeyboardHtml += `
-                                <button type="button" onclick="insertIpaSymbol(${qGlobalIdx}, '${sym}')" 
-                                    class="w-9 h-9 bg-white hover:bg-indigo-50 border border-slate-200 hover:border-indigo-300 rounded-xl text-sm font-mono font-bold text-slate-800 shadow-sm transition-all flex items-center justify-center cursor-pointer">
-                                    ${sym}
-                                </button>
-                            `;
-                        });
-                        ipaKeyboardHtml += `</div></div>`;
-                    }
-
-                    const submitButtonLabel = isShort ? "Reveal Ideal Model Answer & Linguistics Rule" : "Submit Answer";
-
-                    contentHtml += `
-                        <div class="space-y-4">
-                            ${isEssay || isShort ? `
-                                <textarea id="input-${qGlobalIdx}" rows="${isEssay ? 6 : 3}" ${isSubmitted ? 'disabled' : ''} placeholder="${isShort ? 'Type your conceptual answer here...' : 'Compose your comprehensive response here...'}"
-                                    class="w-full p-5 rounded-2xl border border-slate-300 text-lg font-mono focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">${savedAns}</textarea>
-                            ` : `
-                                <div class="flex items-center space-x-4">
-                                    <input type="text" id="input-${qGlobalIdx}" value="${savedAns}" ${isSubmitted ? 'disabled' : ''} placeholder="${q.type === 'transcription' ? 'Type IPA transcription e.g. /kæt/' : 'Type your linguistic analysis...'}" 
-                                        class="flex-1 px-5 py-3.5 rounded-2xl border border-slate-300 font-mono text-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
-                                    <button onclick="submitTextAnswer(${qGlobalIdx})" ${isSubmitted ? 'disabled' : ''}
-                                        class="px-6 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-base font-semibold transition-all shadow-sm cursor-pointer ${isSubmitted ? 'opacity-50 cursor-not-allowed' : ''}">
-                                        ${isSubmitted ? 'Submitted' : submitButtonLabel}
-                                    </button>
-                                </div>
-                            `}
-
-                            ${ipaKeyboardHtml}
-
-                            ${isEssay || isShort ? `
-                                <button onclick="submitTextAnswer(${qGlobalIdx})" ${isSubmitted ? 'disabled' : ''}
-                                    class="px-6 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-base font-semibold transition-all shadow-sm cursor-pointer ${isSubmitted ? 'opacity-50 cursor-not-allowed' : ''}">
-                                    ${isSubmitted ? 'Submitted' : submitButtonLabel}
-                                </button>
-                            ` : ''}
-
-                            <div id="feedback-${qGlobalIdx}" class="${isSubmitted ? 'block' : 'hidden'} p-5 rounded-2xl text-base font-semibold ${
-                                isEssay || isShort
-                                    ? 'bg-indigo-50 text-indigo-950 border border-indigo-200' 
-                                    : (isAnswerCorrect(qGlobalIdx, q) ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-rose-50 text-rose-800 border border-rose-200')
-                            }">
-                                ${isEssay || isShort ? 'Response recorded successfully. Review model breakdown below.' : (isAnswerCorrect(qGlobalIdx, q) ? 'Correct Answer! ✨' : 'Incorrect. Review explanation below.')}
-                            </div>
-
-                            <div id="rule-${qGlobalIdx}" class="${isSubmitted ? 'block' : 'hidden'} p-6 rounded-2xl bg-slate-50 border border-slate-300 text-base text-slate-800 space-y-2">
-                                <span class="font-bold text-[#111111] block text-lg">${isEssay ? 'Instructor Rubric & Model Breakdown:' : (isShort ? 'Ideal Model Answer & Linguistics Rule Explained:' : 'The General Linguistic Rule Explained:')}</span>
-                                <p class="leading-relaxed">${isEssay ? q.rule : q.rule}</p>
-                                ${!isEssay && q.answer ? `<p class="font-mono text-indigo-700 font-semibold mt-2">Target Model Answer: ${q.answer}</p>` : ''}
-                            </div>
-                        </div>
-                    `;
-                } else if (q.type === 'reverse') {
-                    contentHtml += `<div class="space-y-3">`;
-                    q.options.forEach(opt => {
-                        const isSelected = savedAns === opt;
-                        const isCorrect = opt === q.answer;
-                        let btnClass = "border-slate-300 hover:border-indigo-400 bg-white text-slate-800 cursor-pointer";
-                        if (isSubmitted) {
-                            if (isCorrect) btnClass = "bg-emerald-50 border-emerald-500 text-emerald-900 font-semibold";
-                            else if (isSelected && !isCorrect) btnClass = "bg-rose-50 border-rose-500 text-rose-900";
-                            else btnClass = "opacity-50 border-slate-300 bg-slate-50 cursor-not-allowed";
-                        }
-                        contentHtml += `
-                            <button onclick="selectOption(${qGlobalIdx}, '${opt.replace(/'/g, "\\'")}')" ${isSubmitted ? 'disabled' : ''}
-                                class="w-full p-4 rounded-2xl border text-lg text-left transition-all ${btnClass}">
-                                ${opt}
-                            </button>
-                        `;
-                    });
-                    contentHtml += `</div>`;
-
-                    if (isSubmitted) {
-                        contentHtml += `
-                            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-300 text-base text-slate-800 space-y-2 mt-4">
-                                <span class="font-bold text-[#111111] block text-lg">The General Linguistic Rule Explained:</span>
-                                <p class="leading-relaxed">${q.rule}</p>
-                            </div>
-                        `;
-                    }
-                }
-
-                card.innerHTML = contentHtml;
-                container.appendChild(card);
-            });
-
-            updateProgressIndicator();
-        }
-
-        // --- Interaction Handlers ---
-        function submitTextAnswer(qIdx) {
-            const inputEl = document.getElementById(`input-${qIdx}`);
-            const val = inputEl.value.trim();
-
-            if (!val && questionBank[activeSetIndex][qIdx].type !== 'essay' && questionBank[activeSetIndex][qIdx].type !== 'short') {
-                alert("Please enter an answer before submitting.");
-                return;
-            }
-
-            userAnswers[`${activeSetIndex}-${qIdx}`] = val;
-            submittedQuestions[`${activeSetIndex}-${qIdx}`] = true;
-
-            renderCurrentPair();
-        }
-
-        function selectOption(qIdx, opt) {
-            userAnswers[`${activeSetIndex}-${qIdx}`] = opt;
-            submittedQuestions[`${activeSetIndex}-${qIdx}`] = true;
-            renderCurrentPair();
-        }
-
-        function isAnswerCorrect(qIdx, q) {
-            const userAns = (userAnswers[`${activeSetIndex}-${qIdx}`] || '').toLowerCase().trim();
-            const correctAns = (q.answer || '').toLowerCase().trim();
-            if (q.type === 'paragraph' || q.type === 'short') {
-                return userAns.includes(correctAns) || correctAns.includes(userAns) || userAns.length > 3;
-            }
-            return userAns === correctAns;
-        }
-
-        function updateProgressIndicator() {
-            const questions = questionBank[activeSetIndex];
-            let answered = 0;
-            questions.forEach((_, idx) => {
-                if (submittedQuestions[`${activeSetIndex}-${idx}`]) {
-                    answered++;
-                }
-            });
-            document.getElementById('progress-indicator').innerText = `Progress: ${answered} / 27 answered`;
-        }
-
-        function navigatePair(direction) {
-            const questions = questionBank[activeSetIndex];
-            const newIndex = currentGlobalIndex + (direction * 2);
-
-            if (newIndex >= 0 && newIndex < questions.length) {
-                currentGlobalIndex = newIndex;
-                renderCurrentPair();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else if (newIndex >= questions.length) {
-                calculateAndSubmitScore();
-            }
-        }
-
-        // --- Score Calculation & Automatic Background Dispatch ---
-        function calculateAndSubmitScore() {
-            const questions = questionBank[activeSetIndex];
-            let correctCount = 0;
-
-            questions.forEach((q, idx) => {
-                const ans = userAnswers[`${activeSetIndex}-${idx}`];
-                if (ans && submittedQuestions[`${activeSetIndex}-${idx}`]) {
-                    if (q.type === 'transcription' && isAnswerCorrect(idx, q)) correctCount++;
-                    else if (q.type === 'reverse' && ans === q.answer) correctCount++;
-                    else if (q.type === 'short' && ans.length > 3) correctCount++;
-                    else if (q.type === 'paragraph' && isAnswerCorrect(idx, q)) correctCount++;
-                    else if (q.type === 'essay' && ans.length > 15) correctCount++;
-                }
-            });
-
-            setScores[activeSetIndex] = correctCount;
-            setCompletionStatus[activeSetIndex] = true;
-            if (activeSetIndex < 3) {
-                setCompletionStatus[activeSetIndex + 1] = true;
-            }
-
-            dispatchToBackend(correctCount);
-
-            alert(`🎉 Set ${activeSetIndex + 1} Completed Successfully!\nYour Score: ${correctCount} / 27\nData has been automatically synchronized to the instructor matrix.`);
-            exitPractice();
-        }
-
-        function dispatchToBackend(score) {
-            const payload = {
-                rollNumber: currentStudent.roll,
-                name: currentStudent.name,
-                college: currentStudent.college,
-                setNumber: activeSetIndex + 1,
-                score: score,
-                timestamp: new Date().toISOString()
-            };
-
-            saveLocalInstructorRecord(payload);
-
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: "POST",
-                mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload)
-            }).catch(err => {
-                console.log("Background POST sync dispatched:", err);
-            });
-        }
-
-        // --- Instructor Dashboard & Local Persistence ---
-        function saveLocalInstructorRecord(payload) {
-            let records = JSON.parse(localStorage.getItem('ling_instructor_records_27_v2') || '[]');
-            const existingIdx = records.findIndex(r => r.rollNumber === payload.rollNumber);
-
-            if (existingIdx >= 0) {
-                records[existingIdx].totalAttempts += 1;
-                if (payload.score > records[existingIdx].bestScore) {
-                    records[existingIdx].bestScore = payload.score;
-                }
-            } else {
-                records.push({
-                    rollNumber: payload.rollNumber,
-                    name: payload.name,
-                    college: payload.college,
-                    totalAttempts: 1,
-                    bestScore: payload.score
-                });
-            }
-            localStorage.setItem('ling_instructor_records_27_v2', JSON.stringify(records));
-        }
-
-        function handleInstructorLogin(e) {
-            e.preventDefault();
-            const pass = document.getElementById('instructor-password').value;
-            if (pass === 'admin123') {
-                document.getElementById('instructor-auth-panel').classList.add('hidden');
-                document.getElementById('instructor-dashboard-panel').classList.remove('hidden');
-                document.getElementById('endpoint-display').innerText = GOOGLE_SCRIPT_URL;
-                loadInstructorData();
-            } else {
-                alert("Incorrect password. Access denied.");
-            }
-        }
-
-        function loadInstructorData() {
-            const tbody = document.getElementById('instructor-table-body');
-            tbody.innerHTML =
+        <button onclick="enterPracticeLab()" class="w-full mt-4 bg-neutral-900 hover:bg-neutral-800 text-white font-bold p-4 rounded-xl transition text-lg shadow-md cursor-pointer">
+          Enter Practice Lab
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. STUDENT PRACTICE LAB SYSTEM -->
+    <div id="practice-lab-screen" style="display: none;">
+      <!-- Profile Header Bar -->
+      <div class="bg-white border-2 border-neutral-200 rounded-2xl p-4 mb-6 shadow-sm flex flex-wrap justify-between items-center gap-4 text-base font-semibold">
+        <div>👤 Student: <span id="display-student-name" class="text-neutral-600"></span></div>
+        <div>🆔 Roll No: <span id="display-student-roll" class="text-neutral-600"></span></div>
+        <div>🏢 College: <span id="display-student-college" class="text-neutral-600"></span></div>
+      </div>
+
+      <!-- Set Selector Tabs -->
+      <div class="grid grid-cols-4 gap-2 mb-6">
+        <button id="btn-set-1" onclick="loadPracticeSet(1)" class="bg-neutral-900 text-white font-bold py-3 rounded-xl shadow cursor-pointer text-base md:text-lg">Set 1</button>
+        <button id="btn-set-2" onclick="loadPracticeSet(2)" class="bg-neutral-200 text-neutral-800 font-bold py-3 rounded-xl hover:bg-neutral-300 cursor-pointer text-base md:text-lg">Set 2</button>
+        <button id="btn-set-3" onclick="loadPracticeSet(3)" class="bg-neutral-200 text-neutral-800 font-bold py-3 rounded-xl hover:bg-neutral-300 cursor-pointer text-base md:text-lg">Set 3</button>
+        <button id="btn-set-4" onclick="loadPracticeSet(4)" class="bg-neutral-200 text-neutral-800 font-bold py-3 rounded-xl hover:bg-neutral-300 cursor-pointer text-base md:text-lg">Set 4</button>
+      </div>
+
+      <!-- Main Display Window for Questions (2 At a time pagination) -->
+      <div id="active-set-title" class="text-2xl font-black mb-4 underline decoration-neutral-400">Loading Active Module Matrix...</div>
+      
+      <div id="questions-viewport" class="space-y-6">
+        <!-- Interactive Question Pairs Will Be Rendered Dynamic Via Script Injection Here -->
+      </div>
+
+      <!-- Next/Prev Pagination Row Controls -->
+      <div class="mt-8 flex justify-between items-center gap-4">
+        <button id="btn-prev-pair" onclick="paginatePair(-1)" class="bg-neutral-200 hover:bg-neutral-300 font-bold px-6 py-3 rounded-xl transition text-base md:text-lg cursor-pointer">← Previous Pair</button>
+        <span id="pagination-indicator" class="font-bold text-neutral-600 text-base md:text-lg">Pair 1 of 14</span>
+        <button id="btn-next-pair" onclick="paginatePair(1)" class="bg-neutral-900 hover:bg-neutral-800 text-white font-bold px-6 py-3 rounded-xl transition text-base md:text-lg cursor-pointer">Next Pair →</button>
+      </div>
+    </div>
+
+    <!-- 3. PASSWORD GATEWAY FOR INSTRUCTOR ACCESS -->
+    <div id="instructor-auth-screen" style="display: none;" class="bg-white border-2 border-neutral-200 rounded-2xl p-8 shadow-lg text-center max-w-md mx-auto">
+      <span class="text-4xl block mb-2">🔒</span>
+      <h3 class="text-2xl font-bold mb-4">Instructor Authentication Required</h3>
+      <input type="password" id="instructor-password" placeholder="Enter dashboard password" class="w-full border-2 border-neutral-300 rounded-xl p-3 mb-4 text-center focus:border-neutral-900 bg-neutral-50 text-lg">
+      <button onclick="verifyInstructorPassword()" class="w-full bg-neutral-900 hover:bg-neutral-800 text-white font-bold p-3 rounded-xl transition text-lg cursor-pointer">Verify Access</button>
+    </div>
+
+    <!-- 4. INSTRUCTOR ANALYSIS DASHBOARD VIEW -->
+    <div id="instructor-dashboard-screen" style="display: none;">
+      <h2 class="text-3xl font-black mb-2">📊 Analytics Tracking Center</h2>
+      <p class="text-neutral-600 mb-6 text-base">Review active enrollment score rows processed seamlessly from your Google Sheets Web App interface database endpoint.</p>
+      
+      <div class="bg-white border-2 border-neutral-200 rounded-2xl p-4 mb-6 flex flex-wrap gap-4 items-center justify-between shadow-sm">
+        <button onclick="fetchLiveDashboardData()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-xl transition cursor-pointer text-base">🔄 Sync Live Sheet Rows</button>
+        <button onclick="exportDashboardToCSV()" class="bg-neutral-800 hover:bg-neutral-700 text-white font-bold px-5 py-2.5 rounded-xl transition cursor-pointer text-base">📥 Export Data Grid to CSV</button>
+      </div>
+
+      <div class="bg-white border-2 border-neutral-200 rounded-2xl shadow-md overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-base">
+            <thead>
+              <tr class="bg-neutral-900 text-white font-bold">
+                <th class="p-4">Roll Number</th>
+                <th class="p-4">Full Name</th>
+                <th class="p-4">College Name</th>
+                <th class="p-4">Active Set Status</th>
+                <th class="p-4">Score Parameters</th>
+                <th class="p-4">Processed Timestamp</th>
+              </tr>
+            </thead>
+            <tbody id="dashboard-table-body" class="divide-y divide-neutral-200 font-medium">
+              <tr>
+                <td colspan="6" class="p-8 text-center text-neutral-500 font-bold italic">No submissions synchronized. Click the sync button to fetch live stream rows from Google Sheets.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- JAVASCRIPT REVOLUTION MOTOR LOGIC -->
+  <script>
+    // System Endpoint Config Configurations
+    const GOOGLE_SCRIPT_URL = "https://google.com";
+    const MODULE_NAME = "Phonetics and Phonology - Master Complete Matrix";
+
+    // Global Interactive Memory States
+    let currentStudent = null;
+    let currentActiveSet = 1;
+    let currentPairIndex = 0;
+    let studentScores = { 1: 0, 2: 0, 3: 0, 4: 0 };
+    let studentAttempts = { 1: 0, 2: 0, 3: 0, 4: 0 };
+
+    // 30 Essential RP Standard IPA character keyboard configurations array
+    const ipaSymbolsList = ['ɪ','iː','e','æ','ʌ','ɑː','ɒ','ɔː','ʊ','uː','ɜː','ə','eɪ','aɪ','ɔɪ','əʊ','aʊ','ɪə','eə','ʊə','θ','ð','ʃ','ʒ','ŋ','tʃ','dʒ','j','w','ˈ'];
+
+    // Complete 27-Question Core Curriculum Bank Framework Matrix Array (Distributed cleanly into sets)
+    // To minimize source file compilation freeze layouts, we assemble a template grid containing structural components.
+    const masterQuestionMatrix = {};
+    
+    // Programmatically initialize arrays for Set 1 to 4 with exactly 27 structural blocks per module
+    for (let s = 1; s <= 4; s++) {
+      masterQuestionMatrix[s] = [];
+      
+      // Questions 1-5: Section A - RP Transcription Practice
+      for (let q = 1; q <= 5; q++) {
+        let targets = ["cat", "better", "beautiful", "linguistics", "spin"];
+        let expected = ["kæt", "ˈbetə", "ˈbjuːtɪfl", "lɪŋˈɡwɪstɪks", "spɪn"];
+        masterQuestionMatrix[s].push({
+          id: `S${s}-QA-${q}`,
+          section: "A",
+          sectionTitle: "Section A: RP Transcription Practice 🌟",
