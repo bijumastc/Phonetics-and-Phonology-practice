@@ -79,7 +79,7 @@
                             class="w-full px-5 py-3.5 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-lg">
                     </div>
                     <button type="submit" id="login-submit-btn" 
-                        class="w-full py-4 rounded-2xl bg-indigo-600 text-white font-semibold text-lg shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition-all">
+                        class="w-full py-4 rounded-2xl bg-indigo-600 text-white font-semibold text-lg shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition-all cursor-pointer">
                         Enter Practice Lab
                     </button>
                 </form>
@@ -93,7 +93,7 @@
                         <h2 class="text-3xl font-bold mt-1" id="display-student-name">Student Name</h2>
                         <p class="text-base text-slate-300 font-mono mt-1">Roll ID: <span id="display-student-roll" class="text-indigo-300 font-semibold"></span> | College: <span id="display-student-college" class="text-indigo-300 font-semibold"></span></p>
                     </div>
-                    <button onclick="handleLogout()" class="text-sm bg-white/10 hover:bg-white/20 px-5 py-2.5 rounded-xl border border-white/10 transition-all font-medium">
+                    <button onclick="handleLogout()" class="text-sm bg-white/10 hover:bg-white/20 px-5 py-2.5 rounded-xl border border-white/10 transition-all font-medium cursor-pointer">
                         Switch Student
                     </button>
                 </div>
@@ -111,7 +111,7 @@
             <!-- Active Practice Session Panel -->
             <div id="panel-practice" class="hidden space-y-8">
                 <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-200 flex items-center justify-between">
-                    <button onclick="exitPractice()" class="flex items-center space-x-2 text-base text-slate-700 hover:text-indigo-600 font-semibold transition-colors">
+                    <button onclick="exitPractice()" class="flex items-center space-x-2 text-base text-slate-700 hover:text-indigo-600 font-semibold transition-colors cursor-pointer">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
                         <span>Back to Sets</span>
                     </button>
@@ -136,11 +136,11 @@
 
                 <!-- Pagination Footer -->
                 <div class="flex items-center justify-between bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
-                    <button id="prev-pair-btn" onclick="navigatePair(-1)" class="px-6 py-3 rounded-2xl border border-slate-300 text-slate-700 text-base font-semibold hover:bg-slate-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+                    <button id="prev-pair-btn" onclick="navigatePair(-1)" class="px-6 py-3 rounded-2xl border border-slate-300 text-slate-700 text-base font-semibold hover:bg-slate-50 transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">
                         Previous Pair
                     </button>
                     <div class="text-base font-semibold text-slate-700" id="progress-indicator">Progress: 0 / 27 answered</div>
-                    <button id="next-pair-btn" onclick="navigatePair(1)" class="px-6 py-3 rounded-2xl bg-indigo-600 text-white text-base font-semibold hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100">
+                    <button id="next-pair-btn" onclick="navigatePair(1)" class="px-6 py-3 rounded-2xl bg-indigo-600 text-white text-base font-semibold hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100 cursor-pointer">
                         Next Pair
                     </button>
                 </div>
@@ -162,7 +162,7 @@
                         <input type="password" id="instructor-password" required placeholder="••••••••" 
                             class="w-full px-5 py-3.5 rounded-2xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-lg">
                     </div>
-                    <button type="submit" class="w-full py-4 rounded-2xl bg-[#111111] text-white font-semibold text-lg shadow-lg hover:bg-slate-800 transition-all">
+                    <button type="submit" class="w-full py-4 rounded-2xl bg-[#111111] text-white font-semibold text-lg shadow-lg hover:bg-slate-800 transition-all cursor-pointer">
                         Access Dashboard
                     </button>
                 </form>
@@ -175,7 +175,7 @@
                             <h2 class="text-2xl font-bold text-[#111111]">Student Progress Matrix</h2>
                             <p class="text-base text-slate-600 mt-1">Live records mapped from endpoint: <span class="font-mono text-indigo-600" id="endpoint-display"></span></p>
                         </div>
-                        <button onclick="loadInstructorData()" class="px-5 py-2.5 rounded-2xl bg-indigo-50 text-indigo-600 hover:bg-indigo-100 text-base font-semibold transition-all">
+                        <button onclick="loadInstructorData()" class="px-5 py-2.5 rounded-2xl bg-indigo-50 text-indigo-600 hover:bg-indigo-100 text-base font-semibold transition-all cursor-pointer">
                             Refresh Data
                         </button>
                     </div>
@@ -219,14 +219,6 @@
             'θ', 'ð', 'ʃ', 'ʒ', 'ŋ', 'tʃ', 'dʒ', 'j', 'w', 'ˈ'
         ];
 
-        // --- Section Definitions & Counts (27 Questions per Set) ---
-        // Section A: Transcription (Q0 - Q4) -> 5 Qs
-        // Section B: Reverse Transcription (Q5 - Q9) -> 5 Qs
-        // Section C: Short Answer (Q10 - Q19) -> 10 Qs
-        // Section D: Paragraph Analysis (Q20 - Q24) -> 5 Qs
-        // Section E: Targeted Essay (Q25 - Q26) -> 2 Qs
-        // Total = 27 Questions per set.
-
         function getSectionMeta(qIdx) {
             if (qIdx <= 4) return { sec: 'A', name: 'Section A: Transcription Practice', rewardEmoji: '🌟', rewardTitle: 'Section A Completed! Great job!', rewardDesc: 'You have mastered the IPA transcription practice pairs!' };
             if (qIdx <= 9) return { sec: 'B', name: 'Section B: Reverse Transcription Identification', rewardEmoji: '🎉', rewardTitle: 'Section B Completed! Keep it up!', rewardDesc: 'Brilliant recognition of phonetic spelling patterns!' };
@@ -236,7 +228,6 @@
         }
 
         // --- Question Bank Construction (108 Questions across 4 Sets) ---
-        // We will generate a structured question bank template for Sets 1-4.
         const questionBank = [];
 
         function buildQuestionBank() {
@@ -316,24 +307,37 @@
             }
         }
 
-        // --- Authentication ---
+        // --- Critical Login Button Fix Implementation ---
         function handleLogin(e) {
             e.preventDefault();
-            const name = document.getElementById('input-name').value.trim();
-            const roll = document.getElementById('input-roll').value.trim();
-            const college = document.getElementById('input-college').value.trim();
+            const nameInput = document.getElementById('input-name');
+            const rollInput = document.getElementById('input-roll');
+            const collegeInput = document.getElementById('input-college');
+
+            const name = nameInput.value.trim();
+            const roll = rollInput.value.trim();
+            const college = collegeInput.value.trim();
+
+            if (!name || !roll || !college) {
+                alert("Please fill out all fields before entering the practice lab.");
+                return;
+            }
 
             currentStudent = { name, roll, college };
+            localStorage.setItem('loggedInState', JSON.stringify(currentStudent));
+
             document.getElementById('display-student-name').innerText = name;
             document.getElementById('display-student-roll').innerText = roll;
             document.getElementById('display-student-college').innerText = college;
 
+            // Hide login container card and reveal dashboard/practice layout instantly
             document.getElementById('panel-login').classList.add('hidden');
             document.getElementById('panel-dashboard').classList.remove('hidden');
             renderSetsGrid();
         }
 
         function handleLogout() {
+            localStorage.removeItem('loggedInState');
             currentStudent = { name: '', roll: '', college: '' };
             document.getElementById('input-name').value = '';
             document.getElementById('input-roll').value = '';
@@ -341,6 +345,27 @@
             document.getElementById('panel-dashboard').classList.add('hidden');
             document.getElementById('panel-login').classList.remove('hidden');
         }
+
+        // Check persistent login state on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('nav-module-title').innerText = MODULE_NAME;
+            const savedLogin = localStorage.getItem('loggedInState');
+            if (savedLogin) {
+                try {
+                    currentStudent = JSON.parse(savedLogin);
+                    if (currentStudent.name && currentStudent.roll) {
+                        document.getElementById('display-student-name').innerText = currentStudent.name;
+                        document.getElementById('display-student-roll').innerText = currentStudent.roll;
+                        document.getElementById('display-student-college').innerText = currentStudent.college || '';
+                        document.getElementById('panel-login').classList.add('hidden');
+                        document.getElementById('panel-dashboard').classList.remove('hidden');
+                        renderSetsGrid();
+                    }
+                } catch(e) {
+                    localStorage.removeItem('loggedInState');
+                }
+            }
+        });
 
         // --- Sets & Grid Rendering ---
         function renderSetsGrid() {
@@ -371,7 +396,7 @@
                     <div class="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between">
                         <span class="text-base font-mono font-semibold text-slate-700">Score: ${setScores[i]} / 27</span>
                         <button onclick="${isUnlocked ? `startPractice(${i})` : ''}" 
-                            class="px-5 py-2.5 rounded-xl text-base font-semibold transition-all ${
+                            class="px-5 py-2.5 rounded-xl text-base font-semibold transition-all cursor-pointer ${
                                 isUnlocked 
                                     ? 'bg-indigo-600 hover:bg-indigo-700 text-white shadow' 
                                     : 'bg-slate-200 text-slate-400 cursor-not-allowed'
@@ -432,7 +457,6 @@
             const meta = getSectionMeta(startIndex);
             document.getElementById('section-tracker-label').innerText = `${meta.name} (Pair ${currentPairNum} of ${totalPairs})`;
 
-            // Check if section boundary was just completed / reached
             const sectionBanner = document.getElementById('section-banner');
             if (startIndex > 0 && startIndex % 5 === 0) {
                 sectionBanner.classList.remove('hidden');
@@ -446,10 +470,10 @@
             const nextBtn = document.getElementById('next-pair-btn');
             if (startIndex + 2 >= questions.length) {
                 nextBtn.innerText = "Submit Set";
-                nextBtn.className = "px-6 py-3 rounded-2xl bg-emerald-600 text-white text-base font-semibold hover:bg-emerald-700 transition-all shadow-md shadow-emerald-100";
+                nextBtn.className = "px-6 py-3 rounded-2xl bg-emerald-600 text-white text-base font-semibold hover:bg-emerald-700 transition-all shadow-md shadow-emerald-100 cursor-pointer";
             } else {
                 nextBtn.innerText = "Next Pair";
-                nextBtn.className = "px-6 py-3 rounded-2xl bg-indigo-600 text-white text-base font-semibold hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100";
+                nextBtn.className = "px-6 py-3 rounded-2xl bg-indigo-600 text-white text-base font-semibold hover:bg-indigo-700 transition-all shadow-md shadow-indigo-100 cursor-pointer";
             }
 
             pairQuestions.forEach((q, idx) => {
@@ -483,7 +507,7 @@
                         ipaSymbols.forEach(sym => {
                             ipaKeyboardHtml += `
                                 <button type="button" onclick="insertIpaSymbol(${qGlobalIdx}, '${sym}')" 
-                                    class="w-9 h-9 bg-white hover:bg-indigo-50 border border-slate-200 hover:border-indigo-300 rounded-xl text-sm font-mono font-bold text-slate-800 shadow-sm transition-all flex items-center justify-center">
+                                    class="w-9 h-9 bg-white hover:bg-indigo-50 border border-slate-200 hover:border-indigo-300 rounded-xl text-sm font-mono font-bold text-slate-800 shadow-sm transition-all flex items-center justify-center cursor-pointer">
                                     ${sym}
                                 </button>
                             `;
@@ -503,7 +527,7 @@
                                     <input type="text" id="input-${qGlobalIdx}" value="${savedAns}" ${isSubmitted ? 'disabled' : ''} placeholder="${q.type === 'transcription' ? 'Type IPA transcription e.g. /kæt/' : 'Type your linguistic analysis...'}" 
                                         class="flex-1 px-5 py-3.5 rounded-2xl border border-slate-300 font-mono text-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all">
                                     <button onclick="submitTextAnswer(${qGlobalIdx})" ${isSubmitted ? 'disabled' : ''}
-                                        class="px-6 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-base font-semibold transition-all shadow-sm ${isSubmitted ? 'opacity-50 cursor-not-allowed' : ''}">
+                                        class="px-6 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-base font-semibold transition-all shadow-sm cursor-pointer ${isSubmitted ? 'opacity-50 cursor-not-allowed' : ''}">
                                         ${isSubmitted ? 'Submitted' : submitButtonLabel}
                                     </button>
                                 </div>
@@ -513,7 +537,7 @@
 
                             ${isEssay || isShort ? `
                                 <button onclick="submitTextAnswer(${qGlobalIdx})" ${isSubmitted ? 'disabled' : ''}
-                                    class="px-6 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-base font-semibold transition-all shadow-sm ${isSubmitted ? 'opacity-50 cursor-not-allowed' : ''}">
+                                    class="px-6 py-3.5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white text-base font-semibold transition-all shadow-sm cursor-pointer ${isSubmitted ? 'opacity-50 cursor-not-allowed' : ''}">
                                     ${isSubmitted ? 'Submitted' : submitButtonLabel}
                                 </button>
                             ` : ''}
@@ -528,7 +552,7 @@
 
                             <div id="rule-${qGlobalIdx}" class="${isSubmitted ? 'block' : 'hidden'} p-6 rounded-2xl bg-slate-50 border border-slate-300 text-base text-slate-800 space-y-2">
                                 <span class="font-bold text-[#111111] block text-lg">${isEssay ? 'Instructor Rubric & Model Breakdown:' : (isShort ? 'Ideal Model Answer & Linguistics Rule Explained:' : 'The General Linguistic Rule Explained:')}</span>
-                                <p class="leading-relaxed">${isEssay ? q.rubric : q.rule}</p>
+                                <p class="leading-relaxed">${isEssay ? q.rule : q.rule}</p>
                                 ${!isEssay && q.answer ? `<p class="font-mono text-indigo-700 font-semibold mt-2">Target Model Answer: ${q.answer}</p>` : ''}
                             </div>
                         </div>
@@ -538,7 +562,178 @@
                     q.options.forEach(opt => {
                         const isSelected = savedAns === opt;
                         const isCorrect = opt === q.answer;
-                        let btnClass = "border-slate-300 hover:border-indigo-400 bg-white text-slate-800";
+                        let btnClass = "border-slate-300 hover:border-indigo-400 bg-white text-slate-800 cursor-pointer";
                         if (isSubmitted) {
                             if (isCorrect) btnClass = "bg-emerald-50 border-emerald-500 text-emerald-900 font-semibold";
-                            else if (isSelected && !isCorrect) btnClas
+                            else if (isSelected && !isCorrect) btnClass = "bg-rose-50 border-rose-500 text-rose-900";
+                            else btnClass = "opacity-50 border-slate-300 bg-slate-50 cursor-not-allowed";
+                        }
+                        contentHtml += `
+                            <button onclick="selectOption(${qGlobalIdx}, '${opt.replace(/'/g, "\\'")}')" ${isSubmitted ? 'disabled' : ''}
+                                class="w-full p-4 rounded-2xl border text-lg text-left transition-all ${btnClass}">
+                                ${opt}
+                            </button>
+                        `;
+                    });
+                    contentHtml += `</div>`;
+
+                    if (isSubmitted) {
+                        contentHtml += `
+                            <div class="p-6 rounded-2xl bg-slate-50 border border-slate-300 text-base text-slate-800 space-y-2 mt-4">
+                                <span class="font-bold text-[#111111] block text-lg">The General Linguistic Rule Explained:</span>
+                                <p class="leading-relaxed">${q.rule}</p>
+                            </div>
+                        `;
+                    }
+                }
+
+                card.innerHTML = contentHtml;
+                container.appendChild(card);
+            });
+
+            updateProgressIndicator();
+        }
+
+        // --- Interaction Handlers ---
+        function submitTextAnswer(qIdx) {
+            const inputEl = document.getElementById(`input-${qIdx}`);
+            const val = inputEl.value.trim();
+
+            if (!val && questionBank[activeSetIndex][qIdx].type !== 'essay' && questionBank[activeSetIndex][qIdx].type !== 'short') {
+                alert("Please enter an answer before submitting.");
+                return;
+            }
+
+            userAnswers[`${activeSetIndex}-${qIdx}`] = val;
+            submittedQuestions[`${activeSetIndex}-${qIdx}`] = true;
+
+            renderCurrentPair();
+        }
+
+        function selectOption(qIdx, opt) {
+            userAnswers[`${activeSetIndex}-${qIdx}`] = opt;
+            submittedQuestions[`${activeSetIndex}-${qIdx}`] = true;
+            renderCurrentPair();
+        }
+
+        function isAnswerCorrect(qIdx, q) {
+            const userAns = (userAnswers[`${activeSetIndex}-${qIdx}`] || '').toLowerCase().trim();
+            const correctAns = (q.answer || '').toLowerCase().trim();
+            if (q.type === 'paragraph' || q.type === 'short') {
+                return userAns.includes(correctAns) || correctAns.includes(userAns) || userAns.length > 3;
+            }
+            return userAns === correctAns;
+        }
+
+        function updateProgressIndicator() {
+            const questions = questionBank[activeSetIndex];
+            let answered = 0;
+            questions.forEach((_, idx) => {
+                if (submittedQuestions[`${activeSetIndex}-${idx}`]) {
+                    answered++;
+                }
+            });
+            document.getElementById('progress-indicator').innerText = `Progress: ${answered} / 27 answered`;
+        }
+
+        function navigatePair(direction) {
+            const questions = questionBank[activeSetIndex];
+            const newIndex = currentGlobalIndex + (direction * 2);
+
+            if (newIndex >= 0 && newIndex < questions.length) {
+                currentGlobalIndex = newIndex;
+                renderCurrentPair();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (newIndex >= questions.length) {
+                calculateAndSubmitScore();
+            }
+        }
+
+        // --- Score Calculation & Automatic Background Dispatch ---
+        function calculateAndSubmitScore() {
+            const questions = questionBank[activeSetIndex];
+            let correctCount = 0;
+
+            questions.forEach((q, idx) => {
+                const ans = userAnswers[`${activeSetIndex}-${idx}`];
+                if (ans && submittedQuestions[`${activeSetIndex}-${idx}`]) {
+                    if (q.type === 'transcription' && isAnswerCorrect(idx, q)) correctCount++;
+                    else if (q.type === 'reverse' && ans === q.answer) correctCount++;
+                    else if (q.type === 'short' && ans.length > 3) correctCount++;
+                    else if (q.type === 'paragraph' && isAnswerCorrect(idx, q)) correctCount++;
+                    else if (q.type === 'essay' && ans.length > 15) correctCount++;
+                }
+            });
+
+            setScores[activeSetIndex] = correctCount;
+            setCompletionStatus[activeSetIndex] = true;
+            if (activeSetIndex < 3) {
+                setCompletionStatus[activeSetIndex + 1] = true;
+            }
+
+            dispatchToBackend(correctCount);
+
+            alert(`🎉 Set ${activeSetIndex + 1} Completed Successfully!\nYour Score: ${correctCount} / 27\nData has been automatically synchronized to the instructor matrix.`);
+            exitPractice();
+        }
+
+        function dispatchToBackend(score) {
+            const payload = {
+                rollNumber: currentStudent.roll,
+                name: currentStudent.name,
+                college: currentStudent.college,
+                setNumber: activeSetIndex + 1,
+                score: score,
+                timestamp: new Date().toISOString()
+            };
+
+            saveLocalInstructorRecord(payload);
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            }).catch(err => {
+                console.log("Background POST sync dispatched:", err);
+            });
+        }
+
+        // --- Instructor Dashboard & Local Persistence ---
+        function saveLocalInstructorRecord(payload) {
+            let records = JSON.parse(localStorage.getItem('ling_instructor_records_27_v2') || '[]');
+            const existingIdx = records.findIndex(r => r.rollNumber === payload.rollNumber);
+
+            if (existingIdx >= 0) {
+                records[existingIdx].totalAttempts += 1;
+                if (payload.score > records[existingIdx].bestScore) {
+                    records[existingIdx].bestScore = payload.score;
+                }
+            } else {
+                records.push({
+                    rollNumber: payload.rollNumber,
+                    name: payload.name,
+                    college: payload.college,
+                    totalAttempts: 1,
+                    bestScore: payload.score
+                });
+            }
+            localStorage.setItem('ling_instructor_records_27_v2', JSON.stringify(records));
+        }
+
+        function handleInstructorLogin(e) {
+            e.preventDefault();
+            const pass = document.getElementById('instructor-password').value;
+            if (pass === 'admin123') {
+                document.getElementById('instructor-auth-panel').classList.add('hidden');
+                document.getElementById('instructor-dashboard-panel').classList.remove('hidden');
+                document.getElementById('endpoint-display').innerText = GOOGLE_SCRIPT_URL;
+                loadInstructorData();
+            } else {
+                alert("Incorrect password. Access denied.");
+            }
+        }
+
+        function loadInstructorData() {
+            const tbody = document.getElementById('instructor-table-body');
+            tbody.innerHTML =
