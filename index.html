@@ -1,163 +1,572 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Linguistics Portal: Phonetics and Phonology</title>
-  <!-- Tailwind CSS via CDN -->
-  <script src="https://jsdelivr.net"></script>
-  <style>
-    body {
-      background-color: #FDFBF7;
-      color: #111111;
-      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      font-size: 18px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phonetics Practice Lab</title>
+<style>
+  :root {
+    --bg: #FDFBF7; --card: #ffffff; --ink: #1a1a1a; --muted: #5c5c5c;
+    --line: #e4e0d8; --accent: #2f5d8a; --accent-soft: #e6eef6;
+    --good: #1f7a4d; --good-soft: #e3f4ea; --bad: #b3261e; --bad-soft: #fbe9e7;
+    --warn: #8a5a00; --warn-soft: #fdf3dc;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 18px; line-height: 1.5; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 16px; }
+  header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+    padding: 12px 0 20px; }
+  header h1 { font-size: 22px; margin: 0; }
+  .linkbtn { background: none; border: none; color: var(--muted); font-size: 15px; cursor: pointer; text-decoration: underline; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px; margin-bottom: 16px; }
+  h2 { margin: 0 0 8px; font-size: 26px; }
+  p.lead { color: var(--muted); margin: 0 0 20px; }
+  label { display: block; font-weight: 600; margin: 14px 0 6px; font-size: 16px; }
+  input[type=text], input[type=password] { width: 100%; padding: 12px 14px; font-size: 20px; border: 2px solid var(--line);
+    border-radius: 10px; background: #fafafa; font-family: "Charis SIL", "Doulos SIL", "Gentium Plus", "Lucida Sans Unicode", "Segoe UI", sans-serif; }
+  input:focus { outline: none; border-color: var(--accent); background: #fff; }
+  .btn { display: inline-block; border: none; border-radius: 10px; padding: 12px 20px; font-size: 17px; font-weight: 600;
+    cursor: pointer; background: var(--accent); color: #fff; }
+  .btn:hover { filter: brightness(1.08); }
+  .btn.secondary { background: #ecebe7; color: var(--ink); }
+  .btn.full { width: 100%; margin-top: 20px; }
+  .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .error { color: var(--bad); font-size: 15px; margin-top: 8px; min-height: 1em; }
+  .hidden { display: none !important; }
+
+  .student-bar { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 15px; color: var(--muted); margin-bottom: 12px; }
+  .tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+  .tab { border: 2px solid var(--line); background: var(--card); border-radius: 12px; padding: 10px 4px; cursor: pointer;
+    font-size: 15px; font-weight: 600; text-align: center; color: var(--ink); }
+  .tab small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; }
+  .tab.active { border-color: var(--accent); background: var(--accent-soft); }
+  .tab.done small { color: var(--good); }
+
+  .progress { height: 10px; background: #ecebe7; border-radius: 99px; overflow: hidden; margin: 8px 0 4px; }
+  .progress > div { height: 100%; background: var(--accent); transition: width .3s; }
+  .qmeta { display: flex; justify-content: space-between; font-size: 14px; color: var(--muted); }
+  .section-tag { display: inline-block; background: var(--accent-soft); color: var(--accent); font-size: 13px; font-weight: 700;
+    padding: 3px 10px; border-radius: 99px; margin-bottom: 10px; }
+  .prompt { font-size: 21px; margin: 4px 0 16px; }
+  .prompt .word { font-weight: 800; }
+
+  .ipa-keys { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .ipa-keys button { min-width: 44px; height: 44px; font-size: 20px; border: 1px solid var(--line); background: #fff;
+    border-radius: 8px; cursor: pointer; font-family: "Charis SIL", "Doulos SIL", "Lucida Sans Unicode", sans-serif; }
+  .ipa-keys button:hover { background: var(--accent-soft); }
+  .ipa-keys .wide { min-width: 70px; font-size: 14px; }
+  .tip { font-size: 14px; color: var(--muted); margin-top: 8px; }
+
+  .options { display: grid; gap: 10px; }
+  .option { text-align: left; padding: 14px 16px; border: 2px solid var(--line); border-radius: 12px; background: #fff;
+    font-size: 18px; cursor: pointer; font-family: inherit; color: var(--ink); }
+  .option:hover:not(:disabled) { border-color: var(--accent); }
+  .option.selected { border-color: var(--accent); background: var(--accent-soft); }
+  .option.correct { border-color: var(--good); background: var(--good-soft); }
+  .option.wrong { border-color: var(--bad); background: var(--bad-soft); }
+
+  .feedback { border-radius: 12px; padding: 14px 16px; margin-top: 16px; font-size: 16px; }
+  .feedback.good { background: var(--good-soft); color: var(--good); }
+  .feedback.bad { background: var(--bad-soft); color: var(--bad); }
+  .feedback.warn { background: var(--warn-soft); color: var(--warn); }
+  .feedback .explain { color: var(--ink); margin-top: 6px; }
+  .hintbox { background: var(--warn-soft); color: var(--warn); border-radius: 10px; padding: 10px 14px; margin-top: 12px; font-size: 15px; }
+  .actions { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+
+  .score-big { font-size: 56px; font-weight: 800; margin: 8px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { padding: 10px; border-bottom: 1px solid var(--line); text-align: left; }
+  th { background: #f3f1ec; }
+  .table-scroll { overflow-x: auto; }
+</style>
 </head>
-<body class="p-4 md:p-8">
+<body>
+<div class="wrap">
 
-  <!-- TOP NAVIGATION BAR -->
-  <nav class="max-w-5xl mx-auto mb-8 bg-neutral-900 text-white rounded-xl p-4 flex justify-between items-center shadow-md">
-    <span class="font-bold text-xl tracking-wide">🎓 Linguistics Lab Portal</span>
-    <div class="space-x-4">
-      <button onclick="switchView('student')" class="px-4 py-2 hover:bg-neutral-800 rounded transition font-medium">Student Practice</button>
-      <button onclick="switchView('instructor')" class="px-4 py-2 hover:bg-neutral-800 rounded transition font-medium">Instructor Dashboard</button>
+  <header>
+    <h1>🎓 Phonetics Practice Lab</h1>
+    <div>
+      <button class="linkbtn hidden" id="logout-btn" onclick="logout()">Not you? Switch student</button>
+      <button class="linkbtn" id="teacher-link" onclick="show('instructor-auth')">Teacher login</button>
+      <button class="linkbtn hidden" id="student-link" onclick="backToStudent()">Back to practice</button>
     </div>
-  </nav>
+  </header>
 
-  <!-- MAIN CONTAINER CONTAINER -->
-  <main class="max-w-5xl mx-auto">
+  <!-- 1. STUDENT SIGN-IN -->
+  <section id="login" class="card">
+    <h2>Welcome! 👋</h2>
+    <p class="lead">Type your details so your teacher can see your scores. Then pick a practice set and start.</p>
+    <label for="in-name">Your full name</label>
+    <input type="text" id="in-name" placeholder="e.g. Anjali Menon" autocomplete="name">
+    <label for="in-roll">Roll number</label>
+    <input type="text" id="in-roll" placeholder="e.g. 1045">
+    <label for="in-college">College</label>
+    <input type="text" id="in-college" placeholder="e.g. Government Victoria College">
+    <div class="error" id="login-error"></div>
+    <button class="btn full" onclick="startLab()">Start practising →</button>
+  </section>
 
-    <!-- 1. STUDENT AUTHENTICATION LOGIN CARD -->
-    <div id="login-screen" class="bg-white border-2 border-neutral-200 rounded-2xl p-6 md:p-10 shadow-lg text-center max-w-lg mx-auto">
-      <span class="text-4xl block mb-4">✨</span>
-      <h2 class="text-3xl font-extrabold mb-2 text-neutral-900">Student Authentication</h2>
-      <p class="text-neutral-600 mb-6 text-base">Enter your details to access the Master 27-Question matrix across 4 sets (108 questions total).</p>
-      
-      <div class="space-y-4 text-left">
-        <div>
-          <label class="block font-bold text-neutral-800 mb-1 text-base">Full Name</label>
-          <input type="text" id="input-name" placeholder="e.g. Jane Doe" class="w-full border-2 border-neutral-300 rounded-xl p-3 focus:outline-none focus:border-neutral-900 bg-neutral-50 text-lg">
-        </div>
-        <div>
-          <label class="block font-bold text-neutral-800 mb-1 text-base">Roll Number</label>
-          <input type="text" id="input-roll" placeholder="e.g. 1045 or EN01" class="w-full border-2 border-neutral-300 rounded-xl p-3 focus:outline-none focus:border-neutral-900 bg-neutral-50 text-lg">
-        </div>
-        <div>
-          <label class="block font-bold text-neutral-800 mb-1 text-base">College Name</label>
-          <input type="text" id="input-college" placeholder="e.g. University College of Humanities" class="w-full border-2 border-neutral-300 rounded-xl p-3 focus:outline-none focus:border-neutral-900 bg-neutral-50 text-lg">
-        </div>
-        <button onclick="enterPracticeLab()" class="w-full mt-4 bg-neutral-900 hover:bg-neutral-800 text-white font-bold p-4 rounded-xl transition text-lg shadow-md cursor-pointer">
-          Enter Practice Lab
-        </button>
-      </div>
+  <!-- 2. PRACTICE -->
+  <section id="lab" class="hidden">
+    <div class="student-bar">
+      <span>👤 <b id="show-name"></b> · Roll <span id="show-roll"></span></span>
+      <span id="show-college"></span>
     </div>
+    <div class="tabs" id="tabs"></div>
 
-    <!-- 2. STUDENT PRACTICE LAB SYSTEM -->
-    <div id="practice-lab-screen" style="display: none;">
-      <!-- Profile Header Bar -->
-      <div class="bg-white border-2 border-neutral-200 rounded-2xl p-4 mb-6 shadow-sm flex flex-wrap justify-between items-center gap-4 text-base font-semibold">
-        <div>👤 Student: <span id="display-student-name" class="text-neutral-600"></span></div>
-        <div>🆔 Roll No: <span id="display-student-roll" class="text-neutral-600"></span></div>
-        <div>🏢 College: <span id="display-student-college" class="text-neutral-600"></span></div>
-      </div>
-
-      <!-- Set Selector Tabs -->
-      <div class="grid grid-cols-4 gap-2 mb-6">
-        <button id="btn-set-1" onclick="loadPracticeSet(1)" class="bg-neutral-900 text-white font-bold py-3 rounded-xl shadow cursor-pointer text-base md:text-lg">Set 1</button>
-        <button id="btn-set-2" onclick="loadPracticeSet(2)" class="bg-neutral-200 text-neutral-800 font-bold py-3 rounded-xl hover:bg-neutral-300 cursor-pointer text-base md:text-lg">Set 2</button>
-        <button id="btn-set-3" onclick="loadPracticeSet(3)" class="bg-neutral-200 text-neutral-800 font-bold py-3 rounded-xl hover:bg-neutral-300 cursor-pointer text-base md:text-lg">Set 3</button>
-        <button id="btn-set-4" onclick="loadPracticeSet(4)" class="bg-neutral-200 text-neutral-800 font-bold py-3 rounded-xl hover:bg-neutral-300 cursor-pointer text-base md:text-lg">Set 4</button>
-      </div>
-
-      <!-- Main Display Window for Questions (2 At a time pagination) -->
-      <div id="active-set-title" class="text-2xl font-black mb-4 underline decoration-neutral-400">Loading Active Module Matrix...</div>
-      
-      <div id="questions-viewport" class="space-y-6">
-        <!-- Interactive Question Pairs Will Be Rendered Dynamic Via Script Injection Here -->
-      </div>
-
-      <!-- Next/Prev Pagination Row Controls -->
-      <div class="mt-8 flex justify-between items-center gap-4">
-        <button id="btn-prev-pair" onclick="paginatePair(-1)" class="bg-neutral-200 hover:bg-neutral-300 font-bold px-6 py-3 rounded-xl transition text-base md:text-lg cursor-pointer">← Previous Pair</button>
-        <span id="pagination-indicator" class="font-bold text-neutral-600 text-base md:text-lg">Pair 1 of 14</span>
-        <button id="btn-next-pair" onclick="paginatePair(1)" class="bg-neutral-900 hover:bg-neutral-800 text-white font-bold px-6 py-3 rounded-xl transition text-base md:text-lg cursor-pointer">Next Pair →</button>
-      </div>
-    </div>
-
-    <!-- 3. PASSWORD GATEWAY FOR INSTRUCTOR ACCESS -->
-    <div id="instructor-auth-screen" style="display: none;" class="bg-white border-2 border-neutral-200 rounded-2xl p-8 shadow-lg text-center max-w-md mx-auto">
-      <span class="text-4xl block mb-2">🔒</span>
-      <h3 class="text-2xl font-bold mb-4">Instructor Authentication Required</h3>
-      <input type="password" id="instructor-password" placeholder="Enter dashboard password" class="w-full border-2 border-neutral-300 rounded-xl p-3 mb-4 text-center focus:border-neutral-900 bg-neutral-50 text-lg">
-      <button onclick="verifyInstructorPassword()" class="w-full bg-neutral-900 hover:bg-neutral-800 text-white font-bold p-3 rounded-xl transition text-lg cursor-pointer">Verify Access</button>
-    </div>
-
-    <!-- 4. INSTRUCTOR ANALYSIS DASHBOARD VIEW -->
-    <div id="instructor-dashboard-screen" style="display: none;">
-      <h2 class="text-3xl font-black mb-2">📊 Analytics Tracking Center</h2>
-      <p class="text-neutral-600 mb-6 text-base">Review active enrollment score rows processed seamlessly from your Google Sheets Web App interface database endpoint.</p>
-      
-      <div class="bg-white border-2 border-neutral-200 rounded-2xl p-4 mb-6 flex flex-wrap gap-4 items-center justify-between shadow-sm">
-        <button onclick="fetchLiveDashboardData()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-xl transition cursor-pointer text-base">🔄 Sync Live Sheet Rows</button>
-        <button onclick="exportDashboardToCSV()" class="bg-neutral-800 hover:bg-neutral-700 text-white font-bold px-5 py-2.5 rounded-xl transition cursor-pointer text-base">📥 Export Data Grid to CSV</button>
-      </div>
-
-      <div class="bg-white border-2 border-neutral-200 rounded-2xl shadow-md overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse text-base">
-            <thead>
-              <tr class="bg-neutral-900 text-white font-bold">
-                <th class="p-4">Roll Number</th>
-                <th class="p-4">Full Name</th>
-                <th class="p-4">College Name</th>
-                <th class="p-4">Active Set Status</th>
-                <th class="p-4">Score Parameters</th>
-                <th class="p-4">Processed Timestamp</th>
-              </tr>
-            </thead>
-            <tbody id="dashboard-table-body" class="divide-y divide-neutral-200 font-medium">
-              <tr>
-                <td colspan="6" class="p-8 text-center text-neutral-500 font-bold italic">No submissions synchronized. Click the sync button to fetch live stream rows from Google Sheets.</td>
-              </tr>
-            </tbody>
-          </table>
+    <div class="card" id="question-card">
+      <div class="qmeta"><span id="set-title"></span><span id="q-count"></span></div>
+      <div class="progress"><div id="progress-fill"></div></div>
+      <div style="margin-top:16px" id="question-area"></div>
+      <div class="actions">
+        <button class="btn secondary" id="hint-btn" onclick="showHint()">💡 Hint</button>
+        <div style="display:flex;gap:10px">
+          <button class="btn" id="check-btn" onclick="checkAnswer()">Check answer</button>
+          <button class="btn hidden" id="next-btn" onclick="nextQuestion()">Next →</button>
         </div>
       </div>
     </div>
 
-  </main>
+    <div class="card hidden" id="result-card" style="text-align:center"></div>
+  </section>
 
-  <!-- JAVASCRIPT REVOLUTION MOTOR LOGIC -->
-  <script>
-    // System Endpoint Config Configurations
-    const GOOGLE_SCRIPT_URL = "https://google.com";
-    const MODULE_NAME = "Phonetics and Phonology - Master Complete Matrix";
+  <!-- 3. TEACHER PASSWORD -->
+  <section id="instructor-auth" class="card hidden" style="max-width:440px;margin:0 auto">
+    <h2>🔒 Teacher login</h2>
+    <p class="lead">Enter the dashboard password.</p>
+    <input type="password" id="in-password" placeholder="Password" onkeydown="if(event.key==='Enter')verifyTeacher()">
+    <div class="error" id="pw-error"></div>
+    <button class="btn full" onclick="verifyTeacher()">Open dashboard</button>
+  </section>
 
-    // Global Interactive Memory States
-    let currentStudent = null;
-    let currentActiveSet = 1;
-    let currentPairIndex = 0;
-    let studentScores = { 1: 0, 2: 0, 3: 0, 4: 0 };
-    let studentAttempts = { 1: 0, 2: 0, 3: 0, 4: 0 };
+  <!-- 4. TEACHER DASHBOARD -->
+  <section id="dashboard" class="hidden">
+    <div class="card">
+      <h2>📊 Student results</h2>
+      <p class="lead">Results come from your Google Sheet.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn" onclick="loadDashboard()">🔄 Refresh results</button>
+        <button class="btn secondary" onclick="exportCSV()">📥 Download CSV</button>
+      </div>
+      <div class="error" id="dash-error"></div>
+    </div>
+    <div class="card table-scroll">
+      <table>
+        <thead><tr><th>Roll</th><th>Name</th><th>College</th><th>Set</th><th>Score</th><th>Time</th></tr></thead>
+        <tbody id="dash-body"><tr><td colspan="6" style="text-align:center;color:var(--muted)">Click “Refresh results” to load.</td></tr></tbody>
+      </table>
+    </div>
+  </section>
 
-    // 30 Essential RP Standard IPA character keyboard configurations array
-    const ipaSymbolsList = ['ɪ','iː','e','æ','ʌ','ɑː','ɒ','ɔː','ʊ','uː','ɜː','ə','eɪ','aɪ','ɔɪ','əʊ','aʊ','ɪə','eə','ʊə','θ','ð','ʃ','ʒ','ŋ','tʃ','dʒ','j','w','ˈ'];
+</div>
 
-    // Complete 27-Question Core Curriculum Bank Framework Matrix Array (Distributed cleanly into sets)
-    // To minimize source file compilation freeze layouts, we assemble a template grid containing structural components.
-    const masterQuestionMatrix = {};
-    
-    // Programmatically initialize arrays for Set 1 to 4 with exactly 27 structural blocks per module
-    for (let s = 1; s <= 4; s++) {
-      masterQuestionMatrix[s] = [];
-      
-      // Questions 1-5: Section A - RP Transcription Practice
-      for (let q = 1; q <= 5; q++) {
-        let targets = ["cat", "better", "beautiful", "linguistics", "spin"];
-        let expected = ["kæt", "ˈbetə", "ˈbjuːtɪfl", "lɪŋˈɡwɪstɪks", "spɪn"];
-        masterQuestionMatrix[s].push({
-          id: `S${s}-QA-${q}`,
-          section: "A",
-          sectionTitle: "Section A: RP Transcription Practice 🌟",
+<script>
+/* ============================================================
+   SETTINGS — change these two lines
+   ============================================================ */
+// Paste your Google Apps Script Web App URL here (ends in /exec).
+// See the Apps Script code at the bottom of this file.
+const GOOGLE_SCRIPT_URL = "";
+// NOTE: this password is visible to anyone who opens "View source".
+// It only keeps casual visitors out — don't reuse a real password.
+const TEACHER_PASSWORD = "teacher123";
+
+/* ============================================================
+   QUESTION BANK
+   type "ipa": student types a transcription. "answers" lists every
+               accepted version (slashes, spaces, ':' vs 'ː' and
+               'g' vs 'ɡ' are handled automatically).
+   type "mcq": multiple choice; "correct" is the index (0 = first).
+   ============================================================ */
+const SETS = [
+  { title: "Set 1 · Vowels", questions: [
+    { type:"ipa", word:"cat", answers:["kæt"], hint:"The vowel is the open front one, as in 'hat'.", explain:"/k/ + /æ/ + /t/." },
+    { type:"ipa", word:"ship", answers:["ʃɪp"], hint:"'sh' is one sound: ʃ. The vowel is short.", explain:"The short vowel /ɪ/ — compare 'sheep' /ʃiːp/." },
+    { type:"ipa", word:"sheep", answers:["ʃiːp"], hint:"The vowel is long — remember the length mark ː.", explain:"Long /iː/ is what separates it from 'ship'." },
+    { type:"mcq", q:"How many phonemes (sounds) are in the word “thought”?", options:["7","5","3","4"], correct:2,
+      hint:"Count sounds, not letters. 'th' is one sound, 'ough' is one vowel.", explain:"/θɔːt/ — θ + ɔː + t = 3 sounds." },
+    { type:"mcq", q:"Which of these is a diphthong (a gliding vowel)?", options:["/iː/","/eɪ/","/æ/","/ʌ/"], correct:1,
+      hint:"A diphthong moves from one vowel position to another — it has two symbols.", explain:"/eɪ/ as in 'day' glides from /e/ towards /ɪ/." },
+    { type:"mcq", q:"The vowel /uː/ in “food” is…", options:["front and unrounded","back and rounded","central and short","a diphthong"], correct:1,
+      hint:"Say 'food' — what are your lips doing?", explain:"/uː/ is a long close back rounded vowel." }
+  ]},
+  { title: "Set 2 · Consonants", questions: [
+    { type:"ipa", word:"think", answers:["θɪŋk"], hint:"'th' here is voiceless (θ), and 'n' before 'k' becomes ŋ.", explain:"/θ/ is voiceless; /ŋ/ appears before /k/." },
+    { type:"ipa", word:"this", answers:["ðɪs"], hint:"This 'th' is voiced — use ð.", explain:"Voiced /ð/ — compare 'thin' /θɪn/." },
+    { type:"ipa", word:"judge", answers:["dʒʌdʒ"], hint:"'j' and 'dge' are the same sound: dʒ.", explain:"/dʒ/ at both ends, with /ʌ/ in the middle." },
+    { type:"mcq", q:"Where is /k/ made (place of articulation)?", options:["Bilabial","Alveolar","Velar","Dental"], correct:2,
+      hint:"The back of your tongue touches the soft palate.", explain:"/k/ and /ɡ/ are velar stops." },
+    { type:"mcq", q:"/m/ and /n/ are both…", options:["Fricatives","Nasals","Approximants","Affricates"], correct:1,
+      hint:"Pinch your nose while saying 'mmm' — what happens?", explain:"Air goes out through the nose, so they are nasals." },
+    { type:"mcq", q:"What is the voiceless partner of /v/?", options:["/b/","/θ/","/w/","/f/"], correct:3,
+      hint:"Same lips-and-teeth position, but no vibration in the throat.", explain:"/f/ and /v/ are both labiodental fricatives." }
+  ]},
+  { title: "Set 3 · Stress & schwa", questions: [
+    { type:"ipa", word:"better", answers:["ˈbetə"], stress:true, hint:"RP drops the final 'r'. Put ˈ before the stressed syllable.", explain:"/ˈbetə/ — stress on the first syllable, weak /ə/ at the end." },
+    { type:"ipa", word:"about", answers:["əˈbaʊt"], stress:true, hint:"The first syllable is weak (schwa). Stress falls on the second.", explain:"/əˈbaʊt/ — weak /ə/, then stressed /baʊt/." },
+    { type:"ipa", word:"photograph", answers:["ˈfəʊtəɡrɑːf","ˈfəʊtəɡræf"], stress:true, hint:"Stress is on 'pho-'. The middle vowel is weak.", explain:"/ˈfəʊtəɡrɑːf/ — stress on the first syllable." },
+    { type:"mcq", q:"In “photography”, which syllable is stressed?", options:["pho","to","gra","phy"], correct:1,
+      hint:"Say it slowly: pho-TO-gra-phy or PHO-to-gra-phy?", explain:"/fəˈtɒɡrəfi/ — stress moves to the second syllable." },
+    { type:"mcq", q:"What is the most common vowel sound in English?", options:["/ɪ/","/æ/","/ə/ (schwa)","/iː/"], correct:2,
+      hint:"It appears in almost every unstressed syllable.", explain:"Schwa /ə/ — as in 'about', 'better', 'banana'." },
+    { type:"mcq", q:"In “banana”, which syllable is stressed?", options:["ba (1st)","na (2nd)","na (3rd)","none"], correct:1,
+      hint:"Two of the three vowels are schwa.", explain:"/bəˈnɑːnə/ — only the middle syllable is strong." }
+  ]},
+  { title: "Set 4 · Phonology", questions: [
+    { type:"ipa", word:"spin", answers:["spɪn"], hint:"Short vowel, simple consonants.", explain:"/spɪn/ — note the /p/ here is not aspirated." },
+    { type:"ipa", word:"beautiful", answers:["ˈbjuːtɪfl","ˈbjuːtɪfəl","ˈbjuːtəfl","ˈbjuːtəfəl"], stress:true, hint:"'beau' = bjuː. Stress on the first syllable.", explain:"/ˈbjuːtɪfl/ (the final l can be syllabic, or /fəl/)." },
+    { type:"ipa", word:"linguistics", answers:["lɪŋˈɡwɪstɪks"], stress:true, hint:"'ng' before 'g' is ŋ. Stress is on '-guis-'.", explain:"/lɪŋˈɡwɪstɪks/ — stress on the second syllable." },
+    { type:"mcq", q:"The aspirated [pʰ] in “pin” and the unaspirated [p] in “spin” are…", options:["Two different phonemes","Allophones of one phoneme","A minimal pair","Diphthongs"], correct:1,
+      hint:"Does swapping them ever change a word's meaning in English?", explain:"They never change meaning, so they are allophones of /p/." },
+    { type:"mcq", q:"Which of these is a minimal pair?", options:["cat – cats","pat – bat","ship – boat","sun – moon"], correct:1,
+      hint:"Two words that differ in exactly one sound.", explain:"'pat' and 'bat' differ only in /p/ vs /b/." },
+    { type:"mcq", q:"The last sound in “sing” is…", options:["/n/ + /ɡ/","/ŋ/ — a velar nasal","/ɡ/ only","/n/ only"], correct:1,
+      hint:"In RP the 'g' is not pronounced separately.", explain:"'sing' is /sɪŋ/ — a single velar nasal." }
+  ]}
+];
+
+/* IPA keyboard keys */
+const IPA_KEYS = ['ɪ','iː','e','æ','ʌ','ɑː','ɒ','ɔː','ʊ','uː','ɜː','ə','eɪ','aɪ','ɔɪ','əʊ','aʊ','ɪə','eə','ʊə',
+                  'θ','ð','ʃ','ʒ','ŋ','tʃ','dʒ','j','ɡ','ː','ˈ','ˌ'];
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let student = null;
+let setIndex = 0;
+let qIndex = 0;
+let checked = false;
+let selected = null;
+let progress = {}; // { setIdx: { answers: [true/false/null...], finished: bool } }
+
+function store(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {} }
+function load(key) { try { return JSON.parse(localStorage.getItem(key)); } catch (e) { return null; } }
+function esc(s) { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function show(id) {
+  ['login','lab','instructor-auth','dashboard'].forEach(s => document.getElementById(s).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  const teacherView = id === 'instructor-auth' || id === 'dashboard';
+  document.getElementById('teacher-link').classList.toggle('hidden', teacherView);
+  document.getElementById('student-link').classList.toggle('hidden', !teacherView);
+  document.getElementById('logout-btn').classList.toggle('hidden', !(id === 'lab'));
+}
+
+/* ============================================================
+   LOGIN
+   ============================================================ */
+function startLab() {
+  const name = document.getElementById('in-name').value.trim();
+  const roll = document.getElementById('in-roll').value.trim();
+  const college = document.getElementById('in-college').value.trim();
+  const err = document.getElementById('login-error');
+  if (!name || !roll || !college) { err.textContent = "Please fill in all three boxes."; return; }
+  err.textContent = "";
+  student = { name, roll, college };
+  store('ppl-student', student);
+  progress = load('ppl-progress-' + roll) || {};
+  openLab();
+}
+
+function openLab() {
+  document.getElementById('show-name').textContent = student.name;
+  document.getElementById('show-roll').textContent = student.roll;
+  document.getElementById('show-college').textContent = student.college;
+  show('lab');
+  openSet(0);
+}
+
+function logout() {
+  student = null; progress = {};
+  try { localStorage.removeItem('ppl-student'); } catch (e) {}
+  ['in-name','in-roll','in-college'].forEach(id => document.getElementById(id).value = '');
+  show('login');
+}
+
+function backToStudent() { student ? openLab() : show('login'); }
+
+/* ============================================================
+   PRACTICE FLOW
+   ============================================================ */
+function setProgress(i) {
+  if (!progress[i]) progress[i] = { answers: new Array(SETS[i].questions.length).fill(null), finished: false };
+  return progress[i];
+}
+
+function renderTabs() {
+  document.getElementById('tabs').innerHTML = SETS.map((s, i) => {
+    const p = progress[i];
+    let note = 'Not started';
+    if (p && p.finished) note = '✓ ' + p.answers.filter(a => a === true).length + '/' + s.questions.length;
+    else if (p && p.answers.some(a => a !== null)) note = 'In progress';
+    return `<button class="tab ${i === setIndex ? 'active' : ''} ${p && p.finished ? 'done' : ''}" onclick="openSet(${i})">
+      Set ${i + 1}<small>${note}</small></button>`;
+  }).join('');
+}
+
+function openSet(i) {
+  setIndex = i;
+  const p = setProgress(i);
+  renderTabs();
+  if (p.finished) { showResults(); return; }
+  const firstOpen = p.answers.findIndex(a => a === null);
+  qIndex = firstOpen === -1 ? 0 : firstOpen;
+  document.getElementById('question-card').classList.remove('hidden');
+  document.getElementById('result-card').classList.add('hidden');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const set = SETS[setIndex], q = set.questions[qIndex];
+  checked = false; selected = null;
+  document.getElementById('set-title').textContent = set.title;
+  document.getElementById('q-count').textContent = `Question ${qIndex + 1} of ${set.questions.length}`;
+  document.getElementById('progress-fill').style.width = (qIndex / set.questions.length * 100) + '%';
+  document.getElementById('check-btn').classList.remove('hidden');
+  document.getElementById('next-btn').classList.add('hidden');
+  document.getElementById('hint-btn').disabled = false;
+
+  const area = document.getElementById('question-area');
+  if (q.type === 'ipa') {
+    area.innerHTML = `
+      <span class="section-tag">Transcription</span>
+      <div class="prompt">Write the RP transcription of <span class="word">“${esc(q.word)}”</span></div>
+      <input type="text" id="ipa-input" autocomplete="off" autocapitalize="off" spellcheck="false"
+        placeholder="Tap the symbols below or type here" onkeydown="if(event.key==='Enter')checkAnswer()">
+      <div class="ipa-keys">
+        ${IPA_KEYS.map(k => `<button type="button" onclick="insertSymbol('${k}')">${k}</button>`).join('')}
+        <button type="button" class="wide" onclick="backspace()">⌫ Delete</button>
+      </div>
+      <div class="tip">No need for slashes. ${q.stress ? 'Mark stress with ˈ before the stressed syllable.' : 'This word has one syllable, so no stress mark is needed.'}</div>
+      <div id="hint-area"></div><div id="feedback-area"></div>`;
+  } else {
+    area.innerHTML = `
+      <span class="section-tag">Multiple choice</span>
+      <div class="prompt">${esc(q.q)}</div>
+      <div class="options">${q.options.map((o, i) =>
+        `<button class="option" id="opt-${i}" onclick="selectOption(${i})">${esc(o)}</button>`).join('')}</div>
+      <div id="hint-area"></div><div id="feedback-area"></div>`;
+  }
+}
+
+function insertSymbol(sym) {
+  const input = document.getElementById('ipa-input');
+  if (!input || checked) return;
+  const start = input.selectionStart ?? input.value.length, end = input.selectionEnd ?? input.value.length;
+  input.value = input.value.slice(0, start) + sym + input.value.slice(end);
+  input.focus();
+  input.setSelectionRange(start + sym.length, start + sym.length);
+}
+
+function backspace() {
+  const input = document.getElementById('ipa-input');
+  if (!input || checked) return;
+  input.value = [...input.value].slice(0, -1).join('');
+  input.focus();
+}
+
+function selectOption(i) {
+  if (checked) return;
+  selected = i;
+  document.querySelectorAll('.option').forEach((el, j) => el.classList.toggle('selected', j === i));
+}
+
+function showHint() {
+  const q = SETS[setIndex].questions[qIndex];
+  document.getElementById('hint-area').innerHTML = `<div class="hintbox">💡 ${esc(q.hint)}</div>`;
+  document.getElementById('hint-btn').disabled = true;
+}
+
+// Makes typed answers comparable: removes slashes/brackets/spaces, fixes common look-alike characters.
+function normalise(s) {
+  return s.normalize('NFC')
+    .replace(/[\/\[\]\s.]/g, '')
+    .replace(/[:ː]/g, 'ː')
+    .replace(/g/g, 'ɡ')
+    .replace(/['’`]/g, 'ˈ')
+    .replace(/ɛ/g, 'e');
+}
+const noStress = s => s.replace(/[ˈˌ]/g, '');
+
+function checkAnswer() {
+  if (checked) return;
+  const q = SETS[setIndex].questions[qIndex];
+  const fb = document.getElementById('feedback-area');
+  let correct = false, html = '';
+
+  if (q.type === 'ipa') {
+    const raw = document.getElementById('ipa-input').value;
+    if (!raw.trim()) { fb.innerHTML = `<div class="feedback warn">Type your answer first 🙂</div>`; return; }
+    const given = normalise(raw);
+    const accepted = q.answers.map(normalise);
+    if (accepted.includes(given)) {
+      correct = true;
+      html = `<div class="feedback good">✅ Correct! <div class="explain">${esc(q.explain)}</div></div>`;
+    } else if (accepted.map(noStress).includes(noStress(given))) {
+      html = `<div class="feedback warn">🟡 Sounds are right, but the stress mark is missing or in the wrong place.
+        <div class="explain">Correct answer: <b>/${esc(q.answers[0])}/</b> — ${esc(q.explain)}</div></div>`;
+    } else {
+      html = `<div class="feedback bad">❌ Not quite. Correct answer: <b>/${esc(q.answers[0])}/</b>
+        <div class="explain">${esc(q.explain)}</div></div>`;
+    }
+    document.getElementById('ipa-input').readOnly = true;
+  } else {
+    if (selected === null) { fb.innerHTML = `<div class="feedback warn">Pick an answer first 🙂</div>`; return; }
+    correct = selected === q.correct;
+    document.querySelectorAll('.option').forEach((el, j) => {
+      el.disabled = true;
+      if (j === q.correct) el.classList.add('correct');
+      else if (j === selected) el.classList.add('wrong');
+    });
+    html = correct
+      ? `<div class="feedback good">✅ Correct! <div class="explain">${esc(q.explain)}</div></div>`
+      : `<div class="feedback bad">❌ Not quite. The answer is <b>${esc(q.options[q.correct])}</b>.
+          <div class="explain">${esc(q.explain)}</div></div>`;
+  }
+
+  checked = true;
+  fb.innerHTML = html;
+  setProgress(setIndex).answers[qIndex] = correct;
+  store('ppl-progress-' + student.roll, progress);
+  document.getElementById('check-btn').classList.add('hidden');
+  document.getElementById('hint-btn').disabled = true;
+  const next = document.getElementById('next-btn');
+  next.textContent = qIndex === SETS[setIndex].questions.length - 1 ? 'See my score →' : 'Next →';
+  next.classList.remove('hidden');
+  next.focus();
+  renderTabs();
+}
+
+function nextQuestion() {
+  if (qIndex < SETS[setIndex].questions.length - 1) { qIndex++; renderQuestion(); }
+  else finishSet();
+}
+
+function finishSet() {
+  const p = setProgress(setIndex);
+  p.finished = true;
+  store('ppl-progress-' + student.roll, progress);
+  renderTabs();
+  submitScore();
+  showResults();
+}
+
+function showResults() {
+  const set = SETS[setIndex], p = progress[setIndex];
+  const score = p.answers.filter(a => a === true).length, total = set.questions.length;
+  const pct = score / total;
+  const msg = pct === 1 ? "Perfect! 🌟" : pct >= 0.7 ? "Great work! 👏" : pct >= 0.4 ? "Good effort — try once more to improve 💪" : "Keep practising — use the hints next time 📘";
+  const nextSet = setIndex < SETS.length - 1
+    ? `<button class="btn" onclick="openSet(${setIndex + 1})">Go to Set ${setIndex + 2} →</button>` : '';
+  document.getElementById('question-card').classList.add('hidden');
+  const card = document.getElementById('result-card');
+  card.classList.remove('hidden');
+  card.innerHTML = `
+    <div class="section-tag">${esc(set.title)}</div>
+    <div class="score-big">${score} / ${total}</div>
+    <p style="font-size:20px;margin:0 0 6px">${msg}</p>
+    <p class="lead" id="submit-status">${GOOGLE_SCRIPT_URL ? 'Your score has been sent to your teacher.' : ''}</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn secondary" onclick="retrySet()">↻ Try this set again</button>${nextSet}
+    </div>`;
+}
+
+function retrySet() {
+  delete progress[setIndex];
+  store('ppl-progress-' + student.roll, progress);
+  openSet(setIndex);
+}
+
+/* ============================================================
+   GOOGLE SHEETS
+   ============================================================ */
+function submitScore() {
+  if (!GOOGLE_SCRIPT_URL) return;
+  const p = progress[setIndex];
+  const payload = {
+    roll: student.roll, name: student.name, college: student.college,
+    set: SETS[setIndex].title,
+    score: p.answers.filter(a => a === true).length + ' / ' + SETS[setIndex].questions.length,
+    timestamp: new Date().toLocaleString()
+  };
+  // text/plain avoids a CORS preflight that Apps Script can't answer
+  fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' }, body: JSON.stringify(payload) })
+    .catch(() => {
+      const s = document.getElementById('submit-status');
+      if (s) s.textContent = "Couldn't reach the server — your score is saved on this device. Tell your teacher.";
+    });
+}
+
+/* ============================================================
+   TEACHER
+   ============================================================ */
+function verifyTeacher() {
+  if (document.getElementById('in-password').value === TEACHER_PASSWORD) {
+    document.getElementById('in-password').value = '';
+    document.getElementById('pw-error').textContent = '';
+    show('dashboard');
+    loadDashboard();
+  } else {
+    document.getElementById('pw-error').textContent = 'Wrong password.';
+  }
+}
+
+let dashRows = [];
+async function loadDashboard() {
+  const err = document.getElementById('dash-error');
+  const body = document.getElementById('dash-body');
+  err.textContent = '';
+  if (!GOOGLE_SCRIPT_URL) { err.textContent = 'The Google Sheet link is not set yet. Add it at the top of the script (GOOGLE_SCRIPT_URL).'; return; }
+  body.innerHTML = `<tr><td colspan="6" style="text-align:center">Loading…</td></tr>`;
+  try {
+    const res = await fetch(GOOGLE_SCRIPT_URL);
+    dashRows = await res.json();
+    body.innerHTML = dashRows.length
+      ? dashRows.map(r => `<tr><td>${esc(r.roll)}</td><td>${esc(r.name)}</td><td>${esc(r.college)}</td>
+          <td>${esc(r.set)}</td><td><b>${esc(r.score)}</b></td><td>${esc(r.timestamp)}</td></tr>`).join('')
+      : `<tr><td colspan="6" style="text-align:center">No results yet.</td></tr>`;
+  } catch (e) {
+    body.innerHTML = '';
+    err.textContent = 'Could not load results. Check the Web App URL and that it is deployed with access "Anyone".';
+  }
+}
+
+function exportCSV() {
+  if (!dashRows.length) { document.getElementById('dash-error').textContent = 'Load the results first.'; return; }
+  const cols = ['roll','name','college','set','score','timestamp'];
+  const csv = [cols.join(',')].concat(dashRows.map(r => cols.map(c => '"' + String(r[c] ?? '').replace(/"/g, '""') + '"').join(','))).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  a.download = 'phonetics-results.csv';
+  a.click();
+}
+
+/* ============================================================
+   START — remember the student on this device
+   ============================================================ */
+const saved = load('ppl-student');
+if (saved && saved.roll) { student = saved; progress = load('ppl-progress-' + saved.roll) || {}; openLab(); }
+else show('login');
+
+/* ============================================================
+   GOOGLE APPS SCRIPT (paste into Extensions → Apps Script in your Sheet,
+   then Deploy → New deployment → Web app → Execute as: Me, Access: Anyone.
+   Copy the /exec URL into GOOGLE_SCRIPT_URL above.)
+
+   function doPost(e) {
+     const d = JSON.parse(e.postData.contents);
+     SpreadsheetApp.getActiveSheet().appendRow([d.roll, d.name, d.college, d.set, d.score, d.timestamp]);
+     return ContentService.createTextOutput('ok');
+   }
+   function doGet() {
+     const rows = SpreadsheetApp.getActiveSheet().getDataRange().getValues();
+     const out = rows.filter(r => r[0] !== 'roll' && r[0] !== '').map(r =>
+       ({ roll: r[0], name: r[1], college: r[2], set: r[3], score: r[4], timestamp: r[5] }));
+     return ContentService.createTextOutput(JSON.stringify(out.reverse()))
+       .setMimeType(ContentService.MimeType.JSON);
+   }
+   ============================================================ */
+</script>
+</body>
+</html>
