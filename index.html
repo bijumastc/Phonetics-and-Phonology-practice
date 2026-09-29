@@ -554,19 +554,60 @@ else show('login');
    then Deploy → New deployment → Web app → Execute as: Me, Access: Anyone.
    Copy the /exec URL into GOOGLE_SCRIPT_URL above.)
 
-   function doPost(e) {
-     const d = JSON.parse(e.postData.contents);
-     SpreadsheetApp.getActiveSheet().appendRow([d.roll, d.name, d.college, d.set, d.score, d.timestamp]);
-     return ContentService.createTextOutput('ok');
-   }
-   function doGet() {
-     const rows = SpreadsheetApp.getActiveSheet().getDataRange().getValues();
-     const out = rows.filter(r => r[0] !== 'roll' && r[0] !== '').map(r =>
-       ({ roll: r[0], name: r[1], college: r[2], set: r[3], score: r[4], timestamp: r[5] }));
-     return ContentService.createTextOutput(JSON.stringify(out.reverse()))
-       .setMimeType(ContentService.MimeType.JSON);
-   }
-   ============================================================ */
+     function fetchLiveDashboardData() {
+    const tbody = document.getElementById('dashboard-table-body');
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:30px;" class="animate-pulse">Synchronizing performance rows from secure Google Sheets server...</td></tr>`;
+
+    fetch(GOOGLE_SCRIPT_URL)
+    .then(res => res.json())
+    .then(data => {
+      if (!data || data.length <= 1) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--muted);font-style:italic;padding:30px;">No performance rows recorded in the spreadsheet database yet.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = '';
+      for (let i = 1; i < data.length; i++) {
+        const row = data[i];
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td style="font-weight:700;">${row[0] || 'N/A'}</td>
+          <td>${row[1] || 'N/A'}</td>
+          <td style="font-size:13px;color:var(--muted);">${row[2] || 'N/A'}</td>
+          <td><span style="background:#e4e0d8;padding:2px 6px;border-radius:4px;font-size:12px;font-weight:600;">${row[3] || 'Active Set'}</span></td>
+          <td style="color:var(--good);font-weight:800;">${row[4] || '0/27'}</td>
+          <td style="font-size:12px;color:var(--muted);font-family:monospace;">${row[5] ? new Date(row[5]).toLocaleString() : 'N/A'}</td>
+        `;
+        tbody.appendChild(tr);
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:var(--bad);font-weight:700;padding:30px;">Failed to synchronize live rows. Check your script parameters are open to 'Anyone'.</td></tr>`;
+    });
+  }
+
+  function exportDashboardToCSV() {
+    let csv = "Roll Number,Full Name,College,Set Module,Score,Timestamp\n";
+    const rows = document.querySelectorAll("#dashboard-table-body tr");
+    rows.forEach(r => {
+      if (r.cells.length >= 6) {
+        let cols = [];
+        for (let j = 0; j < r.cells.length; j++) {
+          cols.push(`"${r.cells[j].innerText.replace(/"/g, '""')}"`);
+        }
+        csv += cols.join(",") + "\n";
+      }
+    });
+    const uri = "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
+    const link = document.createElement("a");
+    link.href = uri;
+    link.download = "Linguistics_Class_Scores.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
 </script>
 </body>
 </html>
